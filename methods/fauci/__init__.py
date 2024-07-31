@@ -3,12 +3,12 @@ from pathlib import Path
 import tensorflow as tf
 import numpy as np
 import pandas as pd
-from tensorflow.python.keras import Callback
-from tensorflow.python.keras import binary_crossentropy
-from tensorflow.python.keras import Model
-from tensorflow.python.keras import Adam
-from tf_metric import continuous_demographic_parity, continuous_disparate_impact, continuous_equalized_odds, \
-    discrete_demographic_parity, discrete_equalized_odds, discrete_disparate_impact
+from tensorflow.python.keras.callbacks import Callback
+from tensorflow.python.keras.losses import binary_crossentropy
+from tensorflow.python.keras.models import Model
+from tensorflow.python.keras.optimizer_v1 import Adam
+from methods.fauci.tf_metric import continuous_demographic_parity, continuous_disparate_impact, \
+    continuous_equalized_odds, discrete_demographic_parity, discrete_disparate_impact, discrete_equalized_odds
 
 PATH = Path(__file__).parents[0]
 epsilon = 1e-5
@@ -62,7 +62,7 @@ def create_fauci_network(
 
     def custom_loss(y_true, y_pred):
         fair_cost_factor = fairness_metric_function(y_true, y_pred)
-        return tf.cast(binary_crossentropy(y_true, y_pred) + epsilon, tf.float64) + tf.cast(lambda_value * fair_cost_factor, tf.float64)
+        return (1 - lambda_value) * tf.cast(binary_crossentropy(y_true, y_pred) + epsilon, tf.float64) + lambda_value * tf.cast(fair_cost_factor, tf.float64)
 
     model.compile(loss=custom_loss, optimizer=Adam(), metrics=["accuracy"])
     return model

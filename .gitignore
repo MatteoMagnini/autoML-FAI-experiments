@@ -1,4 +1,5 @@
 # Custom exclusions
+*smac3_output*
 *cache*
 .idea/
 *.DS_Store

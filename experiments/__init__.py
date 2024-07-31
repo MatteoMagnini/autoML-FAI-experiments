@@ -10,8 +10,9 @@ from tensorflow.python.keras.callbacks import Callback
 from tensorflow.python.keras.layers import Dense
 from tensorflow.python.keras.models import Model
 from torch import nn
-from experiments._logging import INDENT, LOG_FLOAT_PRECISION
-from fairness.metric import demographic_parity, equalized_odds, disparate_impact
+from analysis.metrics import demographic_parity, equalized_odds, disparate_impact
+from _logging import INDENT, LOG_FLOAT_PRECISION
+from experiments.setup import NEURONS_PER_LAYER
 
 PATH = Path(__file__).parents[0]
 CACHE_DIR_NAME = 'cache'
@@ -37,13 +38,19 @@ def create_cache_directory():
 
 class TensorflowConditions(Callback):
 
-    def __init__(self, patience: int):
+    def __init__(self, patience: int = 10):
         super().__init__()
         self.patience = patience
         self.best_loss = math.inf
         self.wait = 0
         self.stopped_epoch = 0
         self.best_weights = None
+
+    def reset(self):
+        self.wait = 0
+        self.stopped_epoch = 0
+        self.best_weights = None
+        self.best_loss = math.inf
 
     def on_train_begin(self, logs=None):
         self.wait = 0
@@ -57,6 +64,7 @@ class TensorflowConditions(Callback):
             self.model.set_weights(self.best_weights)
             print(f"Stopping at epoch {epoch + 1}")
             self.model.stop_training = True
+            self.reset()
 
         val_loss_value = logs['val_loss']
         train_loss_value = logs['loss']
@@ -140,8 +148,8 @@ class PytorchNN(nn.Module):
 
 def create_fully_connected_nn_tf(
         input_size: int,
-        output_size: int,
-        neurons_per_hidden_layer: Iterable[int],
+        output_size: int = 1,
+        neurons_per_hidden_layer: Iterable[int] = NEURONS_PER_LAYER,
         activation_function: str = 'relu',
         latest_activation_function: str = 'sigmoid'
 ) -> Model:
@@ -153,7 +161,7 @@ def create_fully_connected_nn_tf(
     return Model(inputs=input_layer, outputs=output_layer)
 
 
-def evaluate_predictions(protected: np.array, y_pred: np.array, y_true: np.array, logger: Logger) -> None:
+def evaluate_predictions(protected: np.array, y_pred: np.array, y_true: np.array, logger: Logger) -> dict:
     """
     Evaluate the predictions. Compute the following metrics:
     - Accuracy
@@ -185,3 +193,13 @@ def evaluate_predictions(protected: np.array, y_pred: np.array, y_true: np.array
     logger.info(f"metrics:")
     for metric, value in zip(METRIC_LIST_NAMES, [accuracy, precision, recall, f1_score, auc, dp, di, eo]):
         logger.info(f"{INDENT}{metric}: {value:.{LOG_FLOAT_PRECISION}f}")
+    return {
+        "1 - accuracy": 1 - accuracy,
+        # "1 - precision": 1 - precision,
+        # "1 - recall": 1 - recall,
+        # "1 - f1": 1 - f1_score,
+        # "1 - auc": 1 - auc,
+        "demographic_parity": dp,
+        # "1 - disparate_impact": 1 - di,
+        # "equalized_odds": eo
+    }

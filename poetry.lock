@@ -174,12 +174,12 @@ files = [
 
 [[package]]
 name = "configspace"
-version = "1.1.3"
+version = "1.2.0"
 description = "Creation and manipulation of parameter configuration spaces for automated algorithm configuration and hyperparameter tuning."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "configspace-1.1.3.tar.gz", hash = "sha256:8b77e77bd1c286a57e35da87552e33052f6793ddbcc696a9fc62425f60739ac2"},
+    {file = "configspace-1.2.0.tar.gz", hash = "sha256:d23fa9006a768266af539946d61c3cc5b59662286185333baf57fc0313850ab1"},
 ]
 
 [package.dependencies]
@@ -2572,4 +2572,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "f5dfce15e0031fb2ace8cf8203c8b31849c5f3d0c81537039f8bfa7741fac865"
+content-hash = "f1cd071e0862aea3cfdffda0db7e1cbdc7dd9918e6946f23583b079fcd1f3bbe"
