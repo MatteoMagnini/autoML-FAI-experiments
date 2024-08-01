@@ -227,7 +227,9 @@ def train_and_predict_cho_classifier(
 
             # prediction loss
             p_loss = loss_function(Yhat.squeeze(), y_batch)
-            cost += (1 - lambda_) * p_loss + fairness_cost(Yhat, y_batch, z_batch)
+            # originally:
+            # cost = (1 - lambda_) * p_loss + fairness_cost(Yhat, y_batch, z_batch)
+            cost += (1 - lambda_) * p_loss + lambda_ * fairness_cost(Yhat, y_batch, z_batch)
 
             optimizer.zero_grad()
             if (torch.isnan(cost)).any():
@@ -238,7 +240,9 @@ def train_and_predict_cho_classifier(
 
         y_hat_valid = net(XZ_valid)
         p_loss = loss_function(y_hat_valid.squeeze(), Y_valid)
-        cost = (1 - lambda_) * p_loss + fairness_cost(y_hat_valid, Y_valid, Z_valid)
+        # originally:
+        # cost = (1 - lambda_) * p_loss + fairness_cost(y_hat_valid, Y_valid, Z_valid)
+        cost = (1 - lambda_) * p_loss + lambda_ * fairness_cost(y_hat_valid, Y_valid, Z_valid)
 
         # Early stopping
         if conditions.early_stop(epoch=epoch, loss_value=cost):

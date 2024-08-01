@@ -76,7 +76,9 @@ def regularized_learning(
     for epoch in range(num_epochs):
         for i, (x, y, z) in enumerate(dataset_loader):
             outputs = model(x).flatten()
-            loss = data_fitting_loss(outputs, y)
+            # originally:
+            # loss = data_fitting_loss(outputs, y)
+            loss = (1 - penalty_coefficient) * data_fitting_loss(outputs, y)
             loss += penalty_coefficient * fairness_penalty(outputs, z, device_gpu)
             optimizer.zero_grad()
             if (torch.isnan(loss)).any():
@@ -86,7 +88,9 @@ def regularized_learning(
 
         # Compute validation loss
         outputs = model(x_val).flatten()
-        loss_val = data_fitting_loss(outputs, y_val).item()
+        # originally:
+        # loss_val = data_fitting_loss(outputs, y)
+        loss_val = (1 - penalty_coefficient) * data_fitting_loss(outputs, y_val).item()
         loss_val += penalty_coefficient * fairness_penalty(outputs, z_val, device_gpu)
 
         # Early stopping
