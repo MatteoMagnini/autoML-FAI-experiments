@@ -2,8 +2,11 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import torch
+from torch import device as torch_device
 from torch import nn, optim
 from torch.utils.data import DataLoader
+from torch import cuda
+
 from datasets.pipelines.pytorch_data_pipeline import CustomDataset, FairnessPyTorchDataset
 from experiments import PyTorchConditions
 
@@ -98,11 +101,11 @@ def train_and_predict_cho_classifier(
     net: nn.Module,
     metric: str,
     lambda_: float,
-    device,
     n_epochs: int,
     batch_size: int,
     conditions: PyTorchConditions
 ):
+    device = torch_device('cuda:1') if cuda.is_available() else torch_device('cpu')
     # Retrieve train/test split pytorch tensors for index=split
     train_tensors, valid_tensors, test_tensors = dataset.get_dataset_in_tensor()
     X_train, Y_train, Z_train, XZ_train = train_tensors

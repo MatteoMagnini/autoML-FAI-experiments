@@ -4,6 +4,7 @@ from smac import HyperparameterOptimizationFacade as HPOFacade
 from tensorflow.python.compat.v2_compat import disable_v2_behavior
 from tensorflow.python.framework.ops import disable_eager_execution
 from automl import plot_pareto
+from automl.auto_cho import ChoMLP
 from automl.auto_fauci import FauciMLP
 from smac.multi_objective.parego import ParEGO
 from datasets import get_feature_data_type
@@ -21,7 +22,14 @@ if __name__ == "__main__":
     setup["protected_type"] = get_feature_data_type(setup["dataset"], setup["protected"])
     setup["callbacks"] = [TensorflowConditions()]
 
-    mlp = FauciMLP(setup)
+    if setup["method"] == "fauci":
+        mlp = FauciMLP(setup)
+    elif setup["method"] == "jiang":
+        raise NotImplementedError("Jiang method not implemented")
+    elif setup["method"] == "cho":
+        mlp = ChoMLP(setup)
+    else:
+        raise ValueError(f"Unknown method {setup['method']}")
     objectives = ["1 - accuracy", "demographic_parity"]
 
     # Define our environment variables

@@ -87,7 +87,7 @@ class TensorflowConditions(Callback):
 
 
 class PyTorchConditions:
-    def __init__(self, model: torch.nn.Module, patience: int, max_epochs: int):
+    def __init__(self, model: torch.nn.Module, max_epochs: int, patience: int = 10):
         super().__init__()
         self.model = model
         self.patience = patience
@@ -124,7 +124,7 @@ class PyTorchConditions:
 
 
 class PytorchNN(nn.Module):
-    def __init__(self, n_layers, n_inputs, n_hidden_units):
+    def __init__(self, n_inputs, n_layers: int = len(NEURONS_PER_LAYER) + 2, n_hidden_units: list[int] = NEURONS_PER_LAYER):
         super(PytorchNN, self).__init__()
         layers = []
 
