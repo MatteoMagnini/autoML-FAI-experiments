@@ -1,3 +1,4 @@
+import multiprocessing
 import sys
 from smac import Scenario
 from smac import HyperparameterOptimizationFacade as HPOFacade
@@ -7,6 +8,7 @@ from automl import plot_pareto
 from automl.auto_cho import ChoMLP
 from automl.auto_fauci import FauciMLP
 from smac.multi_objective.parego import ParEGO
+from automl.auto_jiang import JiangMLP
 from datasets import get_feature_data_type
 from experiments import TensorflowConditions
 from experiments.setup import PATH as CONFIG_PATH, from_yaml_file_to_dict, update_with_dataset
@@ -15,7 +17,6 @@ from experiments.setup import PATH as CONFIG_PATH, from_yaml_file_to_dict, updat
 if __name__ == "__main__":
     disable_v2_behavior()
     disable_eager_execution()
-
     conf_file_name = sys.argv[1]
     setup = from_yaml_file_to_dict(CONFIG_PATH / conf_file_name)
     setup = update_with_dataset(setup)
@@ -25,7 +26,7 @@ if __name__ == "__main__":
     if setup["method"] == "fauci":
         mlp = FauciMLP(setup)
     elif setup["method"] == "jiang":
-        raise NotImplementedError("Jiang method not implemented")
+        mlp = JiangMLP(setup)
     elif setup["method"] == "cho":
         mlp = ChoMLP(setup)
     else:
@@ -36,10 +37,12 @@ if __name__ == "__main__":
     scenario = Scenario(
         mlp.configspace,
         objectives=objectives,
-        walltime_limit=60,  # After 60 seconds, we stop the hyperparameter optimization
-        n_trials=20,  # Evaluate max 200 different trials
-        n_workers=1,
+        walltime_limit=2*60,  # After 2 minutes, we stop the hyperparameter optimization
+        n_trials=30,  # Evaluate max 30 different trials
+        n_workers=multiprocessing.cpu_count()
     )
+
+    print(f"Using {scenario.n_workers} workers")
 
     # We want to run five random configurations before starting the optimization.
     initial_design = HPOFacade.get_initial_design(scenario, n_configs=5)

@@ -4,13 +4,22 @@ import numpy as np
 import torch
 from torch import nn
 from torch.utils.data import TensorDataset, DataLoader
+from datasets.pipelines.pytorch_data_pipeline import FairnessPyTorchDataset
 from experiments import PyTorchConditions
 
 
 PATH = Path(__file__).parents[0]
 
 
-def train_and_predict_jiang_classifier(net, fairness_dataset, device, lambda_value, epochs, batch_size, conditions):
+def train_and_predict_jiang_classifier(
+        dataset: FairnessPyTorchDataset,
+        net: nn.Module,
+        metric: str,
+        lambda_: float,
+        n_epochs: int,
+        batch_size: int,
+        conditions: PyTorchConditions):
+    device = torch.device("cuda:1") if torch.cuda.is_available() else torch.device("cpu")
     net = net.to(device)
     test_sol = 1e-3
     x_appro = torch.arange(test_sol, 1 - test_sol, test_sol).to(device)
@@ -21,7 +30,7 @@ def train_and_predict_jiang_classifier(net, fairness_dataset, device, lambda_val
         train_datasets,
         valid_datasets,
         test_datasets,
-    ) = fairness_dataset.get_dataset_in_tensor()
+    ) = dataset.get_dataset_in_tensor()
     _, y_train, z_train, x_train = train_datasets
     _, y_valid, z_valid, x_valid = valid_datasets
     _, y_test, z_test, x_test = test_datasets
@@ -38,9 +47,9 @@ def train_and_predict_jiang_classifier(net, fairness_dataset, device, lambda_val
         net,
         penalty,
         device,
-        lambda_value,
+        lambda_,
         nn.functional.binary_cross_entropy,
-        epochs,
+        n_epochs,
         conditions
     )
 
@@ -51,20 +60,20 @@ def train_and_predict_jiang_classifier(net, fairness_dataset, device, lambda_val
 
 
 def regularized_learning(
-    dataset_loader,
-    x_val,
-    y_val,
-    z_val,
-    x_test,
-    y_test,
-    z_test,
-    model,
-    fairness_penalty,
-    device_gpu,
-    penalty_coefficient,
-    data_fitting_loss,
-    num_epochs: int,
-    conditions: PyTorchConditions,
+        dataset_loader,
+        x_val,
+        y_val,
+        z_val,
+        x_test,
+        y_test,
+        z_test,
+        model,
+        fairness_penalty,
+        device_gpu,
+        penalty_coefficient,
+        data_fitting_loss,
+        num_epochs: int,
+        conditions: PyTorchConditions,
 ):
     # mse regression objective
     # data_fitting_loss = nn.MSELoss()
@@ -129,7 +138,7 @@ class KDE_fair:
         n = x_train.size()[0]
         X_repeat = self.x_test.repeat_interleave(n).reshape((-1, n))
         attention_weights = nn.functional.softmax(
-            -((X_repeat - x_train) ** 2) / (bandwidth**2) / 2, dim=1
+            -((X_repeat - x_train) ** 2) / (bandwidth ** 2) / 2, dim=1
         )
         y_hat = torch.matmul(attention_weights, y_train)
         return y_hat
@@ -141,17 +150,17 @@ class KDE_fair:
         train_x = x_train.unsqueeze(0)
         two_tensor = 2
         pdf_values = (
-            (
-                torch.exp(
-                    -(
-                        (data - train_x) ** two_tensor
-                        / (bandwidth**two_tensor)
-                        / two_tensor
+                (
+                    torch.exp(
+                        -(
+                                (data - train_x) ** two_tensor
+                                / (bandwidth ** two_tensor)
+                                / two_tensor
+                        )
                     )
-                )
-            ).mean(dim=-1)
-            / sqrt(2 * pi)
-            / bandwidth
+                ).mean(dim=-1)
+                / sqrt(2 * pi)
+                / bandwidth
         )
 
         return pdf_values
