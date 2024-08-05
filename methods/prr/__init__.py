@@ -2,9 +2,8 @@ import torch
 
 
 class PRLoss:
-    def __init__(self, eta=1.0, first_group_size: int = 0, second_group_size: int = 0):
+    def __init__(self, first_group_size: int = 0, second_group_size: int = 0):
         super(PRLoss, self).__init__()
-        self.eta = eta
         self.first_group_size = first_group_size
         self.second_group_size = second_group_size
 
@@ -33,31 +32,30 @@ class PRLoss:
         pi_s0y1 = second_group_output * p_s0y1
         pi_s0y0 = (1 - second_group_output) * p_s0y0
         pi = torch.sum(pi_s1y1) + torch.sum(pi_s1y0) + torch.sum(pi_s0y1) + torch.sum(pi_s0y0)
-        pi = self.eta * pi
         return pi
 
 
 class PRLR:  # using linear
-    def __init__(self, first_model, second_model, eta=0.0, epochs=3000, lr=0.01):
+    def __init__(self, first_model, second_model, _lambda=0.5, epochs=3000, lr=0.01):
         super(PRLR, self).__init__()
         self.first_model = first_model
         self.second_model = second_model
-        self.eta = eta
+        self._lambda = _lambda
         self.epochs = epochs
         self.lr = lr
 
     def fit(self, x_female, y_female, x_male, y_male):
         criterion = torch.nn.BCELoss(reduction='sum')
-        PI = PRLoss(eta=self.eta)
+        pi = PRLoss(x_female.shape[0], x_male.shape[0])
         epochs = self.epochs
         optimizer = torch.optim.Adam(list(self.first_model.parameters()) + list(self.second_model.parameters()), self.lr, weight_decay=1e-5)
         for epoch in range(epochs):
             optimizer.zero_grad()
             output_f = self.first_model(x_female)
             output_m = self.second_model(x_male)
-            logloss = criterion(output_f, y_female) + criterion(output_m, y_male)
-            PIloss = PI.forward(output_f, output_m)
-            loss = PIloss + logloss
+            usual_loss = criterion(output_f, y_female) + criterion(output_m, y_male)
+            pi_loss = pi.forward(output_f, output_m)
+            loss = (1 - self._lambda) * usual_loss + self._lambda * pi_loss
             loss.backward()
             optimizer.step()
         self.first_model.eval()
