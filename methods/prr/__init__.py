@@ -1,65 +1,102 @@
 import torch
+from torch import cuda
+from torch import device as torch_device
+from torch.utils.data import DataLoader
+from datasets.pipelines.pytorch_data_pipeline import FairnessPyTorchDataset, CustomDataset
+from experiments import PyTorchConditions
 
 
-class PRLoss:
-    def __init__(self, first_group_size: int = 0, second_group_size: int = 0):
-        super(PRLoss, self).__init__()
-        self.first_group_size = first_group_size
-        self.second_group_size = second_group_size
-
-    def forward(self, first_group_output, second_group_output):
-        # For the mutual information,
-        # Pr[y|s] = sum{(xi,si),si=s} sigma(xi,si) / #D[xs]
-        # D[xs]
-        n_first_group = torch.tensor(first_group_output.shape[0])
-        n_second_group = torch.tensor(second_group_output.shape[0])
-        dxisi = torch.stack((n_second_group, n_first_group), axis=0)
-        # Pr[y|s]
-        y_pred_female = torch.sum(first_group_output)
-        y_pred_male = torch.sum(second_group_output)
-        p_ys = torch.stack((y_pred_male, y_pred_female), axis=0) / dxisi
-        # Pr[y]
-        p = torch.cat((first_group_output, second_group_output), 0)
-        p_y = torch.sum(p) / (self.first_group_size + self.second_group_size)
-        # P(siyi)
-        p_s1y1 = torch.log(p_ys[1]) - torch.log(p_y)
-        p_s1y0 = torch.log(1 - p_ys[1]) - torch.log(1 - p_y)
-        p_s0y1 = torch.log(p_ys[0]) - torch.log(p_y)
-        p_s0y0 = torch.log(1 - p_ys[0]) - torch.log(1 - p_y)
-        # PI
-        pi_s1y1 = first_group_output * p_s1y1
-        pi_s1y0 = (1 - first_group_output) * p_s1y0
-        pi_s0y1 = second_group_output * p_s0y1
-        pi_s0y0 = (1 - second_group_output) * p_s0y0
-        pi = torch.sum(pi_s1y1) + torch.sum(pi_s1y0) + torch.sum(pi_s0y1) + torch.sum(pi_s0y0)
-        return pi
+def mutual_information(first_group: torch.tensor, second_group: torch.tensor) -> torch.tensor:
+    # For the mutual information,
+    # Pr[y|s] = sum{(xi,si),si=s} sigma(xi,si) / #D[xs]
+    # D[xs]
+    first_group_size = first_group.shape[0]
+    second_group_size = second_group.shape[0]
+    first_group_size_tensor = torch.tensor(first_group_size)
+    second_group_size_tensor = torch.tensor(second_group_size)
+    dxisi = torch.stack((second_group_size_tensor, first_group_size_tensor))
+    # Pr[y|s]
+    y_pred_female = torch.sum(first_group)
+    y_pred_male = torch.sum(second_group)
+    p_ys = torch.stack((y_pred_male, y_pred_female)) / dxisi
+    # Pr[y]
+    p = torch.cat((first_group, second_group), 0)
+    p_y = torch.sum(p) / (first_group_size + second_group_size)
+    # P(siyi)
+    p_s1y1 = torch.log(p_ys[1]) - torch.log(p_y)
+    p_s1y0 = torch.log(1 - p_ys[1]) - torch.log(1 - p_y)
+    p_s0y1 = torch.log(p_ys[0]) - torch.log(p_y)
+    p_s0y0 = torch.log(1 - p_ys[0]) - torch.log(1 - p_y)
+    # PI
+    pi_s1y1 = first_group * p_s1y1
+    pi_s1y0 = (1 - first_group) * p_s1y0
+    pi_s0y1 = second_group * p_s0y1
+    pi_s0y0 = (1 - second_group) * p_s0y0
+    pi = torch.sum(pi_s1y1) + torch.sum(pi_s1y0) + torch.sum(pi_s0y1) + torch.sum(pi_s0y0)
+    return pi
 
 
-class PRLR:  # using linear
-    def __init__(self, first_model, second_model, _lambda=0.5, epochs=3000, lr=0.01):
-        super(PRLR, self).__init__()
-        self.first_model = first_model
-        self.second_model = second_model
-        self._lambda = _lambda
-        self.epochs = epochs
-        self.lr = lr
+def train_and_predict_prr(
+        dataset: FairnessPyTorchDataset,
+        net: torch.nn.Module,
+        metric: str,
+        lambda_: float,
+        n_epochs: int,
+        batch_size: int,
+        conditions: PyTorchConditions
+):
+    device = torch_device('cuda:1') if cuda.is_available() else torch_device('cpu')
 
-    def fit(self, x_female, y_female, x_male, y_male):
-        criterion = torch.nn.BCELoss(reduction='sum')
-        pi = PRLoss(x_female.shape[0], x_male.shape[0])
-        epochs = self.epochs
-        optimizer = torch.optim.Adam(list(self.first_model.parameters()) + list(self.second_model.parameters()), self.lr, weight_decay=1e-5)
-        for epoch in range(epochs):
+    # Retrieve train/test split pytorch tensors for index=split
+    train_tensors, valid_tensors, test_tensors = dataset.get_dataset_in_tensor()
+    X_train, Y_train, Z_train, XZ_train = train_tensors
+    X_valid, Y_valid, Z_valid, XZ_valid = valid_tensors
+    X_test, Y_test, Z_test, XZ_test = test_tensors
+
+    custom_dataset = CustomDataset(XZ_train, Y_train, Z_train)
+    data_loader = DataLoader(custom_dataset, batch_size=batch_size, shuffle=True)
+
+    loss_function = torch.nn.BCELoss()
+    optimizer = torch.optim.Adam(net.parameters())
+
+    conditions.on_train_begin()
+    for epoch in range(n_epochs):
+        for i, (xz_batch, y_batch, z_batch) in enumerate(data_loader):
+            # Split the datasets into two different groups w.r.t. the sensitive attribute
+            # Here we assume that the sensitive attribute is binary!
+            group1_x_batch = xz_batch[z_batch == 0].to(device)
+            group1_y_batch = y_batch[z_batch == 0].to(device)
+            group2_x_batch = xz_batch[z_batch == 1].to(device)
+            group2_y_batch = y_batch[z_batch == 1].to(device)
+
+            group1_output = net(group1_x_batch)
+            group2_output = net(group2_x_batch)
+
             optimizer.zero_grad()
-            output_f = self.first_model(x_female)
-            output_m = self.second_model(x_male)
-            usual_loss = criterion(output_f, y_female) + criterion(output_m, y_male)
-            pi_loss = pi.forward(output_f, output_m)
-            loss = (1 - self._lambda) * usual_loss + self._lambda * pi_loss
+            usual_loss = loss_function(group1_output, group1_y_batch) + loss_function(group2_output, group2_y_batch)
+            pi_loss = mutual_information(group1_output, group2_output)
+            loss = (1 - lambda_) * usual_loss + lambda_ * pi_loss
             loss.backward()
             optimizer.step()
-        self.first_model.eval()
-        self.second_model.eval()
-        # accu = accuracy(self.first_model, self.second_model, x_female, y_female, x_male, y_male)
-        # cvs = CVS(self.first_model, self.second_model, x_female, x_male)
-        # return accu, cvs
+
+        # Split the datasets into two different groups w.r.t. the sensitive attribute
+        # Here we assume that the sensitive attribute is binary!
+        group1_x_valid = X_valid[Z_valid == 0].to(device)
+        group1_y_valid = Y_valid[Z_valid == 0].to(device)
+        group2_x_valid = X_valid[Z_valid == 1].to(device)
+        group2_y_valid = Y_valid[Z_valid == 1].to(device)
+
+        group1_y_hat_valid = net(group1_x_valid)
+        group2_y_hat_valid = net(group2_x_valid)
+        group1_p_loss = loss_function(group1_y_hat_valid.squeeze(), group1_y_valid)
+        group2_p_loss = loss_function(group2_y_hat_valid.squeeze(), group2_y_valid)
+        p_loss = group1_p_loss + group2_p_loss
+        pi_loss = mutual_information(group1_y_hat_valid, group2_y_hat_valid)
+        cost = (1 - lambda_) * p_loss + lambda_ * pi_loss
+
+        # Early stopping
+        if conditions.early_stop(epoch=epoch, loss_value=cost):
+            break
+
+    y_hat_test = net(X_test).squeeze().detach().cpu().numpy()
+    return y_hat_test

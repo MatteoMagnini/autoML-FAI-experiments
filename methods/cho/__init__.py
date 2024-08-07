@@ -112,9 +112,6 @@ def train_and_predict_cho_classifier(
     X_valid, Y_valid, Z_valid, XZ_valid = valid_tensors
     X_test, Y_test, Z_test, XZ_test = test_tensors
 
-    # Retrieve train/test split numpy arrays for index=split
-    train_arrays, valid_arrays, test_arrays = dataset.get_dataset_in_ndarray()
-    X_valid_np, Y_valid_np, Z_valid_np, XZ_valid_np = valid_arrays
     sensitive_attrs = dataset.sensitive_attrs
 
     custom_dataset = CustomDataset(XZ_train, Y_train, Z_train)
