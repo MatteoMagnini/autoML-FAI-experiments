@@ -36,7 +36,7 @@ def mutual_information(first_group: torch.tensor, second_group: torch.tensor) ->
     return pi
 
 
-def train_and_predict_prr(
+def train_and_predict_prr_classifier(
         dataset: FairnessPyTorchDataset,
         net: torch.nn.Module,
         metric: str,
@@ -54,6 +54,9 @@ def train_and_predict_prr(
     X_test, Y_test, Z_test, XZ_test = test_tensors
 
     custom_dataset = CustomDataset(XZ_train, Y_train, Z_train)
+    # cast the values of Z to 0 and 1
+    custom_dataset.Z = custom_dataset.Z.type(torch.int64)
+    Z_valid = Z_valid.type(torch.int64)
     data_loader = DataLoader(custom_dataset, batch_size=batch_size, shuffle=True)
 
     loss_function = torch.nn.BCELoss()
@@ -64,13 +67,13 @@ def train_and_predict_prr(
         for i, (xz_batch, y_batch, z_batch) in enumerate(data_loader):
             # Split the datasets into two different groups w.r.t. the sensitive attribute
             # Here we assume that the sensitive attribute is binary!
-            group1_x_batch = xz_batch[z_batch == 0].to(device)
+            group1_x_batch = xz_batch[z_batch == 0][:, :-1].to(device)
             group1_y_batch = y_batch[z_batch == 0].to(device)
-            group2_x_batch = xz_batch[z_batch == 1].to(device)
+            group2_x_batch = xz_batch[z_batch == 1][:, :-1].to(device)
             group2_y_batch = y_batch[z_batch == 1].to(device)
 
-            group1_output = net(group1_x_batch)
-            group2_output = net(group2_x_batch)
+            group1_output = net(group1_x_batch).squeeze()
+            group2_output = net(group2_x_batch).squeeze()
 
             optimizer.zero_grad()
             usual_loss = loss_function(group1_output, group1_y_batch) + loss_function(group2_output, group2_y_batch)
@@ -86,8 +89,8 @@ def train_and_predict_prr(
         group2_x_valid = X_valid[Z_valid == 1].to(device)
         group2_y_valid = Y_valid[Z_valid == 1].to(device)
 
-        group1_y_hat_valid = net(group1_x_valid)
-        group2_y_hat_valid = net(group2_x_valid)
+        group1_y_hat_valid = net(group1_x_valid).squeeze()
+        group2_y_hat_valid = net(group2_x_valid).squeeze()
         group1_p_loss = loss_function(group1_y_hat_valid.squeeze(), group1_y_valid)
         group2_p_loss = loss_function(group2_y_hat_valid.squeeze(), group2_y_valid)
         p_loss = group1_p_loss + group2_p_loss

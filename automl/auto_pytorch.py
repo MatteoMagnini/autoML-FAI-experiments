@@ -10,6 +10,8 @@ from experiments import PytorchNN, PyTorchConditions, evaluate_predictions
 
 class PytorchMLP(MLP):
 
+    features_to_drop = 1
+
     def train_and_predict_classifier(self, dataset, net, metric, lambda_, n_epochs, batch_size, conditions):
         raise NotImplementedError("Method not implemented")
 
@@ -27,7 +29,7 @@ class PytorchMLP(MLP):
             pt_dataset.prepare_ndarray(protected)
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
-                model = PytorchNN(n_inputs=train_data.shape[1] - 1)
+                model = PytorchNN(n_inputs=train_data.shape[1] - self.features_to_drop)
                 callbacks = PyTorchConditions(model, epochs)
 
                 start_time = time.time()

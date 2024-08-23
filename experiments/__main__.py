@@ -9,6 +9,7 @@ from automl.auto_cho import ChoMLP
 from automl.auto_fauci import FauciMLP
 from smac.multi_objective.parego import ParEGO
 from automl.auto_jiang import JiangMLP
+from automl.auto_prr import PRRMLP
 from datasets import get_feature_data_type
 from experiments import TensorflowConditions
 from experiments.setup import PATH as CONFIG_PATH, from_yaml_file_to_dict, update_with_dataset
@@ -29,6 +30,8 @@ if __name__ == "__main__":
         mlp = JiangMLP(setup)
     elif setup["method"] == "cho":
         mlp = ChoMLP(setup)
+    elif setup["method"] == "prr":
+        mlp = PRRMLP(setup)
     else:
         raise ValueError(f"Unknown method {setup['method']}")
     objectives = ["1 - accuracy", "demographic_parity"]
