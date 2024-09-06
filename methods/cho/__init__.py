@@ -6,7 +6,6 @@ from torch import device as torch_device
 from torch import nn, optim
 from torch.utils.data import DataLoader
 from torch import cuda
-
 from datasets.pipelines.pytorch_data_pipeline import CustomDataset, FairnessPyTorchDataset
 from experiments import PyTorchConditions
 
@@ -36,7 +35,7 @@ def CDF_tau(y_hat, h=0.01, tau=TAU):
     return sum_ / m
 
 
-def Huber_loss(x, delta):
+def huber_loss(x, delta):
     if x.abs() < delta:
         return (x**2) / 2
     return delta * (x.abs() - delta / 2)
@@ -56,42 +55,42 @@ def measures_from_y_hat(y, z, y_hat=None, threshold=0.5):
     # Accuracy
     acc = (y_tilde == y).astype(np.float32).mean()
     # DP
-    DDP = abs(np.mean(y_tilde[z == 0]) - np.mean(y_tilde[z == 1]))
+    ddp = abs(np.mean(y_tilde[z == 0]) - np.mean(y_tilde[z == 1]))
     # EO
-    Y_Z0, Y_Z1 = y[z == 0], y[z == 1]
-    Y1_Z0 = Y_Z0[Y_Z0 == 1]
-    Y0_Z0 = Y_Z0[Y_Z0 == 0]
-    Y1_Z1 = Y_Z1[Y_Z1 == 1]
-    Y0_Z1 = Y_Z1[Y_Z1 == 0]
+    y_z0, y_z1 = y[z == 0], y[z == 1]
+    y1_z0 = y_z0[y_z0 == 1]
+    y0_z0 = y_z0[y_z0 == 0]
+    y1_z1 = y_z1[y_z1 == 1]
+    y0_z1 = y_z1[y_z1 == 0]
 
-    FPR, FNR = {}, {}
-    FPR[0] = (
-        np.sum(y_tilde[np.logical_and(z == 0, y == 0)]) / len(Y0_Z0)
-        if len(Y0_Z0) > 0
+    fpr, fnr = {}, {}
+    fpr[0] = (
+        np.sum(y_tilde[np.logical_and(z == 0, y == 0)]) / len(y0_z0)
+        if len(y0_z0) > 0
         else 0
     )
-    FPR[1] = (
-        np.sum(y_tilde[np.logical_and(z == 1, y == 0)]) / len(Y0_Z1)
-        if len(Y0_Z1) > 0
-        else 0
-    )
-
-    FNR[0] = (
-        np.sum(1 - y_tilde[np.logical_and(z == 0, y == 1)]) / len(Y1_Z0)
-        if len(Y1_Z0) > 0
-        else 0
-    )
-    FNR[1] = (
-        np.sum(1 - y_tilde[np.logical_and(z == 1, y == 1)]) / len(Y1_Z1)
-        if len(Y1_Z1) > 0
+    fpr[1] = (
+        np.sum(y_tilde[np.logical_and(z == 1, y == 0)]) / len(y0_z1)
+        if len(y0_z1) > 0
         else 0
     )
 
-    TPR_diff = abs((1 - FNR[0]) - (1 - FNR[1]))
-    FPR_diff = abs(FPR[0] - FPR[1])
-    DEO = TPR_diff + FPR_diff
+    fnr[0] = (
+        np.sum(1 - y_tilde[np.logical_and(z == 0, y == 1)]) / len(y1_z0)
+        if len(y1_z0) > 0
+        else 0
+    )
+    fnr[1] = (
+        np.sum(1 - y_tilde[np.logical_and(z == 1, y == 1)]) / len(y1_z1)
+        if len(y1_z1) > 0
+        else 0
+    )
 
-    data = [acc, DDP, DEO]
+    tpr_diff = abs((1 - fnr[0]) - (1 - fnr[1]))
+    fpr_diff = abs(fpr[0] - fpr[1])
+    deo = tpr_diff + fpr_diff
+
+    data = [acc, ddp, deo]
     columns = ["acc", "DDP", "DEO"]
     return pd.DataFrame([data], columns=columns)
 
