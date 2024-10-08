@@ -12,7 +12,8 @@ from experiments import PyTorchConditions
 
 PATH = Path(__file__).parents[0]
 TAU = 0.5
-# Approximation of Q-function given by López-Benítez & Casadevall (2011) based on a second-order exponential function & Q(x) = 1- Q(-x):
+# Approximation of Q-function given by López-Benítez & Casadevall (2011)
+# based on a second-order exponential function & Q(x) = 1- Q(-x):
 A = 0.4920
 B = 0.2887
 C = 1.1893
@@ -24,7 +25,7 @@ def q_function(x):
     return torch.exp(-A * x**2 - B * x - C)
 
 
-def CDF_tau(y_hat, h=0.01, tau=TAU):
+def cdf_tau(y_hat, h=0.01, tau=TAU):
     m = len(y_hat)
     y_tilde = (tau - y_hat) / h
     sum_ = (
@@ -137,9 +138,9 @@ def train_and_predict_cho_classifier(
             y_pred_detached = y_pred.detach()
         # DP_Constraint
         if metric == "demographic_parity":
-            Pr_Ytilde1 = CDF_tau(y_pred_detached, H, TAU)
+            Pr_Ytilde1 = cdf_tau(y_pred_detached, H, TAU)
             for z in sensitive_attrs:
-                Pr_Ytilde1_Z = CDF_tau(y_pred_detached[z_b == z], H, TAU)
+                Pr_Ytilde1_Z = cdf_tau(y_pred_detached[z_b == z], H, TAU)
                 m_z = z_b[z_b == z].shape[0]
 
                 Delta_z = Pr_Ytilde1_Z - Pr_Ytilde1
@@ -173,10 +174,10 @@ def train_and_predict_cho_classifier(
         # EO_Constraint
         elif metric == "equalized_odds":
             for y in [0, 1]:
-                Pr_Ytilde1_Y = CDF_tau(y_pred_detached[y_b == y], H, TAU)
+                Pr_Ytilde1_Y = cdf_tau(y_pred_detached[y_b == y], H, TAU)
                 m_y = y_b[y_b == y].shape[0]
                 for z in sensitive_attrs:
-                    Pr_Ytilde1_ZY = CDF_tau(
+                    Pr_Ytilde1_ZY = cdf_tau(
                         y_pred_detached[(y_b == y) & (z_b == z)], H, TAU
                     )
                     m_zy = z_b[(y_b == y) & (z_b == z)].shape[0]
@@ -220,15 +221,15 @@ def train_and_predict_cho_classifier(
                 y_batch.to(device),
                 z_batch.to(device),
             )
-            Yhat = net(xz_batch)
+            y_hat = net(xz_batch)
             cost = 0.0
             m = z_batch.shape[0]
 
             # prediction loss
-            p_loss = loss_function(Yhat.squeeze(), y_batch)
+            p_loss = loss_function(y_hat.squeeze(), y_batch)
             # originally:
             # cost = (1 - lambda_) * p_loss + fairness_cost(Yhat, y_batch, z_batch)
-            cost += (1 - lambda_) * p_loss + lambda_ * fairness_cost(Yhat, y_batch, z_batch)
+            cost += (1 - lambda_) * p_loss + lambda_ * fairness_cost(y_hat, y_batch, z_batch)
 
             optimizer.zero_grad()
             if (torch.isnan(cost)).any():

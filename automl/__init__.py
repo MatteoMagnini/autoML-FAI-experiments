@@ -22,6 +22,11 @@ class MLP:
     def configspace(self) -> ConfigurationSpace:
         cs = ConfigurationSpace()
 
+        # TODO: add
+        # - learning rate
+        # - optimizer
+        # - number of layers
+        # - number of neurons per layer
         batch_size = Integer("batch_size", (32, 1024), default=32)
         lambda_value = Float("lambda_value", (0, 1), default=0.5)
 

@@ -23,7 +23,7 @@ def train_and_predict_jiang_classifier(
     net = net.to(device)
     test_sol = 1e-3
     x_appro = torch.arange(test_sol, 1 - test_sol, test_sol).to(device)
-    KDE_FAIR = KDE_fair(x_appro)
+    KDE_FAIR = kde_fair(x_appro)
     penalty = KDE_FAIR.forward
     # Fair classifier training
     (
@@ -109,7 +109,7 @@ def regularized_learning(
     return y_test_pred
 
 
-class KDE_fair:
+class kde_fair:
     """
     A Gaussian KDE implemented in pytorch for the gradients to flow in pytorch optimization.
     Keep in mind that KDE are not scaling well with the number of dimensions and this implementation is not really

@@ -1,6 +1,4 @@
-import random
 import numpy as np
-import pandas as pd
 import torch
 import torch.nn as nn
 from torch import device as torch_device, optim
@@ -11,18 +9,18 @@ from datasets.pipelines.pytorch_data_pipeline import FairnessPyTorchDataset, Cus
 from experiments import PyTorchConditions
 
 
-def balance_ppv(eta_base, eta, Ybase, Y, tbase, t_min, t_max):
-    if (eta_base >= tbase).mean() == 0:
+def balance_ppv(eta_base, eta, y_base, y, t_base, t_min, t_max):
+    if (eta_base >= t_base).mean() == 0:
         s = 1
     else:
-        s = np.mean(Ybase[eta_base >= tbase])
+        s = np.mean(y_base[eta_base >= t_base])
 
     for i in range(20):
         t = (t_min + t_max) / 2
         if (eta >= t).mean() == 0:
             sc = 1
         else:
-            sc = np.mean(Y[eta >= t])
+            sc = np.mean(y[eta >= t])
         if sc > s:
             t_max = t
         else:
@@ -30,52 +28,52 @@ def balance_ppv(eta_base, eta, Ybase, Y, tbase, t_min, t_max):
     return (t_max + t_min) / 2
 
 
-def threshold_pp(eta1, eta0, Y1, Y0):
+def threshold_pp(eta1, eta0, y1, y0):
     t_max1 = np.max(eta1)
     t_max0 = np.max(eta0)
     datasize = len(eta1) + len(eta0)
     if (eta1 >= 0.5).mean() == 0:
         s1 = 1
     else:
-        s1 = np.mean(Y1[eta1 >= 0.5])
+        s1 = np.mean(y1[eta1 >= 0.5])
 
     if (eta0 >= 0.5).mean() == 0:
         s0 = 1
     else:
-        s0 = np.mean(Y0[eta0 >= 0.5])
+        s0 = np.mean(y0[eta0 >= 0.5])
 
     if s1 > s0:
         t1max = 0.5
-        t1min = balance_ppv(eta0, eta1, Y0, Y1, 0.5, 0.001, 0.5)
+        t1min = balance_ppv(eta0, eta1, y0, y1, 0.5, 0.001, 0.5)
         t0min = 0.5
-        t0max = balance_ppv(eta1, eta0, Y1, Y0, 0.5, 0.5, t_max0)
+        t0max = balance_ppv(eta1, eta0, y1, y0, 0.5, 0.5, t_max0)
         t1set = np.arange(t1min, t1max, 0.001)
         lent = len(t1set)
-        t0set = [balance_ppv(eta1, eta0, Y1, Y0, t1, t0min, t0max) for t1 in t1set]
-        accset = [(((eta1 >= t1set[s]) == Y1).sum() + ((eta0 >= t0set[s]) == Y0).sum()) / datasize for s in range(lent)]
-        accset = np.array(accset)
-        index = np.argmax(accset)
+        t0set = [balance_ppv(eta1, eta0, y1, y0, t1, t0min, t0max) for t1 in t1set]
+        acc_set = [(((eta1 >= t1set[s]) == y1).sum() + ((eta0 >= t0set[s]) == y0).sum()) / datasize for s in range(lent)]
+        acc_set = np.array(acc_set)
+        index = np.argmax(acc_set)
         t1star = t1set[index]
         t0star = t0set[index]
     else:
         t1min = 0.5
-        t1max = balance_ppv(eta0, eta1, Y0, Y1, 0.5, 0.5, t_max1)
-        t0min = balance_ppv(eta1, eta0, Y1, Y0, 0.5, 0, 0.5)
+        t1max = balance_ppv(eta0, eta1, y0, y1, 0.5, 0.5, t_max1)
+        t0min = balance_ppv(eta1, eta0, y1, y0, 0.5, 0, 0.5)
         t0max = 0.5
         t1set = np.arange(t1min, t1max, 0.001)
         lent = len(t1set)
-        t0set = [balance_ppv(eta1, eta0, Y1, Y0, t1, t0min, t0max, ) for t1 in t1set]
-        accset = [(((eta1 >= t1set[s]) == Y1).sum() + ((eta0 >= t0set[s]) == Y0).sum()) / datasize for s in range(lent)]
+        t0set = [balance_ppv(eta1, eta0, y1, y0, t1, t0min, t0max, ) for t1 in t1set]
+        acc_set = [(((eta1 >= t1set[s]) == y1).sum() + ((eta0 >= t0set[s]) == y0).sum()) / datasize for s in range(lent)]
         t0set = np.array(t0set)
-        accset = np.array(accset)
-        index = np.argmax(accset)
+        acc_set = np.array(acc_set)
+        index = np.argmax(acc_set)
         t1star = t1set[index]
         t0star = t0set[index]
 
     return [t1star, t0star]
 
 
-def train_and_predict_pdd_classifier(
+def train_and_predict_dpp_classifier(
         dataset: FairnessPyTorchDataset,
         net: nn.Module,
         metric: str,
@@ -92,13 +90,16 @@ def train_and_predict_pdd_classifier(
     X_valid, Y_valid, Z_valid, XZ_valid = valid_tensors
     X_test, Y_test, Z_test, XZ_test = test_tensors
 
+    # Z_valid and Z_test cast to 1 or 0 (we assume binary sensitive attribute)
+    Z_valid = (Z_valid > 0).float()
+    Z_test = (Z_test > 0).float()
+
     Z_train_np = Z_train.detach().cpu().numpy()
     Z_list = sorted(list(set(Z_train_np)))
     for z in Z_list:
         if (Z_train_np == z).sum() == 0:
             print('At least one sensitive group has no data point')
             sys.exit()
-    test_size = len(Z_test)
 
     XZ_val_att1, Y_val_att1 = XZ_valid[Z_valid == 1], Y_valid[Z_valid == 1]
     XZ_val_att0, Y_val_att0 = XZ_valid[Z_valid == 0], Y_valid[Z_valid == 0]
@@ -107,7 +108,7 @@ def train_and_predict_pdd_classifier(
 
     Y_val_att1_np = Y_val_att1.clone().cpu().detach().numpy()
     Y_val_att0_np = Y_val_att0.clone().cpu().detach().numpy()
-    Y_val_np = Y_valid.clone().cpu().detach().numpy()
+    y_val_np = Y_valid.clone().cpu().detach().numpy()
 
     custom_dataset = CustomDataset(XZ_train, Y_train, Z_train)
     data_loader = DataLoader(custom_dataset, batch_size=batch_size, shuffle=True)
@@ -118,13 +119,14 @@ def train_and_predict_pdd_classifier(
     costs = []
     total_train_step = 0
 
+    conditions.on_train_begin()
     for epoch in range(n_epochs):
         net.train()
 
-        for i, (x, y) in enumerate(data_loader):
+        for i, (x, y, _) in enumerate(data_loader):
             x, y = x.to(device), y.to(device)
-            Yhat = net(x)
-            loss = loss_function(Yhat.squeeze(), y)
+            y_hat = net(x)
+            loss = loss_function(y_hat.squeeze(), y)
 
             optimizer.zero_grad()
             loss.backward()
@@ -133,18 +135,16 @@ def train_and_predict_pdd_classifier(
 
             total_train_step += 1
             if (i + 1) % 10 == 0 or (i + 1) == batch_size:
-                print('Epoch [{}/{}], Batch [{}/{}], Cost: {:.4f}'.format(epoch + 1, n_epochs, i + 1, len(data_loader),
-                                                                          loss.item()), end='\r')
+                print('Epoch [{}/{}], Batch [{}/{}], Cost: {:.4f}'.format(epoch + 1, n_epochs, i + 1, len(data_loader), loss.item()), end='\r')
 
-        ########choose the model with best performance on validation set###########
+        # choose the model with the best performance on validation set
         net.eval()
         with torch.no_grad():
 
             output_val = net(XZ_valid).squeeze().detach().cpu().numpy()
-
-            Ytilde_val = (output_val >= 0.5).astype(np.float32)
-
-            accuracy = (Ytilde_val == Y_val_np).astype(np.float32).mean()
+            cost = loss_function(torch.tensor(output_val), Y_valid).item()
+            y_tilde_val = (output_val >= 0.5).astype(np.float32)
+            accuracy = (y_tilde_val == y_val_np).astype(np.float32).mean()
 
             if epoch == 0:
                 accuracy_max = accuracy
@@ -154,7 +154,11 @@ def train_and_predict_pdd_classifier(
                 accuracy_max = accuracy
                 best_net_acc_stat_dict = net.state_dict()
 
-    #########Calculate thresholds for fair Bayes-optimal Classifier###########
+        # Early stopping
+        if conditions.early_stop(epoch=epoch, loss_value=cost):
+            break
+
+    # Calculate thresholds for fair Bayes-optimal Classifier
     net.load_state_dict(best_net_acc_stat_dict)
 
     eta1_val = net(XZ_val_att1).squeeze().detach().cpu().numpy()
@@ -168,11 +172,8 @@ def train_and_predict_pdd_classifier(
     y_hat_test = (eta1_test >= t1_pp).astype(np.float32)
     y_hat_test = np.concatenate((y_hat_test, (eta0_test >= t0_pp).astype(np.float32)))
     # sort to preserve the order of the original dataset
-    y_hat_test = y_hat_test[np.argsort(np.concatenate((Z_test.clone().cpu().detach().numpy(), Z_test.clone().cpu().detach().numpy())))]
+    y_hat_test = y_hat_test[np.argsort(Z_test.clone().cpu().detach().numpy())]
     return y_hat_test
-
-
-
 
     # acc_pp = (((eta1_test >= t1_pp) == Y_test_att1_np).sum() + (
     #         (eta0_test >= t0_pp) == Y_test_att0_np).sum()) / test_size

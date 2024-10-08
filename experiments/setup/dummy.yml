@@ -1,5 +1,5 @@
 dataset: adult
-method: prr
+method: dpp
 fairness_metric: demographic_parity
 protected: 8
 epochs: 20

@@ -6,6 +6,7 @@ from tensorflow.python.compat.v2_compat import disable_v2_behavior
 from tensorflow.python.framework.ops import disable_eager_execution
 from automl import plot_pareto
 from automl.auto_cho import ChoMLP
+from automl.auto_dpp import DPPMLP
 from automl.auto_fauci import FauciMLP
 from smac.multi_objective.parego import ParEGO
 from automl.auto_jiang import JiangMLP
@@ -32,6 +33,8 @@ if __name__ == "__main__":
         mlp = ChoMLP(setup)
     elif setup["method"] == "prr":
         mlp = PRRMLP(setup)
+    elif setup["method"] == "dpp":
+        mlp = DPPMLP(setup)
     else:
         raise ValueError(f"Unknown method {setup['method']}")
     objectives = ["1 - accuracy", "demographic_parity"]
@@ -42,7 +45,7 @@ if __name__ == "__main__":
         objectives=objectives,
         walltime_limit=2*60,  # After 2 minutes, we stop the hyperparameter optimization
         n_trials=30,  # Evaluate max 30 different trials
-        n_workers=multiprocessing.cpu_count()
+        n_workers=1 # multiprocessing.cpu_count()
     )
 
     print(f"Using {scenario.n_workers} workers")
