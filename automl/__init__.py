@@ -1,13 +1,15 @@
 from pathlib import Path
 import numpy as np
+import pandas as pd
 from matplotlib import pyplot as plt
-from smac.facade.abstract_facade import AbstractFacade
+from smac import HyperparameterOptimizationFacade as HPOFacade
 from ConfigSpace import (
     Configuration,
     ConfigurationSpace,
     Float,
-    Integer
+    Integer, Categorical
 )
+from results import PATH as RESULT_PATH
 
 
 PATH = Path(__file__).parents[0]
@@ -16,28 +18,40 @@ PATH = Path(__file__).parents[0]
 class MLP:
 
     def __init__(self, setup: dict):
-        self.setup = setup
+        self.setup: dict = setup
 
     @property
     def configspace(self) -> ConfigurationSpace:
         cs = ConfigurationSpace()
 
+        # Batch size: [16, 512], on log-scale
+        # Learning rate: [1e-4, 1e-1], on log-scale
+        # Momentum: [0.1, 0.99]
+        # Weight decay: [1e-5, 1e-1]
+        # Number of layers: [1, 5]
+        # Maximum number of units per layer: [64, 1024], on log-scale
+        # Dropout: [0.0, 1.0]
+
         # TODO: add
         # - learning rate
-        # - optimizer
+        # - optimizer (Not now)
         # - number of layers
         # - number of neurons per layer
+        # batch_size = Categorical("batch_size", [32, 64, 128, 256, 512, 1024], default=32)  # This rises an error!!! Why? It says that cannot be serialized
         batch_size = Integer("batch_size", (32, 1024), default=32)
         lambda_value = Float("lambda_value", (0, 1), default=0.5)
 
         cs.add([batch_size, lambda_value])
         return cs
 
-    def train(self, config: Configuration, seed: int = 0, budget: int = 10) -> dict[str, float]:
+    def train(self, config: Configuration, seed: int = 0, budget: int = 50) -> dict[str, float]:
         raise NotImplementedError
 
+    def get_name(self) -> str:
+        return f"{self.setup['dataset']}_{self.setup['method']}_{self.setup['fairness_metric']}_{self.setup['protected']}"
 
-def plot_pareto(smac: AbstractFacade, incumbents: list[Configuration]) -> None:
+
+def plot_pareto(smac: HPOFacade, incumbents: list[Configuration]) -> None:
     """Plots configurations from SMAC and highlights the best configurations in a Pareto front."""
     average_costs = []
     average_pareto_costs = []
@@ -51,7 +65,10 @@ def plot_pareto(smac: AbstractFacade, incumbents: list[Configuration]) -> None:
             average_costs += [average_cost]
 
     # Let's work with a numpy array
-    costs = np.vstack(average_costs)
+    if len(average_costs) == 1:
+        costs = np.array(average_costs)
+    else:
+        costs = np.vstack(average_costs)
     pareto_costs = np.vstack(average_pareto_costs)
     pareto_costs = pareto_costs[pareto_costs[:, 0].argsort()]  # Sort them
 
@@ -72,3 +89,24 @@ def plot_pareto(smac: AbstractFacade, incumbents: list[Configuration]) -> None:
     plt.ylabel(smac.scenario.objectives[1])
     plt.legend()
     plt.show()
+
+
+class ResultSingleton:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(ResultSingleton, cls).__new__(cls)
+            cls._instance.results = []  # List of dictionaries with the results.
+
+        return cls._instance
+
+    def append(self, result: dict[int: dict[str: float]]) -> None:
+        self.results.append(result)
+
+    def save_results(self, name: str) -> None:
+        # Convert to DataFrame
+        # Every dictionary has the same keys
+        df = pd.DataFrame(self.results)
+        df.to_csv(RESULT_PATH / f"{name}_results.csv", index=False)
+

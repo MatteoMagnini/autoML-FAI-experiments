@@ -161,7 +161,7 @@ def create_fully_connected_nn_tf(
     return Model(inputs=input_layer, outputs=output_layer)
 
 
-def evaluate_predictions(protected: np.array, y_pred: np.array, y_true: np.array, logger: Logger) -> dict:
+def evaluate_predictions(protected: np.array, y_pred: np.array, y_true: np.array, logger: Logger) -> dict[str: float]:
     """
     Evaluate the predictions. Compute the following metrics:
     - Accuracy
@@ -183,16 +183,18 @@ def evaluate_predictions(protected: np.array, y_pred: np.array, y_true: np.array
     fp = np.sum(np.logical_and(binary_predictions == 1, y_true == 0))
     fn = np.sum(np.logical_and(binary_predictions == 0, y_true == 1))
     accuracy = (tp + tn) / (tp + tn + fp + fn)
-    precision = tp / (tp + fp) if tp + fp > 0 else 0
-    recall = tp / (tp + fn) if tp + fn > 0 else 0
-    f1_score = 2 * precision * recall / (precision + recall) if precision + recall > 0 else 0
-    auc = roc_auc_score(y_true, y_pred)
+    # precision = tp / (tp + fp) if tp + fp > 0 else 0
+    # recall = tp / (tp + fn) if tp + fn > 0 else 0
+    # f1_score = 2 * precision * recall / (precision + recall) if precision + recall > 0 else 0
+    # auc = roc_auc_score(y_true, y_pred)
     dp = demographic_parity(protected, y_pred)
-    eo = equalized_odds(protected, y_true, y_pred)
-    di = disparate_impact(protected, y_pred)
+    # eo = equalized_odds(protected, y_true, y_pred)
+    # di = disparate_impact(protected, y_pred)
     logger.info(f"metrics:")
-    for metric, value in zip(METRIC_LIST_NAMES, [accuracy, precision, recall, f1_score, auc, dp, di, eo]):
-        logger.info(f"{INDENT}{metric}: {value:.{LOG_FLOAT_PRECISION}f}")
+    # for metric, value in zip(METRIC_LIST_NAMES, [accuracy, precision, recall, f1_score, auc, dp, di, eo]):
+    #     logger.info(f"{INDENT}{metric}: {value:.{LOG_FLOAT_PRECISION}f}")
+    logger.info(f"{INDENT}accuracy: {accuracy:.{LOG_FLOAT_PRECISION}f}")
+    logger.info(f"{INDENT}demographic_parity: {dp:.{LOG_FLOAT_PRECISION}f}")
     return {
         "1 - accuracy": 1 - accuracy,
         # "1 - precision": 1 - precision,

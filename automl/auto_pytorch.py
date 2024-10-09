@@ -3,7 +3,7 @@ import warnings
 from ConfigSpace import Configuration
 from sklearn.model_selection import KFold
 from _logging import logger
-from automl import MLP
+from automl import MLP, ResultSingleton
 from datasets.pipelines.pytorch_data_pipeline import FairnessPyTorchDataset
 from experiments import PytorchNN, PyTorchConditions, evaluate_predictions
 
@@ -15,7 +15,7 @@ class PytorchMLP(MLP):
     def train_and_predict_classifier(self, dataset, net, metric, lambda_, n_epochs, batch_size, conditions):
         raise NotImplementedError("Method not implemented")
 
-    def train(self, config: Configuration, seed: int = 0, budget: int = 10) -> dict[str, float]:
+    def train(self, config: Configuration, seed: int = 0, budget: int = 100) -> dict[str, float]:
         train = self.setup["train"]
         test = self.setup["test"]
         epochs = self.setup["epochs"]
@@ -23,6 +23,7 @@ class PytorchMLP(MLP):
         results = {}
 
         folds = KFold(n_splits=5, shuffle=True, random_state=seed)
+        singleton = ResultSingleton()
         for exp_number, (train_idx, valid_idx) in enumerate(folds.split(train)):
             train_data, valid_data = train.iloc[train_idx], train.iloc[valid_idx]
             pt_dataset = FairnessPyTorchDataset(train_data, valid_data, test)
@@ -47,8 +48,14 @@ class PytorchMLP(MLP):
                 logger.debug(f"training time: {end_time - start_time}")
                 test_y = test.iloc[:, -1].reset_index(drop=True)
                 test_p = test.iloc[:, protected].reset_index(drop=True)
-                tmp_results = evaluate_predictions(test_p, predictions, test_y, logger)
-                # tmp_results["training_time"] = end_time - start_time
-                results = {k: results.get(k, 0) + tmp_results.get(k, 0) for k in set(results) | set(tmp_results)}
+                fold_results = evaluate_predictions(test_p, predictions, test_y, logger)
+                results = {k: results.get(k, 0) + fold_results.get(k, 0) for k in set(results) | set(fold_results)}
+
             results = {k: v / 5 for k, v in results.items()}
+
+        conf_info = {
+            "batch_size": config.get("batch_size"),
+            "lambda_value": config.get("lambda_value"),
+        }
+        singleton.append(conf_info | results)
         return results

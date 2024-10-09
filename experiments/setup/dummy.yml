@@ -2,4 +2,4 @@ dataset: adult
 method: dpp
 fairness_metric: demographic_parity
 protected: 8
-epochs: 20
+epochs: 100

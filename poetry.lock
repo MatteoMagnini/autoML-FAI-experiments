@@ -2100,21 +2100,21 @@ files = [
 
 [[package]]
 name = "smac"
-version = "2.1.0"
+version = "2.2.0"
 description = "SMAC3, a Python implementation of 'Sequential Model-based Algorithm Configuration'."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "smac-2.1.0.tar.gz", hash = "sha256:af9d3bffd4d8d233ecc872a8c0f7c245043d41340a7790091165d363b2f7fe63"},
+    {file = "smac-2.2.0.tar.gz", hash = "sha256:d0ef8aeed8775f897e512be41746693d42692bda61d9ef4f4759064bcf9a30c0"},
 ]
 
 [package.dependencies]
-ConfigSpace = ">=0.6.1"
+ConfigSpace = ">=1.0.0"
 dask = {version = "*", extras = ["distributed"]}
-dask_jobqueue = "*"
+dask_jobqueue = ">=0.8.2"
 emcee = ">=3.0.0"
 joblib = "*"
-numpy = ">=1.23.3"
+numpy = ">=1.23.3,<2.0.0"
 psutil = "*"
 pynisher = ">=1.0.0"
 pyrfr = ">=0.9.0"
@@ -2572,4 +2572,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "f1cd071e0862aea3cfdffda0db7e1cbdc7dd9918e6946f23583b079fcd1f3bbe"
+content-hash = "5804de8fb7e38f7818d1cf50f8454b14be115a39f1d5d26ee2aa1fa89590114a"

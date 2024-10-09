@@ -1,10 +1,9 @@
-import multiprocessing
 import sys
 from smac import Scenario
 from smac import HyperparameterOptimizationFacade as HPOFacade
 from tensorflow.python.compat.v2_compat import disable_v2_behavior
 from tensorflow.python.framework.ops import disable_eager_execution
-from automl import plot_pareto
+from automl import plot_pareto, ResultSingleton
 from automl.auto_cho import ChoMLP
 from automl.auto_dpp import DPPMLP
 from automl.auto_fauci import FauciMLP
@@ -14,7 +13,7 @@ from automl.auto_prr import PRRMLP
 from datasets import get_feature_data_type
 from experiments import TensorflowConditions
 from experiments.setup import PATH as CONFIG_PATH, from_yaml_file_to_dict, update_with_dataset
-
+from results import save_incumbents
 
 if __name__ == "__main__":
     disable_v2_behavior()
@@ -43,9 +42,9 @@ if __name__ == "__main__":
     scenario = Scenario(
         mlp.configspace,
         objectives=objectives,
-        walltime_limit=2*60,  # After 2 minutes, we stop the hyperparameter optimization
-        n_trials=30,  # Evaluate max 30 different trials
-        n_workers=1 # multiprocessing.cpu_count()
+        walltime_limit=500,  # 6*10*60,  # After 1 hour, we stop the hyperparameter optimization
+        n_trials=10,  # 10000,  # Evaluate max 30 different trials
+        n_workers=1  # multiprocessing.cpu_count()
     )
 
     print(f"Using {scenario.n_workers} workers")
@@ -69,13 +68,15 @@ if __name__ == "__main__":
     incumbents = smac.optimize()
 
     # Get cost of default configuration
-    default_cost = smac.validate(mlp.configspace.get_default_configuration())
-    print(f"Validated costs from default config: \n--- {default_cost}\n")
+    # default_cost = smac.validate(mlp.configspace.get_default_configuration())
+    # print(f"Validated costs from default config: \n--- {default_cost}\n")
 
     print("Validated costs from the Pareto front (incumbents):")
     for incumbent in incumbents:
         cost = smac.validate(incumbent)
         print("---", cost)
+    save_incumbents(smac, incumbents, mlp.get_name() + "_incumbents.csv")
+    ResultSingleton().save_results(mlp.get_name())
 
     # Let's plot a pareto front
     plot_pareto(smac, incumbents)

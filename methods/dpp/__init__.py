@@ -126,6 +126,10 @@ def train_and_predict_dpp_classifier(
         for i, (x, y, _) in enumerate(data_loader):
             x, y = x.to(device), y.to(device)
             y_hat = net(x)
+            # Prevent the following ValueError:
+            # Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated.
+            # Please ensure they have the same size.
+            y = y.unsqueeze(1)
             loss = loss_function(y_hat.squeeze(), y)
 
             optimizer.zero_grad()
@@ -174,29 +178,3 @@ def train_and_predict_dpp_classifier(
     # sort to preserve the order of the original dataset
     y_hat_test = y_hat_test[np.argsort(Z_test.clone().cpu().detach().numpy())]
     return y_hat_test
-
-    # acc_pp = (((eta1_test >= t1_pp) == Y_test_att1_np).sum() + (
-    #         (eta0_test >= t0_pp) == Y_test_att0_np).sum()) / test_size
-    # if (eta1_test >= t1_pp).mean() == 0:
-    #     ppv1_fair = 1
-    # else:
-    #     ppv1_fair = np.mean(Y_test_att1_np[eta1_test >= t1_pp])
-    # if (eta0_test >= t0_pp).mean() == 0:
-    #     ppv0_fair = 1
-    # else:
-    #     ppv0_fair = np.mean(Y_test_att0_np[eta0_test >= t0_pp])
-    #
-    # yyhateq11 = (Y_test_att1_np[eta1_test >= t1_pp]).sum() + (Y_test_att0_np[eta0_test >= t0_pp]).sum()
-    # yhateq1 = (eta1_test >= t1_pp).sum() + (eta0_test >= t0_pp).sum()
-    # dpp = abs(ppv1_fair - ppv0_fair)
-    #
-    # if (eta0_test > 0.5).mean() == 0:
-    #     ppv0 = 1
-    # else:
-    #     ppv0 = np.mean(Y_test_att0_np[eta0_test >= 0.5])
-    # data = [t1_pp, t0_pp, acc_pp, dpp]
-    # columns = ['PP_t1', 'PP_t0', 'acc_PP', 'DPP']
-    # df_test_temp = pd.DataFrame([data], columns=columns)
-    # df_test_pp = df_test_pp.append(df_test_temp)
-    #
-    # return df_test_pp
