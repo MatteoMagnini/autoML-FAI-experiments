@@ -16,7 +16,7 @@ smac = "2.2.0"
 scikit-learn = "1.5.1"
 tensorflow = "2.16.1"
 torch = "2.4.0"
-tqdm = "4.66.1"
+tqdm = "4.66.3"
 configspace = "^1.2.0"
 
 
