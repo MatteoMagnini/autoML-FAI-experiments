@@ -31,12 +31,18 @@ jobs:
 
       - name: Get Version
         id: get-version
-        run: echo ::set-output name=version::$(python setup.py get_project_version | tail -n 1)
+        run: |
+          version=$(python setup.py get_project_version | tail -n 1)
+          echo "Version: $version"
+          echo "::set-output name=version::$version"
 
       - name: Build Docker Image
         run: |
-          .github/scripts/retry.sh "docker compose -f docker-compose.yml build"
-          .github/scripts/retry.sh "docker tag ${{env.PROJECT_NAME}} pikalab/${{env.PROJECT_NAME}}:${{ steps.get-version.outputs.version }}"
+          .github/scripts/retry.sh "docker build -t ${{ env.PROJECT_NAME }} ."
+          .github/scripts/retry.sh "docker tag ${{ env.PROJECT_NAME }} pikalab/${{ env.PROJECT_NAME }}:${{ steps.get-version.outputs.version }}"
+
+      - name: List Docker Images
+        run: docker images
 
       - name: Push Docker Image
-        run: docker push pikalab/${{env.PROJECT_NAME}}:${{ steps.get-version.outputs.version }}
+        run: docker push pikalab/${{ env.PROJECT_NAME }}:${{ steps.get-version.outputs.version }}
