@@ -7,10 +7,10 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - mmagnini:/mnt/persistent
+      - mmagnini:/persistent
     command: >
       sh -c "find experiments/setup -name '*.yml' | 
-             xargs -n 1 -P $$(nproc) -I {} poetry run python -m experiments --config {} --output /mnt/persistent"
+             xargs -n 1 -P $$(nproc) -I {} poetry run python -m experiments --config {} --output /persistent"
 
 volumes:
   mmagnini:

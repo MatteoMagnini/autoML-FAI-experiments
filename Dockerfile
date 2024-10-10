@@ -27,15 +27,15 @@ RUN poetry config virtualenvs.create false \
 COPY . /app/
 
 # Ensure the directory to store both code and results exists
-RUN mkdir -p /mnt/persistent
+RUN mkdir -p /persistent
 
 # Copy the code into the persistent directory
-RUN cp -r /app/* /mnt/persistent/
+RUN cp -r /app/* /persistent/
 
 # Set the persistent directory as the working directory
-WORKDIR /mnt/persistent
+WORKDIR /persistent
 
 # Make sure all YAML configuration files are in the correct directory
-# and run the experiments in parallel, passing output directory as /mnt/persistent
+# and run the experiments in parallel, passing output directory as /persistent
 CMD find experiments/setup -name "*.yml" | \
-  xargs -n 1 -P $(nproc) -I {} poetry run python -m experiments --config {} --output /mnt/persistent
+  xargs -n 1 -P $(nproc) -I {} poetry run python -m experiments --config {} --output /persistent
