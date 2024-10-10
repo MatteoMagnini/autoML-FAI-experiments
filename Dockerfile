@@ -1,6 +1,15 @@
 # Use an official Python runtime as a parent image
 FROM python:3.12-slim
 
+# Install system dependencies, including SWIG, pkg-config, and HDF5 headers
+RUN apt-get update && apt-get install -y \
+    swig \
+    build-essential \
+    pkg-config \
+    libhdf5-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 # Set a temporary working directory inside the container
 WORKDIR /app
 
@@ -16,6 +25,9 @@ RUN poetry config virtualenvs.create false \
 
 # Copy the rest of the application code to the temporary working directory
 COPY . /app/
+
+# Ensure the directory to store both code and results exists
+RUN mkdir -p /mnt/persistent
 
 # Copy the code into the persistent directory
 RUN cp -r /app/* /mnt/persistent/
