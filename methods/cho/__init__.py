@@ -101,6 +101,7 @@ def train_and_predict_cho_classifier(
     net: nn.Module,
     metric: str,
     lambda_: float,
+    lr: float,
     n_epochs: int,
     batch_size: int,
     conditions: PyTorchConditions
@@ -128,7 +129,7 @@ def train_and_predict_cho_classifier(
 
     loss_function = nn.BCELoss()
     costs = []
-    optimizer = optim.Adam(net.parameters())
+    optimizer = optim.Adam(net.parameters(), lr=lr)
 
     def fairness_cost(y_pred, y_b, z_b):
         if isinstance(y_pred, torch.Tensor):

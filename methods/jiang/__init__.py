@@ -16,6 +16,7 @@ def train_and_predict_jiang_classifier(
         net: nn.Module,
         metric: str,
         lambda_: float,
+        lr: float,
         n_epochs: int,
         batch_size: int,
         conditions: PyTorchConditions):
@@ -48,6 +49,7 @@ def train_and_predict_jiang_classifier(
         penalty,
         device,
         lambda_,
+        lr,
         nn.functional.binary_cross_entropy,
         n_epochs,
         conditions
@@ -71,6 +73,7 @@ def regularized_learning(
         fairness_penalty,
         device_gpu,
         penalty_coefficient,
+        lr,
         data_fitting_loss,
         num_epochs: int,
         conditions: PyTorchConditions,
@@ -79,7 +82,7 @@ def regularized_learning(
     # data_fitting_loss = nn.MSELoss()
 
     # stochastic optimizer
-    optimizer = torch.optim.Adam(model.parameters())
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
 
     conditions.on_train_begin()
     for epoch in range(num_epochs):

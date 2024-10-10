@@ -41,6 +41,7 @@ def train_and_predict_prr_classifier(
         net: torch.nn.Module,
         metric: str,
         lambda_: float,
+        lr: float,
         n_epochs: int,
         batch_size: int,
         conditions: PyTorchConditions
@@ -60,7 +61,7 @@ def train_and_predict_prr_classifier(
     data_loader = DataLoader(custom_dataset, batch_size=batch_size, shuffle=True)
 
     loss_function = torch.nn.BCELoss()
-    optimizer = torch.optim.Adam(net.parameters())
+    optimizer = torch.optim.Adam(net.parameters(), lr=lr)
 
     conditions.on_train_begin()
     for epoch in range(n_epochs):

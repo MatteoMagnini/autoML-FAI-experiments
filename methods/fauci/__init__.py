@@ -18,6 +18,7 @@ def create_fauci_network(
         model: Model,
         protected_attribute: int,
         type_protected_attribute: str,
+        lr: float,
         fairness_metric: str,
         lambda_value: float,
 ) -> Model:
@@ -26,6 +27,7 @@ def create_fauci_network(
     :param model: model to add the custom loss function
     :param protected_attribute: index of the protected attribute
     :param type_protected_attribute: type of the protected attribute
+    :param lr: learning rate
     :param fairness_metric: fairness metric to use
     :param lambda_value: lambda value for the fairness metric
     :return: model with the custom loss function
@@ -66,7 +68,7 @@ def create_fauci_network(
         # return tf.cast(binary_crossentropy(y_true, y_pred) + epsilon, tf.float64) + lambda_value * tf.cast(lambda_value * fair_cost_factor, tf.float64)
         return (1 - lambda_value) * tf.cast(binary_crossentropy(y_true, y_pred) + epsilon, tf.float64) + lambda_value * tf.cast(fair_cost_factor, tf.float64)
 
-    model.compile(loss=custom_loss, optimizer=Adam(), metrics=["accuracy"])
+    model.compile(loss=custom_loss, optimizer=Adam(lr=lr), metrics=["accuracy"])
     return model
 
 

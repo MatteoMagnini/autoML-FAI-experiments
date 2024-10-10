@@ -15,6 +15,16 @@ from results import PATH as RESULT_PATH
 PATH = Path(__file__).parents[0]
 
 
+def get_conf_space_info(config) -> dict[str, int | float]:
+    return {
+        "batch_size": config["batch_size"],
+        "lambda_value": config["lambda_value"],
+        "learning_rate": config["learning_rate"],
+        "number_of_layers": config["number_of_layers"],
+        "number_of_neurons_per_layer": config["number_of_neurons_per_layer"],
+    }
+
+
 class MLP:
 
     def __init__(self, setup: dict):
@@ -23,25 +33,15 @@ class MLP:
     @property
     def configspace(self) -> ConfigurationSpace:
         cs = ConfigurationSpace()
-
-        # Batch size: [16, 512], on log-scale
-        # Learning rate: [1e-4, 1e-1], on log-scale
-        # Momentum: [0.1, 0.99]
-        # Weight decay: [1e-5, 1e-1]
-        # Number of layers: [1, 5]
-        # Maximum number of units per layer: [64, 1024], on log-scale
-        # Dropout: [0.0, 1.0]
-
-        # TODO: add
-        # - learning rate
-        # - optimizer (Not now)
-        # - number of layers
-        # - number of neurons per layer
-        # batch_size = Categorical("batch_size", [32, 64, 128, 256, 512, 1024], default=32)  # This rises an error!!! Why? It says that cannot be serialized
+        # The following line rises an error! Why? It says that cannot be serialized.
+        # batch_size = Categorical("batch_size", [32, 64, 128, 256, 512, 1024], default=32)
         batch_size = Integer("batch_size", (32, 1024), default=32)
         lambda_value = Float("lambda_value", (0, 1), default=0.5)
+        learning_rate = Float("learning_rate", (1e-4, 1e-1), default=1e-3, log=True)
+        number_of_layers = Integer("number_of_layers", (1, 5), default=1)
+        number_of_neurons_per_layer = Integer("number_of_neurons_per_layer", (64, 1024), default=64, log=True)
 
-        cs.add([batch_size, lambda_value])
+        cs.add([batch_size, lambda_value, learning_rate, number_of_layers, number_of_neurons_per_layer])
         return cs
 
     def train(self, config: Configuration, seed: int = 0, budget: int = 50) -> dict[str, float]:

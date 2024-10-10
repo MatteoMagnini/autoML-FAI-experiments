@@ -3,7 +3,7 @@ import warnings
 from ConfigSpace import Configuration
 from sklearn.model_selection import KFold
 from _logging import logger
-from automl import MLP, ResultSingleton
+from automl import MLP, ResultSingleton, get_conf_space_info
 from datasets.pipelines.pytorch_data_pipeline import FairnessPyTorchDataset
 from experiments import PytorchNN, PyTorchConditions, evaluate_predictions
 
@@ -12,7 +12,7 @@ class PytorchMLP(MLP):
 
     features_to_drop = 1
 
-    def train_and_predict_classifier(self, dataset, net, metric, lambda_, n_epochs, batch_size, conditions):
+    def train_and_predict_classifier(self, dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions):
         raise NotImplementedError("Method not implemented")
 
     def train(self, config: Configuration, seed: int = 0, budget: int = 100) -> dict[str, float]:
@@ -30,18 +30,23 @@ class PytorchMLP(MLP):
             pt_dataset.prepare_ndarray(protected)
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
-                model = PytorchNN(n_inputs=train_data.shape[1] - self.features_to_drop)
+                model = PytorchNN(
+                    inputs=train_data.shape[1] - self.features_to_drop,
+                    hidden_layers=config.get("number_of_layers"),
+                    neurons=config.get("number_of_neurons_per_layer"),
+                )
                 callbacks = PyTorchConditions(model, epochs)
 
                 start_time = time.time()
                 predictions = self.train_and_predict_classifier(
-                    dataset=pt_dataset,
                     net=model,
-                    metric=self.setup["fairness_metric"],
-                    lambda_=config.get("lambda_value"),
-                    n_epochs=epochs,
+                    dataset=pt_dataset,
                     batch_size=config.get("batch_size"),
-                    conditions=callbacks
+                    conditions=callbacks,
+                    lambda_=config.get("lambda_value"),
+                    lr=config.get("learning_rate"),
+                    metric=self.setup["fairness_metric"],
+                    n_epochs=epochs
                 )
                 end_time = time.time()
                 logger.debug(f"end training model")
@@ -53,9 +58,6 @@ class PytorchMLP(MLP):
 
             results = {k: v / 5 for k, v in results.items()}
 
-        conf_info = {
-            "batch_size": config.get("batch_size"),
-            "lambda_value": config.get("lambda_value"),
-        }
+        conf_info = get_conf_space_info(config)
         singleton.append(conf_info | results)
         return results

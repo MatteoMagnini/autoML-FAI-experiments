@@ -17,7 +17,6 @@ from experiments.setup import NEURONS_PER_LAYER
 PATH = Path(__file__).parents[0]
 CACHE_DIR_NAME = 'cache'
 CACHE_PATH = PATH / CACHE_DIR_NAME
-DI_METRIC_NAME = "disparate_impact"
 METRIC_LIST_NAMES = [
     'accuracy',
     'precision',
@@ -124,20 +123,20 @@ class PyTorchConditions:
 
 
 class PytorchNN(nn.Module):
-    def __init__(self, n_inputs, n_layers: int = len(NEURONS_PER_LAYER) + 2, n_hidden_units: list[int] = NEURONS_PER_LAYER):
+    def __init__(self, inputs, hidden_layers: int = 1, neurons: int = 64):
         super(PytorchNN, self).__init__()
         layers = []
 
-        if n_layers == 1:  # Logistic Regression
-            layers.append(nn.Linear(n_inputs, 1))
+        if hidden_layers == 0:  # Logistic Regression
+            layers.append(nn.Linear(inputs, 1))
             layers.append(nn.Sigmoid())
         else:
-            layers.append(nn.Linear(n_inputs, n_hidden_units[0]))
+            layers.append(nn.Linear(inputs, neurons))
             layers.append(nn.ReLU())
-            for i in range(1, len(n_hidden_units)):
-                layers.append(nn.Linear(n_hidden_units[i - 1], n_hidden_units[i]))
+            for _ in range(0, hidden_layers):
+                layers.append(nn.Linear(neurons, neurons))
                 layers.append(nn.ReLU())
-            layers.append(nn.Linear(n_hidden_units[-1], 1))
+            layers.append(nn.Linear(neurons, 1))
             layers.append(nn.Sigmoid())
         self.layers = nn.Sequential(*layers)
 
@@ -146,31 +145,31 @@ class PytorchNN(nn.Module):
         return x
 
 
-def create_fully_connected_nn_tf(
-        input_size: int,
-        output_size: int = 1,
-        neurons_per_hidden_layer: Iterable[int] = NEURONS_PER_LAYER,
-        activation_function: str = 'relu',
-        latest_activation_function: str = 'sigmoid'
-) -> Model:
-    input_layer = Input(shape=(input_size,))
+def create_fully_connected_nn_tf(inputs: int, hidden_layers: int = 1, neurons: int = 64) -> Model:
+    input_layer = Input(shape=(inputs,))
     x = input_layer
-    for neurons in neurons_per_hidden_layer:
-        x = Dense(neurons, activation=activation_function)(x)
-    output_layer = Dense(output_size, activation=latest_activation_function)(x)
-    return Model(inputs=input_layer, outputs=output_layer)
+
+    if hidden_layers == 0:
+        x = Dense(1, activation='sigmoid')(x)
+    else:
+        x = Dense(neurons, activation='relu')(x)
+        for _ in range(hidden_layers):
+            x = Dense(neurons, activation='relu')(x)
+        x = Dense(1, activation='sigmoid')(x)
+    return Model(inputs=input_layer, outputs=x)
 
 
 def evaluate_predictions(protected: np.array, y_pred: np.array, y_true: np.array, logger: Logger) -> dict[str: float]:
     """
     Evaluate the predictions. Compute the following metrics:
     - Accuracy
-    - Precision
-    - Recall
-    - F1 score
-    - Statistical parity
-    - TPR parity (equal opportunity)
-    - FPR parity
+    # - Precision
+    # - Recall
+    # - F1 score
+    # - AUC
+    - Demographic parity
+    # - Disparate impact
+    # - Equalized odds
 
     @param protected: protected features
     @param y_pred: predicted labels

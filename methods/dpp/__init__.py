@@ -78,6 +78,7 @@ def train_and_predict_dpp_classifier(
         net: nn.Module,
         metric: str,
         lambda_: float,
+        lr: float,
         n_epochs: int,
         batch_size: int,
         conditions: PyTorchConditions
@@ -114,7 +115,7 @@ def train_and_predict_dpp_classifier(
     data_loader = DataLoader(custom_dataset, batch_size=batch_size, shuffle=True)
 
     loss_function = nn.BCELoss()
-    optimizer = optim.Adam(net.parameters())
+    optimizer = optim.Adam(net.parameters(), lr=lr)
 
     costs = []
     total_train_step = 0
