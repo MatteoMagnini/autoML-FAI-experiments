@@ -42,8 +42,8 @@ if __name__ == "__main__":
     scenario = Scenario(
         mlp.configspace,
         objectives=objectives,
-        walltime_limit=60,  # 6*10*60,  # After 1 hour, we stop the hyperparameter optimization
-        n_trials=5,  # 10000,  # Evaluate max 30 different trials
+        walltime_limit=6*10*60,  # After 1 hour, we stop the hyperparameter optimization
+        n_trials=10000,  # Evaluate max 30 different trials
         n_workers=1  # multiprocessing.cpu_count()
     )
 

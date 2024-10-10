@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  experiments:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - mmagnini:/mnt/persistent
+    command: >
+      sh -c "find experiments/setup -name '*.yml' | 
+             xargs -n 1 -P $$(nproc) -I {} poetry run python -m experiments --config {} --output /mnt/persistent"
+
+volumes:
+  mmagnini:
+    external: true
+    name: mmagnini
