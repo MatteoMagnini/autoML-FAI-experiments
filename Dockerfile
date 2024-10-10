@@ -26,15 +26,6 @@ RUN poetry config virtualenvs.create false \
 # Copy the rest of the application code to the temporary working directory
 COPY . /app/
 
-# Ensure the directory to store both code and results exists
-RUN mkdir -p /persistent
-
-# Copy the code into the persistent directory
-RUN cp -r /app/* /persistent/
-
-# Set the persistent directory as the working directory
-WORKDIR /persistent
-
 # Make sure all YAML configuration files are in the correct directory
 # and run the experiments in parallel, passing output directory as /persistent
 CMD find experiments/setup -name "*.yml" | \
