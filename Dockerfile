@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Set a temporary working directory inside the container
-WORKDIR /automl-fairness-experiments
+# Set the working directory inside the container
+WORKDIR /home/dev/persistent/automl-fairness-experiments
 
 # Install Poetry
 RUN pip install --no-cache-dir poetry
@@ -23,9 +23,5 @@ COPY pyproject.toml poetry.lock /automl-fairness-experiments/
 RUN poetry config virtualenvs.create false \
   && poetry install --no-interaction --no-ansi
 
-# Copy the rest of the application code to the temporary working directory
+# Copy the rest of the application code to the working directory
 COPY . /automl-fairness-experiments
-
-# Move evrything to the persistent working directory home/dev/persistent
-RUN mkdir -p /home/dev/persistent
-RUN mv /automl-fairness-experiments /home/dev/persistent

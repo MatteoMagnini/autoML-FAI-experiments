@@ -8,8 +8,10 @@ services:
       dockerfile: Dockerfile
     volumes:
       - mmagnini:/home/dev/persistent
-    command: >
-      chmod 777 run.sh && ./run.sh
+    command: |
+      sh -c '
+      ./run.sh
+      '
 
 volumes:
   mmagnini:
