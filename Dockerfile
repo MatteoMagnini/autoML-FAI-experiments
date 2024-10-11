@@ -23,5 +23,5 @@ COPY pyproject.toml poetry.lock /automl-fairness-experiments/
 RUN poetry config virtualenvs.create false \
   && poetry install --no-interaction --no-ansi
 
-# Copy the rest of the application code to the working directory
-COPY . /automl-fairness-experiments
+# Copy all the files from the project's root directory to the working directory
+COPY . /automl-fairness-experiments/

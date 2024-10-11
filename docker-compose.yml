@@ -10,6 +10,9 @@ services:
       - mmagnini:/home/dev/persistent
     command: |
       sh -c '
+      cd ../home/dev/persistent/autoML-FAI-experiments
+      ls -la
+      chmod 777 run.sh
       ./run.sh
       '
 

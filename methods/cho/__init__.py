@@ -227,7 +227,7 @@ def train_and_predict_cho_classifier(
             m = z_batch.shape[0]
 
             # prediction loss
-            p_loss = loss_function(y_hat.squeeze(), y_batch)
+            p_loss = loss_function(y_hat.view_as(y_batch), y_batch)
             # originally:
             # cost = (1 - lambda_) * p_loss + fairness_cost(Yhat, y_batch, z_batch)
             cost += (1 - lambda_) * p_loss + lambda_ * fairness_cost(y_hat, y_batch, z_batch)
