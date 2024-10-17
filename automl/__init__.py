@@ -110,3 +110,5 @@ class ResultSingleton:
         df = pd.DataFrame(self.results)
         df.to_csv(RESULT_PATH / f"{name}_results.csv", index=False)
 
+    def check_if_results_exist(self, name: str) -> bool:
+        return (RESULT_PATH / f"{name}_results.csv").exists()
