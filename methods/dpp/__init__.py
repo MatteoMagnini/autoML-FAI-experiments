@@ -91,10 +91,6 @@ def train_and_predict_dpp_classifier(
     X_valid, Y_valid, Z_valid, XZ_valid = valid_tensors
     X_test, Y_test, Z_test, XZ_test = test_tensors
 
-    # Z_valid and Z_test cast to 1 or 0 (we assume binary sensitive attribute)
-    Z_valid = (Z_valid > 0).float()
-    Z_test = (Z_test > 0).float()
-
     Z_train_np = Z_train.detach().cpu().numpy()
     Z_list = sorted(list(set(Z_train_np)))
     for z in Z_list:
@@ -128,10 +124,7 @@ def train_and_predict_dpp_classifier(
             x, y = x.to(device), y.to(device)
             y_hat = net(x)
             # Prevent the following ValueError:
-            # Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated.
-            # Please ensure they have the same size.
-            y = y.unsqueeze(1)
-            loss = loss_function(y_hat.squeeze(), y)
+            loss = loss_function(y_hat.view_as(y), y)
 
             optimizer.zero_grad()
             loss.backward()

@@ -38,12 +38,17 @@ if __name__ == "__main__":
         raise ValueError(f"Unknown method {setup['method']}")
     objectives = ["1 - accuracy", "demographic_parity"]
 
+    # Check if results are already available
+    if ResultSingleton().check_if_results_exist(mlp.get_name()):
+        print("Results already exist. Skipping...")
+        sys.exit(0)
+
     # Define our environment variables
     scenario = Scenario(
         mlp.configspace,
         objectives=objectives,
-        walltime_limit=6*10*60,  # After 1 hour, we stop the hyperparameter optimization
-        n_trials=10000,  # Evaluate max 30 different trials
+        walltime_limit=12*60*60,  # After 12 hour, we stop the hyperparameter optimization
+        n_trials=10000,  # Evaluate max 10^4 different trials
         n_workers=1  # multiprocessing.cpu_count()
     )
 

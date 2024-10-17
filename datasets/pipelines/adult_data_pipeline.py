@@ -72,7 +72,14 @@ class AdultLoader:
             output = df.pop("income")
             if preprocess:
                 scaler = StandardScaler() if not min_max else MinMaxScaler()
-                df = pd.DataFrame(scaler.fit_transform(df))
+                new_df = pd.DataFrame(scaler.fit_transform(df))
+                # Put back the values for the binary columns
+                binary_columns = df.columns[df.nunique() == 2]
+                new_df.columns = df.columns
+                for column in binary_columns:
+                    new_df[column] = df[column]
+                df = new_df
+
             df["income"] = output
             return df
 
