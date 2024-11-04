@@ -65,8 +65,8 @@ def create_fauci_network(
     def custom_loss(y_true, y_pred):
         fair_cost_factor = fairness_metric_function(y_true, y_pred)
         # originally:
-        # return tf.cast(binary_crossentropy(y_true, y_pred) + epsilon, tf.float64) + lambda_value * tf.cast(lambda_value * fair_cost_factor, tf.float64)
-        return (1 - lambda_value) * tf.cast(binary_crossentropy(y_true, y_pred) + epsilon, tf.float64) + lambda_value * tf.cast(fair_cost_factor, tf.float64)
+        return tf.cast(binary_crossentropy(y_true, y_pred) + epsilon, tf.float64) + lambda_value * tf.cast(lambda_value * fair_cost_factor, tf.float64)
+        # return (1 - lambda_value) * tf.cast(binary_crossentropy(y_true, y_pred) + epsilon, tf.float64) + lambda_value * tf.cast(fair_cost_factor, tf.float64)
 
     model.compile(loss=custom_loss, optimizer=Adam(lr=lr), metrics=["accuracy"])
     return model
