@@ -23,6 +23,7 @@ class PytorchMLP(MLP):
         results = {}
 
         folds = KFold(n_splits=5, shuffle=True, random_state=seed)
+        fold_results = []
         singleton = ResultSingleton()
         for exp_number, (train_idx, valid_idx) in enumerate(folds.split(train)):
             train_data, valid_data = train.iloc[train_idx], train.iloc[valid_idx]
@@ -53,10 +54,14 @@ class PytorchMLP(MLP):
                 logger.debug(f"training time: {end_time - start_time}")
                 test_y = test.iloc[:, -1].reset_index(drop=True)
                 test_p = test.iloc[:, protected].reset_index(drop=True)
-                fold_results = evaluate_predictions(test_p, predictions, test_y, logger)
-                results = {k: results.get(k, 0) + fold_results.get(k, 0) for k in set(results) | set(fold_results)}
+                fold_results.append(evaluate_predictions(test_p, predictions, test_y, logger))
 
-            results = {k: v / 5 for k, v in results.items()}
+            fairness_metric = sum([result["demographic_parity"] for result in fold_results]) / 5
+            one_minus_accuracy = sum([result["1 - accuracy"] for result in fold_results]) / 5
+            results = {
+                "demographic_parity": fairness_metric,
+                "1 - accuracy": one_minus_accuracy
+            }
 
         conf_info = get_conf_space_info(config)
         singleton.append(conf_info | results)
