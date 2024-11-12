@@ -1,105 +1,91 @@
-from logging import Logger
 from pathlib import Path
-import tensorflow as tf
-import numpy as np
-import pandas as pd
-from tensorflow.python.keras.callbacks import Callback
-from tensorflow.python.keras.losses import binary_crossentropy
-from tensorflow.python.keras.models import Model
-from tensorflow.python.keras.optimizer_v1 import Adam
-from methods.fauci.tf_metric import continuous_demographic_parity, continuous_disparate_impact, \
-    continuous_equalized_odds, discrete_demographic_parity, discrete_disparate_impact, discrete_equalized_odds
+import torch
+from torch import nn, optim, cuda
+from torch.backends import mps
+from torch import device as torch_device
+from torch.utils.data import DataLoader
+from datasets.pipelines.pytorch_data_pipeline import FairnessPyTorchDataset, CustomDataset
+from experiments import PyTorchConditions
+from methods.fauci.pt_metric import discrete_demographic_parity
 
 PATH = Path(__file__).parents[0]
 epsilon = 1e-5
 
 
-def create_fauci_network(
-        model: Model,
-        protected_attribute: int,
-        type_protected_attribute: str,
-        lr: float,
-        fairness_metric: str,
-        lambda_value: float,
-) -> Model:
-    """
-    Create a neural network with a custom loss function.
-    :param model: model to add the custom loss function
-    :param protected_attribute: index of the protected attribute
-    :param type_protected_attribute: type of the protected attribute
-    :param lr: learning rate
-    :param fairness_metric: fairness metric to use
-    :param lambda_value: lambda value for the fairness metric
-    :return: model with the custom loss function
-    """
+def train_and_predict_fauci_classifier(
+    dataset: FairnessPyTorchDataset,
+    net: nn.Module,
+    metric: str,
+    lambda_: float,
+    lr: float,
+    n_epochs: int,
+    batch_size: int,
+    conditions: PyTorchConditions
+):
+    device = torch_device('cuda') if cuda.is_available() else torch_device('mps') if mps.is_available() else torch_device('cpu')
+    # Retrieve train/test split pytorch tensors for index=split
+    train_tensors, valid_tensors, test_tensors = dataset.get_dataset_in_tensor()
+    X_train, Y_train, Z_train, XZ_train = train_tensors
+    X_valid, Y_valid, Z_valid, XZ_valid = valid_tensors
+    X_test, Y_test, Z_test, XZ_test = test_tensors
 
-    input_layer = model.layers[0].input
-    if type_protected_attribute == "continuous":
-        def tf_demographic_parity(y_true, y_pred):
-            return continuous_demographic_parity(input_layer[:, protected_attribute], y_pred)
+    sensitive_attrs = dataset.sensitive_attrs
 
-        def tf_disparate_impact(y_true, y_pred):
-            return continuous_disparate_impact(input_layer[:, protected_attribute], y_pred)
-
-        def tf_equalized_odds(y_true, y_pred):
-            return continuous_equalized_odds(input_layer[:, protected_attribute], y_true, y_pred)
+    custom_dataset = CustomDataset(XZ_train, Y_train, Z_train)
+    if batch_size == "full":
+        batch_size_ = XZ_train.shape[0]
+    elif isinstance(batch_size, int):
+        batch_size_ = batch_size
     else:
-        def tf_demographic_parity(y_true, y_pred):
-            return discrete_demographic_parity(input_layer[:, protected_attribute], y_pred)
+        raise ValueError("batch_size must be 'full' or an integer")
+    data_loader = DataLoader(custom_dataset, batch_size=batch_size_, shuffle=True)
 
-        def tf_disparate_impact(y_true, y_pred):
-            return discrete_disparate_impact(input_layer[:, protected_attribute], y_pred)
+    loss_function = nn.BCELoss()
+    costs = []
+    optimizer = optim.Adam(net.parameters(), lr=lr)
 
-        def tf_equalized_odds(y_true, y_pred):
-            return discrete_equalized_odds(input_layer[:, protected_attribute], y_true, y_pred)
+    def fairness_cost(y_pred, z_b):
+        if isinstance(y_pred, torch.Tensor):
+            y_pred_detached = y_pred.detach()
+        else:
+            y_pred = torch.tensor(y_pred).to(device)
+            y_pred_detached = y_pred.detach()
+        # DP_Constraint
+        if metric == "demographic_parity":
+            return discrete_demographic_parity(z_b, y_pred)
+        else:
+            raise ValueError(f"Unknown fairness metric {metric}")
 
-    if fairness_metric == "demographic_parity":
-        fairness_metric_function = tf_demographic_parity
-    elif fairness_metric == "disparate_impact":
-        fairness_metric_function = tf_disparate_impact
-    elif fairness_metric == "equalized_odds":
-        fairness_metric_function = tf_equalized_odds
-    else:
-        raise ValueError(f"Unknown fairness metric {fairness_metric}")
+    conditions.on_train_begin()
+    for epoch in range(n_epochs):
+        for i, (xz_batch, y_batch, z_batch) in enumerate(data_loader):
+            xz_batch, y_batch, z_batch = (
+                xz_batch.to(device),
+                y_batch.to(device),
+                z_batch.to(device),
+            )
+            y_hat = net(xz_batch)
+            cost = 0.0
+            m = z_batch.shape[0]
 
-    def custom_loss(y_true, y_pred):
-        fair_cost_factor = fairness_metric_function(y_true, y_pred)
-        # originally:
-        return tf.cast(binary_crossentropy(y_true, y_pred) + epsilon, tf.float64) + lambda_value * tf.cast(lambda_value * fair_cost_factor, tf.float64)
-        # return (1 - lambda_value) * tf.cast(binary_crossentropy(y_true, y_pred) + epsilon, tf.float64) + lambda_value * tf.cast(fair_cost_factor, tf.float64)
+            # prediction loss
+            p_loss = loss_function(y_hat.view_as(y_batch), y_batch)
+            cost += (1 - lambda_) * p_loss + lambda_ * fairness_cost(y_hat, z_batch)
 
-    model.compile(loss=custom_loss, optimizer=Adam(lr=lr), metrics=["accuracy"])
-    return model
+            optimizer.zero_grad()
+            if (torch.isnan(cost)).any():
+                continue
+            cost.backward()
+            optimizer.step()
+            costs.append(cost.item())
 
+        y_hat_valid = net(XZ_valid)
+        p_loss = loss_function(y_hat_valid.squeeze(), Y_valid)
+        cost = (1 - lambda_) * p_loss + lambda_ * fairness_cost(y_hat_valid, Z_valid)
 
-def train_and_predict_tf(
-        model: Model,
-        train: pd.DataFrame,
-        valid: pd.DataFrame,
-        test: pd.DataFrame,
-        epochs: int,
-        batch_size: int,
-        callbacks: list[Callback],
-        logger: Logger) -> np.array:
-    """
-    Train the model and predict the test set.
-    :param model: model to train
-    :param train: training set
-    :param valid: validation set
-    :param test: test set
-    :param epochs: number of epochs
-    :param batch_size: batch size
-    :param callbacks: list of callbacks
-    :param logger: logger
-    :return: DataFrame with the predictions
-    """
-    train_x, train_y = train.iloc[:, :-1], train.iloc[:, -1]
-    valid_x, valid_y = valid.iloc[:, :-1], valid.iloc[:, -1]
-    test_x, _ = test.iloc[:, :-1], test.iloc[:, -1]
-    logger.debug(f"start training model")
-    model.fit(train_x, train_y, epochs=epochs, batch_size=batch_size, callbacks=callbacks, validation_data=(valid_x, valid_y), verbose=0)
-    logger.debug(f"end training model")
-    logger.debug(f"start predicting labels")
-    predictions = model.predict(test_x)
-    logger.debug(f"end predicting labels")
-    return predictions
+        # Early stopping
+        if conditions.early_stop(epoch=epoch, loss_value=cost):
+            break
+
+    y_hat_test = net(XZ_test).squeeze().detach().cpu().numpy()
+    return y_hat_test

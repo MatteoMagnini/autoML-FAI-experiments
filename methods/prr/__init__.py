@@ -1,6 +1,7 @@
 import torch
 from torch import cuda
 from torch import device as torch_device
+from torch.backends import mps
 from torch.utils.data import DataLoader
 from datasets.pipelines.pytorch_data_pipeline import FairnessPyTorchDataset, CustomDataset
 from experiments import PyTorchConditions
@@ -46,7 +47,7 @@ def train_and_predict_prr_classifier(
         batch_size: int,
         conditions: PyTorchConditions
 ):
-    device = torch_device('cuda:1') if cuda.is_available() else torch_device('cpu')
+    device = torch_device('cuda') if cuda.is_available() else torch_device('mps') if mps.is_available() else torch_device('cpu')
 
     # Retrieve train/test split pytorch tensors for index=split
     train_tensors, valid_tensors, test_tensors = dataset.get_dataset_in_tensor()

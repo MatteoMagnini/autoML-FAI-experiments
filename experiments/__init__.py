@@ -1,16 +1,10 @@
 import math
 from logging import Logger
 from pathlib import Path
-from typing import Iterable
 import numpy as np
 import torch
-from sklearn.metrics import roc_auc_score
-from tensorflow.python.keras import Input
-from tensorflow.python.keras.callbacks import Callback
-from tensorflow.python.keras.layers import Dense
-from tensorflow.python.keras.models import Model
 from torch import nn
-from analysis.metrics import demographic_parity, equalized_odds, disparate_impact
+from analysis.metrics import demographic_parity
 from _logging import INDENT, LOG_FLOAT_PRECISION
 from experiments.setup import NEURONS_PER_LAYER
 
@@ -33,56 +27,6 @@ EPSILON = 1e-4
 def create_cache_directory():
     if not CACHE_PATH.exists():
         CACHE_PATH.mkdir()
-
-
-class TensorflowConditions(Callback):
-
-    def __init__(self, patience: int = 10):
-        super().__init__()
-        self.patience = patience
-        self.best_loss = math.inf
-        self.wait = 0
-        self.stopped_epoch = 0
-        self.best_weights = None
-
-    def reset(self):
-        self.wait = 0
-        self.stopped_epoch = 0
-        self.best_weights = None
-        self.best_loss = math.inf
-
-    def on_train_begin(self, logs=None):
-        self.wait = 0
-        self.stopped_epoch = 0
-        self.best_weights = self.model.get_weights()
-
-    def on_epoch_end(self, epoch, logs=None):
-
-        def end():
-            self.stopped_epoch = epoch
-            self.model.set_weights(self.best_weights)
-            print(f"Stopping at epoch {epoch + 1}")
-            self.model.stop_training = True
-            self.reset()
-
-        val_loss_value = logs['val_loss']
-        train_loss_value = logs['loss']
-
-        # First condition: reached the maximum amount of epochs
-        if epoch + 1 == self.params['epochs']:
-            end()
-
-        # Second condition: loss value does not improve for patience epochs
-        elif train_loss_value < EPSILON:
-            end()
-        elif val_loss_value < self.best_loss:
-            self.best_loss = val_loss_value
-            self.wait = 0
-            self.best_weights = self.model.get_weights()
-        else:
-            self.wait += 1
-            if self.wait >= self.patience:
-                end()
 
 
 class PyTorchConditions:
@@ -143,20 +87,6 @@ class PytorchNN(nn.Module):
     def forward(self, x):
         x = self.layers(x)
         return x
-
-
-def create_fully_connected_nn_tf(inputs: int, hidden_layers: int = 1, neurons: int = 64) -> Model:
-    input_layer = Input(shape=(inputs,))
-    x = input_layer
-
-    if hidden_layers == 0:
-        x = Dense(1, activation='sigmoid')(x)
-    else:
-        x = Dense(neurons, activation='relu')(x)
-        for _ in range(hidden_layers):
-            x = Dense(neurons, activation='relu')(x)
-        x = Dense(1, activation='sigmoid')(x)
-    return Model(inputs=input_layer, outputs=x)
 
 
 def evaluate_predictions(protected: np.array, y_pred: np.array, y_true: np.array, logger: Logger) -> dict[str: float]:

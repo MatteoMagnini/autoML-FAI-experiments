@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 import torch
+from torch import cuda
+from torch.backends import mps
 from sklearn.preprocessing import StandardScaler
 
 
@@ -33,7 +35,7 @@ class FairnessPyTorchDataset:
         train: pd.DataFrame,
         val: pd.DataFrame,
         test: pd.DataFrame,
-        device=torch.device("cpu"),
+        device=cuda.device('cuda') if cuda.is_available() else torch.device('mps') if mps.is_available() else cuda.device('cpu')
     ):
         self.device = device
         self.sensitive_attrs = None

@@ -1,8 +1,6 @@
 import sys
 from smac import Scenario
 from smac import HyperparameterOptimizationFacade as HPOFacade
-from tensorflow.python.compat.v2_compat import disable_v2_behavior
-from tensorflow.python.framework.ops import disable_eager_execution
 from automl import plot_pareto, ResultSingleton
 from automl.auto_cho import ChoMLP
 from automl.auto_dpp import DPPMLP
@@ -11,18 +9,15 @@ from smac.multi_objective.parego import ParEGO
 from automl.auto_jiang import JiangMLP
 from automl.auto_prr import PRRMLP
 from datasets import get_feature_data_type
-from experiments import TensorflowConditions
 from experiments.setup import PATH as CONFIG_PATH, from_yaml_file_to_dict, update_with_dataset
 from results import save_incumbents
 
 if __name__ == "__main__":
-    disable_v2_behavior()
-    disable_eager_execution()
     conf_file_name = sys.argv[1]
     setup = from_yaml_file_to_dict(CONFIG_PATH / conf_file_name)
     setup = update_with_dataset(setup)
     setup["protected_type"] = get_feature_data_type(setup["dataset"], setup["protected"])
-    setup["callbacks"] = [TensorflowConditions()]
+    setup["callbacks"] = []
 
     if setup["method"] == "fauci":
         mlp = FauciMLP(setup)
@@ -41,7 +36,7 @@ if __name__ == "__main__":
     # Check if results are already available
     if ResultSingleton().check_if_results_exist(mlp.get_name()):
         print("Results already exist. Skipping...")
-        sys.exit(0)
+        #sys.exit(0)
 
     # Define our environment variables
     scenario = Scenario(

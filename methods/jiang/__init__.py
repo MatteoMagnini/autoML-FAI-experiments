@@ -2,6 +2,8 @@ from math import sqrt, pi
 from pathlib import Path
 import numpy as np
 import torch
+from torch import cuda
+from torch.backends import mps
 from torch import nn
 from torch.utils.data import TensorDataset, DataLoader
 from datasets.pipelines.pytorch_data_pipeline import FairnessPyTorchDataset
@@ -20,7 +22,7 @@ def train_and_predict_jiang_classifier(
         n_epochs: int,
         batch_size: int,
         conditions: PyTorchConditions):
-    device = torch.device("cuda:1") if torch.cuda.is_available() else torch.device("cpu")
+    device = torch.device('cuda') if cuda.is_available() else torch.device('mps') if mps.is_available() else torch.device('cpu')
     net = net.to(device)
     test_sol = 1e-3
     x_appro = torch.arange(test_sol, 1 - test_sol, test_sol).to(device)

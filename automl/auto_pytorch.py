@@ -1,5 +1,7 @@
 import time
 import warnings
+
+import torch
 from ConfigSpace import Configuration
 from sklearn.model_selection import KFold
 from _logging import logger
@@ -16,6 +18,7 @@ class PytorchMLP(MLP):
         raise NotImplementedError("Method not implemented")
 
     def train(self, config: Configuration, seed: int = 0, budget: int = 100) -> dict[str, float]:
+        device = 'cuda' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else 'cpu'
         train = self.setup["train"]
         test = self.setup["test"]
         epochs = self.setup["epochs"]
@@ -36,6 +39,7 @@ class PytorchMLP(MLP):
                     hidden_layers=config.get("number_of_layers"),
                     neurons=config.get("number_of_neurons_per_layer"),
                 )
+                model.to(device)
                 callbacks = PyTorchConditions(model, epochs)
 
                 start_time = time.time()
