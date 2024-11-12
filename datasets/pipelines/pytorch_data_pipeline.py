@@ -35,7 +35,7 @@ class FairnessPyTorchDataset:
         train: pd.DataFrame,
         val: pd.DataFrame,
         test: pd.DataFrame,
-        device=cuda.device('cuda') if cuda.is_available() else torch.device('mps') if mps.is_available() else cuda.device('cpu')
+        device=cuda.device('cuda') if cuda.is_available() else torch.device('mps') if mps.is_available() else torch.device('cpu')
     ):
         self.device = device
         self.sensitive_attrs = None
