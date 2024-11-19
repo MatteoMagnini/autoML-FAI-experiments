@@ -18,7 +18,7 @@ def save_incumbents(smac: HPOFacade, incumbents: list, filename: str):
     costs_names = ["1 - accuracy", "demographic_parity"]
     for incumbent in incumbents:
         config = incumbent.get_dictionary()
-        costs = {k: v for k, v in zip(costs_names, smac.validate(incumbent))}
+        costs = {k: v for k, v in zip(costs_names, smac.runhistory.average_cost(incumbent))}
         config.update(costs)
         df.append(config)
     df = pd.DataFrame(df)
