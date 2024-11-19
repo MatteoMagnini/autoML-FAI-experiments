@@ -42,7 +42,7 @@ if __name__ == "__main__":
     scenario = Scenario(
         mlp.configspace,
         objectives=objectives,
-        walltime_limit=12*60*60,  # After 12 hour, we stop the hyperparameter optimization
+        walltime_limit=60,  # After 12 hour, we stop the hyperparameter optimization
         n_trials=10000,  # Evaluate max 10^4 different trials
         n_workers=1  # multiprocessing.cpu_count()
     )
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     # We want to run five random configurations before starting the optimization.
     initial_design = HPOFacade.get_initial_design(scenario, n_configs=5)
     multi_objective_algorithm = ParEGO(scenario)
-    intensifier = HPOFacade.get_intensifier(scenario, max_config_calls=2)
+    intensifier = HPOFacade.get_intensifier(scenario, max_config_calls=1)
 
     # Create our SMAC object and pass the scenario and the train method
     smac = HPOFacade(
@@ -73,7 +73,7 @@ if __name__ == "__main__":
 
     print("Validated costs from the Pareto front (incumbents):")
     for incumbent in incumbents:
-        cost = smac.validate(incumbent)
+        cost = smac.runhistory.average_cost(incumbent)
         print("---", cost)
     save_incumbents(smac, incumbents, mlp.get_name() + "_incumbents.csv")
     ResultSingleton().save_results(mlp.get_name())
