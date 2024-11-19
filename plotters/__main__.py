@@ -1,12 +1,13 @@
 import os
-
 from utils.pareto_front import plot_pareto_raw
 from utils.results_collection import read_results
+from results import PATH as results_path
+
 
 if __name__ == "__main__":
     args = {
-        "input_path": "results",
-        "output_path": "results",
+        "input_path": results_path,
+        "output_path": results_path,
         "file_pattern": "dataset_approach_metric_metric"
     }
 
