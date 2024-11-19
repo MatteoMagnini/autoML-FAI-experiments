@@ -66,3 +66,37 @@ def plot_pareto(
     # plt.show()
     fig.savefig(file_path)
 
+
+def plot_pareto_smac(smac: AbstractFacade, file_path: os.path) -> None:
+    """Plots configurations from SMAC and highlights the best configurations in a Pareto front."""
+    # Get Pareto costs
+    # print([smac.runhistory.get_cost(incumbent) for incumbent in incumbents])
+    _, c = get_pareto_front(smac)
+    pareto_costs = np.array(c)
+
+    # Sort them a bit
+    pareto_costs = pareto_costs[pareto_costs[:, 0].argsort()]
+
+    # Get all other costs from runhistory
+    average_costs = []
+    for config in smac.runhistory.get_configs():
+        # Since we use multiple seeds, we have to average them to get only one cost value pair for each configuration
+        average_cost = smac.runhistory.average_cost(config)
+
+        if average_cost not in c:
+            average_costs += [average_cost]
+
+    # Let's work with a numpy array
+    costs = np.vstack(average_costs)
+    costs_x, costs_y = costs[:, 0], costs[:, 1]
+    pareto_costs_x, pareto_costs_y = pareto_costs[:, 0], pareto_costs[:, 1]
+
+    plot_pareto(
+        costs_x=costs_x,
+        costs_y=costs_y,
+        pareto_costs_x=pareto_costs_x,
+        pareto_costs_y=pareto_costs_y,
+        file_path=file_path,
+        obj0=smac.scenario.objectives[0],
+        obj1=smac.scenario.objectives[0]
+    )
