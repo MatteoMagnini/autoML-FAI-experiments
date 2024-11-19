@@ -36,7 +36,7 @@ if __name__ == "__main__":
     # Check if results are already available
     if ResultSingleton().check_if_results_exist(mlp.get_name()):
         print("Results already exist. Skipping...")
-        #sys.exit(0)
+        sys.exit(0)
 
     # Define our environment variables
     scenario = Scenario(
