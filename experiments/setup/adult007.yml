@@ -1,0 +1,5 @@
+dataset: compas
+method: dpp
+fairness_metric: demographic_parity
+protected: 1
+epochs: 100
