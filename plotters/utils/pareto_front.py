@@ -87,7 +87,8 @@ def plot_pareto_raw(
     pareto_costs: dict,
     file_path: os.path,
     obj0: str,
-    obj1: str) -> None:
+    obj1: str
+) -> None:
 
     # Let's work with a numpy array
     # costs = np.vstack(summary["costs"])
@@ -123,7 +124,8 @@ def plot_pareto(
     pareto_costs_y: dict,
     file_path: os.path,
     obj0: str,
-    obj1: str) -> None:
+    obj1: str
+) -> None:
 
     fig, ax = plt.subplots()
 
@@ -144,3 +146,72 @@ def plot_pareto(
     ax.set_ylabel(obj1)
     # plt.show()
     fig.savefig(file_path)
+
+
+def plot_multiple_pareto_fronts(
+        methods_incumbents: dict[str, dict],
+        title: str,
+        obj0: str,
+        obj1: str,
+        file_path: os.path,
+) -> None:
+    """
+    Plots the Pareto frontiers for multiple methods on the same graph, with points and enhanced visual clarity.
+
+    Parameters
+    ----------
+    methods_incumbents : dict
+        A dictionary where keys are method names and values are lists of incumbents (configurations and costs).
+    title : str
+        Title of the plot.
+    obj0 : str
+        Label for the X-axis.
+    obj1 : str
+        Label for the Y-axis.
+    file_path : os.path
+        Path to save the plot.
+    """
+    plt.figure(figsize=(10, 6))
+
+    # Enhanced colormap with accessible and visually appealing colors
+    colors = plt.cm.get_cmap('Set2', len(methods_incumbents))
+
+    for idx, (method_name, incumbents) in enumerate(methods_incumbents.items()):
+        costs = np.array(incumbents)
+
+        # Check if costs are 2D
+        if costs.shape[1] != 2:
+            raise ValueError(f"Expected 2D costs, but got {costs.shape[1]}D data for method '{method_name}'.")
+
+        # Sort costs
+        sorted_indices = np.argsort(costs[:, 0])
+        sorted_costs = costs[sorted_indices]
+
+        # Plot the Pareto frontier line
+        plt.plot(
+            sorted_costs[:, 0],
+            sorted_costs[:, 1],
+            label=method_name,
+            color=colors(idx),
+            linewidth=2.5,
+            linestyle='-'
+        )
+        # Plot the points of the frontier
+        plt.scatter(
+            sorted_costs[:, 0],
+            sorted_costs[:, 1],
+            color=colors(idx),
+            edgecolors='black',
+            s=50,
+            label=f"{method_name} points"
+        )
+
+    # Plot settings
+    plt.title(title)
+    plt.xlabel(obj0)
+    plt.ylabel(obj1)
+    plt.grid(True, linestyle='--', alpha=0.6)
+    plt.legend(title="Methods", loc="best", fontsize='medium')
+    plt.tight_layout()
+    plt.savefig(file_path)
+    plt.close()
