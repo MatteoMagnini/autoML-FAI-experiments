@@ -106,7 +106,6 @@ def train_and_predict_dpp_classifier(
 
     Y_val_att1_np = Y_val_att1.clone().cpu().detach().numpy()
     Y_val_att0_np = Y_val_att0.clone().cpu().detach().numpy()
-    y_val_np = Y_valid.clone().cpu().detach().numpy()
 
     custom_dataset = CustomDataset(XZ_train, Y_train, Z_train)
     data_loader = DataLoader(custom_dataset, batch_size=batch_size, shuffle=True)
@@ -141,24 +140,12 @@ def train_and_predict_dpp_classifier(
         with torch.no_grad():
 
             output_val = net(XZ_valid).squeeze().detach().cpu().numpy()
-            cost = loss_function(torch.tensor(output_val), Y_valid).item()
-            y_tilde_val = (output_val >= 0.5).astype(np.float32)
-            accuracy = (y_tilde_val == y_val_np).astype(np.float32).mean()
+            cost = loss_function(torch.tensor(output_val, device=device), Y_valid).item()
 
-            if epoch == 0:
-                accuracy_max = accuracy
-                best_net_acc_stat_dict = net.state_dict()
-
-            if accuracy > accuracy_max:
-                accuracy_max = accuracy
-                best_net_acc_stat_dict = net.state_dict()
 
         # Early stopping
         if conditions.early_stop(epoch=epoch, loss_value=cost):
             break
-
-    # Calculate thresholds for fair Bayes-optimal Classifier
-    net.load_state_dict(best_net_acc_stat_dict)
 
     eta1_val = net(XZ_val_att1).squeeze().detach().cpu().numpy()
     eta0_val = net(XZ_val_att0).squeeze().detach().cpu().numpy()
@@ -168,8 +155,12 @@ def train_and_predict_dpp_classifier(
 
     [t1_pp, t0_pp] = threshold_pp(eta1_val, eta0_val, Y_val_att1_np, Y_val_att0_np)
 
-    y_hat_test = (eta1_test >= t1_pp).astype(np.float32)
-    y_hat_test = np.concatenate((y_hat_test, (eta0_test >= t0_pp).astype(np.float32)))
-    # sort to preserve the order of the original dataset
-    y_hat_test = y_hat_test[np.argsort(Z_test.clone().cpu().detach().numpy())]
+    eta1_test = (eta1_test >= t1_pp).astype(np.float32)
+    eta0_test = (eta0_test >= t0_pp).astype(np.float32)
+    # Merge the predictions in order to preserve the original order
+    # In other words, look at the Z_test tensor, if it is 1, then the prediction is eta1_test, otherwise it is eta0_test
+    y_hat_test = np.zeros(len(Z_test))
+    y_hat_test[(Z_test == 1).cpu()] = eta1_test
+    y_hat_test[(Z_test == 0).cpu()] = eta0_test
+
     return y_hat_test
