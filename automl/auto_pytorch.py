@@ -1,6 +1,9 @@
 import time
 import warnings
 
+from numpy.ma.setup import configuration
+
+from experiments.cache import PATH as CACHE_PATH
 import torch
 from ConfigSpace import Configuration
 from sklearn.model_selection import KFold
@@ -53,6 +56,16 @@ class PytorchMLP(MLP):
                     metric=self.setup["fairness_metric"],
                     n_epochs=epochs
                 )
+                # Save predictions into a txt file in the cache folder
+                # Than place the file into the right subfolder, the name of the subfolder is the setup configuration
+                # The name of the file is an incremental number
+                sub_path = CACHE_PATH / self.get_sub_path()
+                config_text = f"{config.get('batch_size')}_{config.get('lambda_value')}_{config.get('learning_rate')}_{config.get('number_of_layers')}_{config.get('number_of_neurons_per_layer')}"
+                file_name = f"{config_text}_{exp_number}.txt"
+                # Recursively create the subfolder if it does not exist
+                sub_path.mkdir(parents=True, exist_ok=True)
+                with open(sub_path / file_name, "w") as f:
+                    f.write("\n".join(map(str, predictions)))
                 end_time = time.time()
                 logger.debug(f"end training model")
                 logger.debug(f"training time: {end_time - start_time}")

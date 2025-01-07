@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -49,6 +50,9 @@ class MLP:
 
     def get_name(self) -> str:
         return f"{self.setup['dataset']}_{self.setup['method']}_{self.setup['fairness_metric']}_{self.setup['protected']}"
+
+    def get_sub_path(self) -> str:
+        return f"{self.setup['dataset']}{os.sep}{self.setup['method']}{os.sep}{self.setup['fairness_metric']}{os.sep}{self.setup['protected']}"
 
 
 def plot_pareto(smac: HPOFacade, incumbents: list[Configuration]) -> None:
