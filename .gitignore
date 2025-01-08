@@ -2,9 +2,9 @@
 results/*.csv
 *smac3_output*
 *cache*
+!experiments/cache/__init__.py
 .idea/
 *.DS_Store
-!experiments/cache/__init__.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
