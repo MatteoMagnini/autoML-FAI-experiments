@@ -34,8 +34,6 @@ class MLP:
     @property
     def configspace(self) -> ConfigurationSpace:
         cs = ConfigurationSpace()
-        # The following line rises an error! Why? It says that cannot be serialized.
-        # batch_size = Categorical("batch_size", [32, 64, 128, 256, 512, 1024], default=32)
         batch_size = Integer("batch_size", (32, 1024), default=32)
         lambda_value = Float("lambda_value", (0, 1), default=0.5)
         learning_rate = Float("learning_rate", (1e-4, 1e-1), default=1e-3, log=True)
