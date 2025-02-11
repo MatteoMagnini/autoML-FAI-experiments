@@ -9,6 +9,18 @@ from ConfigSpace import Configuration
 from smac.facade.abstract_facade import AbstractFacade
 
 
+PRETTY_NAMES = {
+    "1 - accuracy": "1 - Accuracy",
+    "demographic_parity": "Demographic Parity",
+    "equal_odds": "Equal Odds",
+    "disparate_impact": "Disparate Impact",
+    "fauci": "FaUCI",
+    "jiang": "GDP",
+    "cho": "KDE",
+    "prr": "PRR",
+}
+
+
 def get_pareto_front(smac: AbstractFacade) -> tuple[list[Configuration], list[list[float]]]:
     """Returns the Pareto front of the runhistory.
 
@@ -132,18 +144,17 @@ def plot_pareto(
     ax.scatter(costs_x, costs_y, marker="x")
     ax.scatter(pareto_costs_x, pareto_costs_y, marker="x", c="r")
     ax.step(
-        [pareto_costs_x[0]] + pareto_costs_x.tolist() + [np.max(pareto_costs_x)
-                                                         ],  # We add bounds
+        [pareto_costs_x[0]] + pareto_costs_x.tolist() + [np.max(pareto_costs_x)],  # We add bounds
         [np.max(pareto_costs_y)] + pareto_costs_y.tolist() + \
         [np.min(pareto_costs_y)],  # We add bounds
         where="post",
         linestyle=":",
     )
-
-    ax.set_title(" ".join(file_path.split(
-        "/")[-1].split(".")[0].split("_")).title())
-    ax.set_xlabel(obj0)
-    ax.set_ylabel(obj1)
+    dataset, method = file_path.split("/")[-1].split(".")[0].split("_")[:2]
+    method = PRETTY_NAMES[method]
+    # ax.set_title("Results for " + method + " on " + dataset)
+    ax.set_xlabel(PRETTY_NAMES[obj0], fontsize=16)
+    ax.set_ylabel(PRETTY_NAMES[obj1], fontsize=16)
     # plt.show()
     fig.savefig(file_path)
 
@@ -191,7 +202,7 @@ def plot_multiple_pareto_fronts(
         plt.plot(
             sorted_costs[:, 0],
             sorted_costs[:, 1],
-            label=method_name,
+            label=PRETTY_NAMES[method_name],
             color=colors(idx),
             linewidth=2.5,
             linestyle='-'
@@ -203,13 +214,13 @@ def plot_multiple_pareto_fronts(
             color=colors(idx),
             edgecolors='black',
             s=50,
-            label=f"{method_name} points"
+            label=f"{PRETTY_NAMES[method_name]} points"
         )
 
     # Plot settings
-    plt.title(title)
-    plt.xlabel(obj0)
-    plt.ylabel(obj1)
+    # plt.title(title)
+    plt.xlabel(PRETTY_NAMES[obj0], fontsize=14)
+    plt.ylabel(PRETTY_NAMES[obj1], fontsize=14)
     plt.grid(True, linestyle='--', alpha=0.6)
     plt.legend(title="Methods", loc="best", fontsize='medium')
     plt.tight_layout()

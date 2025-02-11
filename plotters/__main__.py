@@ -23,11 +23,11 @@ if __name__ == "__main__":
                 print(f"\t\t{metric}")
                 pareto_fronts[approach] = metric_dict["incumbents"]
                 plot_pareto_raw(costs=metric_dict["results"], pareto_costs=metric_dict["incumbents"],
-                                file_path=os.path.join(args["output_path"], f"{dataset}_{approach}_{metric}.png"), obj0=objectives[0], obj1=objectives[1])
+                                file_path=os.path.join(args["output_path"], f"{dataset}_{approach}_{metric}.eps"), obj0=objectives[0], obj1=objectives[1])
         plot_multiple_pareto_fronts(
             pareto_fronts,
             title=f"Pareto Fronts for {dataset.capitalize()} dataset",
             obj0=objectives[0],
             obj1=objectives[1],
-            file_path=os.path.join(args["output_path"], f"{dataset}.png")
+            file_path=os.path.join(args["output_path"], f"{dataset}.eps")
         )

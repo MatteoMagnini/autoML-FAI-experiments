@@ -1,5 +1,6 @@
 # Custom exclusions
 results/*.csv
+results/*.eps
 *smac3_output*
 *cache*
 !experiments/cache/__init__.py
