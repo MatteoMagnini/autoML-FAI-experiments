@@ -97,7 +97,7 @@ def plot_pareto_smac(smac: AbstractFacade, file_path: os.path) -> None:
 def plot_pareto_raw(
     costs: dict,
     pareto_costs: dict,
-    file_path: os.path,
+    file_paths: os.path or list[os.path],
     obj0: str,
     obj1: str
 ) -> None:
@@ -123,7 +123,7 @@ def plot_pareto_raw(
         costs_y=costs_y,
         pareto_costs_x=pareto_costs_x,
         pareto_costs_y=pareto_costs_y,
-        file_path=file_path,
+        file_paths=file_paths,
         obj0=obj0,
         obj1=obj1
     )  
@@ -134,7 +134,7 @@ def plot_pareto(
     costs_y: dict,
     pareto_costs_x: dict,
     pareto_costs_y: dict,
-    file_path: os.path,
+    file_paths: os.path or list[os.path],
     obj0: str,
     obj1: str
 ) -> None:
@@ -150,13 +150,18 @@ def plot_pareto(
         where="post",
         linestyle=":",
     )
-    dataset, method = file_path.split("/")[-1].split(".")[0].split("_")[:2]
-    method = PRETTY_NAMES[method]
+
+    # dataset, method = file_paths[0].split("/")[-1].split(".")[0].split("_")[:2]
+    # method = PRETTY_NAMES[method]
     # ax.set_title("Results for " + method + " on " + dataset)
     ax.set_xlabel(PRETTY_NAMES[obj0], fontsize=16)
     ax.set_ylabel(PRETTY_NAMES[obj1], fontsize=16)
     # plt.show()
-    fig.savefig(file_path)
+    if isinstance(file_paths, list):
+        for file_path in file_paths:
+            plt.savefig(file_path)
+    else:
+        plt.savefig(file_paths)
 
 
 def plot_multiple_pareto_fronts(
@@ -164,7 +169,7 @@ def plot_multiple_pareto_fronts(
         title: str,
         obj0: str,
         obj1: str,
-        file_path: os.path,
+        file_paths: os.path or list[os.path],
 ) -> None:
     """
     Plots the Pareto frontiers for multiple methods on the same graph, with points and enhanced visual clarity.
@@ -224,5 +229,9 @@ def plot_multiple_pareto_fronts(
     plt.grid(True, linestyle='--', alpha=0.6)
     plt.legend(title="Methods", loc="best", fontsize='medium')
     plt.tight_layout()
-    plt.savefig(file_path)
+    if isinstance(file_paths, list):
+        for file_path in file_paths:
+            plt.savefig(file_path)
+    else:
+        plt.savefig(file_paths)
     plt.close()

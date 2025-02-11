@@ -1,5 +1,5 @@
 # Custom exclusions
-results/*.csv
+results/*.png
 results/*.eps
 *smac3_output*
 *cache*
