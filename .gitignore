@@ -4,7 +4,7 @@ analysis/*.csv
 results/*.png
 results/*.eps
 *smac3_output*
-*cache*
+**/cache
 !experiments/cache/__init__.py
 .idea/
 *.DS_Store
