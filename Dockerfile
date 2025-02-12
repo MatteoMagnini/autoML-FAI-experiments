@@ -11,17 +11,18 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory inside the container
-WORKDIR /home/dev/persistent/autoML-FAI-experiments
+WORKDIR /autoML-FAI-experiments
 
 # Install Poetry
 RUN pip install --no-cache-dir poetry
 
 # Copy only the Poetry files first to leverage Docker layer caching
-COPY pyproject.toml poetry.lock /autoML-FAI-experiments/
+COPY pyproject.toml poetry.lock ./
+COPY ../README.md /autoML-FAI-experiments/README.md
 
 # Install dependencies via Poetry (without creating virtual environments)
 RUN poetry config virtualenvs.create false \
   && poetry install --no-interaction --no-ansi
 
 # Copy all the files from the project's root directory to the working directory
-COPY . /autoML-FAI-experiments/
+COPY . .
