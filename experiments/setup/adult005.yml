@@ -1,5 +1,0 @@
-dataset: adult
-method: prr
-fairness_metric: demographic_parity
-protected: 8
-epochs: 100

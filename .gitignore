@@ -1,4 +1,5 @@
 # Custom exclusions
+old/
 analysis/*.csv
 results/*.png
 results/*.eps

@@ -1,5 +1,5 @@
 dataset: compas
-method: jiang
+method: prr
 fairness_metric: demographic_parity
 protected: 1
 epochs: 100

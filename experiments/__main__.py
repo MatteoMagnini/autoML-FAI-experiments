@@ -1,3 +1,4 @@
+import os
 import sys
 from smac import Scenario
 from smac import HyperparameterOptimizationFacade as HPOFacade
@@ -10,6 +11,7 @@ from automl.auto_jiang import JiangMLP
 from automl.auto_prr import PRRMLP
 from datasets import get_feature_data_type
 from experiments.setup import PATH as CONFIG_PATH, from_yaml_file_to_dict, update_with_dataset
+from experiments.smac_cache import PATH as SMAC_CACHE_PATH
 from results import save_incumbents
 
 if __name__ == "__main__":
@@ -42,6 +44,7 @@ if __name__ == "__main__":
     scenario = Scenario(
         mlp.configspace,
         objectives=objectives,
+        output_directory=SMAC_CACHE_PATH / setup['dataset'] / setup['method'],
         walltime_limit=12*60*60,  # After 12 hour, we stop the hyperparameter optimization
         n_trials=10000,  # Evaluate max 10^4 different trials
         n_workers=1  # multiprocessing.cpu_count()

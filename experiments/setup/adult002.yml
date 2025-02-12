@@ -1,5 +1,5 @@
 dataset: adult
-method: dpp
+method: fauci
 fairness_metric: demographic_parity
 protected: 8
 epochs: 100
