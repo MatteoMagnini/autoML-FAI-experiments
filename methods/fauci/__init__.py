@@ -20,7 +20,8 @@ def train_and_predict_fauci_classifier(
     lr: float,
     n_epochs: int,
     batch_size: int,
-    conditions: PyTorchConditions
+    conditions: PyTorchConditions,
+    on_test: bool = False,
 ):
     device = torch_device('cuda') if cuda.is_available() else torch_device('mps') if mps.is_available() else torch_device('cpu')
     # Retrieve train/test split pytorch tensors for index=split
@@ -79,13 +80,15 @@ def train_and_predict_fauci_classifier(
             optimizer.step()
             costs.append(cost.item())
 
-        y_hat_valid = net(XZ_valid)
-        p_loss = loss_function(y_hat_valid.squeeze(), Y_valid)
-        cost = (1 - lambda_) * p_loss + lambda_ * fairness_cost(y_hat_valid, Z_valid)
+        y_hat_valid = net(XZ_train)
+        p_loss = loss_function(y_hat_valid.squeeze(), Y_train)
+        cost = (1 - lambda_) * p_loss + lambda_ * fairness_cost(y_hat_valid, Z_train)
 
         # Early stopping
         if conditions.early_stop(epoch=epoch, loss_value=cost):
             break
 
-    y_hat_test = net(XZ_test).squeeze().detach().cpu().numpy()
-    return y_hat_test
+    if on_test:
+        return net(XZ_test).squeeze().detach().cpu().numpy()
+    else:
+        return net(XZ_valid).squeeze().detach().cpu().numpy()

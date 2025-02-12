@@ -93,12 +93,12 @@ def plot_pareto(smac: HPOFacade, incumbents: list[Configuration]) -> None:
     plt.show()
 
 
-class ResultSingleton:
+class ValidResultSingleton:
     _instance = None
 
     def __new__(cls):
         if cls._instance is None:
-            cls._instance = super(ResultSingleton, cls).__new__(cls)
+            cls._instance = super(ValidResultSingleton, cls).__new__(cls)
             cls._instance.results = []  # List of dictionaries with the results.
 
         return cls._instance
@@ -114,3 +114,24 @@ class ResultSingleton:
 
     def check_if_results_exist(self, name: str) -> bool:
         return (RESULT_PATH / f"{name}_results.csv").exists()
+
+
+class TestResultSingleton:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(TestResultSingleton, cls).__new__(cls)
+            cls._instance.results = []
+
+        return cls._instance
+
+    def append(self, result: dict[int: dict[str: float]]) -> None:
+        self.results.append(result)
+
+    def save_results(self, name: str) -> None:
+        df = pd.DataFrame(self.results)
+        df.to_csv(RESULT_PATH / f"test_{name}_results.csv", index=False)
+
+    def check_if_results_exist(self, name: str) -> bool:
+        return (RESULT_PATH / f"test_{name}_results.csv").exists()

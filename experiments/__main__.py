@@ -2,7 +2,7 @@ import os
 import sys
 from smac import Scenario
 from smac import HyperparameterOptimizationFacade as HPOFacade
-from automl import plot_pareto, ResultSingleton
+from automl import plot_pareto, ValidResultSingleton, TestResultSingleton
 from automl.auto_cho import ChoMLP
 from automl.auto_dpp import DPPMLP
 from automl.auto_fauci import FauciMLP
@@ -36,7 +36,7 @@ if __name__ == "__main__":
     objectives = ["1 - accuracy", "demographic_parity"]
 
     # Check if results are already available
-    if ResultSingleton().check_if_results_exist(mlp.get_name()):
+    if ValidResultSingleton().check_if_results_exist(mlp.get_name()):
         print("Results already exist. Skipping...")
         sys.exit(0)
 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
         mlp.configspace,
         objectives=objectives,
         output_directory=SMAC_CACHE_PATH / setup['dataset'] / setup['method'],
-        walltime_limit=12*60*60,  # After 12 hour, we stop the hyperparameter optimization
+        walltime_limit=24*60*60,  # After 24 hour, we stop the hyperparameter optimization
         n_trials=10000,  # Evaluate max 10^4 different trials
         n_workers=1  # multiprocessing.cpu_count()
     )
@@ -79,7 +79,8 @@ if __name__ == "__main__":
         cost = smac.runhistory.average_cost(incumbent)
         print("---", cost)
     save_incumbents(smac, incumbents, mlp.get_name() + "_incumbents.csv")
-    ResultSingleton().save_results(mlp.get_name())
+    ValidResultSingleton().save_results(mlp.get_name())
+    TestResultSingleton().save_results(mlp.get_name())
 
     # Let's plot a pareto front
     plot_pareto(smac, incumbents)

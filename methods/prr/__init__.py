@@ -45,7 +45,8 @@ def train_and_predict_prr_classifier(
         lr: float,
         n_epochs: int,
         batch_size: int,
-        conditions: PyTorchConditions
+        conditions: PyTorchConditions,
+        on_test: bool = False
 ):
     device = torch_device('cuda') if cuda.is_available() else torch_device('mps') if mps.is_available() else torch_device('cpu')
 
@@ -86,15 +87,15 @@ def train_and_predict_prr_classifier(
 
         # Split the datasets into two different groups w.r.t. the sensitive attribute
         # Here we assume that the sensitive attribute is binary!
-        group1_x_valid = X_valid[Z_valid == 0].to(device)
-        group1_y_valid = Y_valid[Z_valid == 0].to(device)
-        group2_x_valid = X_valid[Z_valid == 1].to(device)
-        group2_y_valid = Y_valid[Z_valid == 1].to(device)
+        group1_x_train = X_train[Z_train == 0].to(device)
+        group1_y_train = Y_train[Z_train == 0].to(device)
+        group2_x_train = X_train[Z_train == 1].to(device)
+        group2_y_train = Y_train[Z_train == 1].to(device)
 
-        group1_y_hat_valid = net(group1_x_valid).squeeze()
-        group2_y_hat_valid = net(group2_x_valid).squeeze()
-        group1_p_loss = loss_function(group1_y_hat_valid.squeeze(), group1_y_valid)
-        group2_p_loss = loss_function(group2_y_hat_valid.squeeze(), group2_y_valid)
+        group1_y_hat_valid = net(group1_x_train).squeeze()
+        group2_y_hat_valid = net(group2_x_train).squeeze()
+        group1_p_loss = loss_function(group1_y_hat_valid.squeeze(), group1_y_train)
+        group2_p_loss = loss_function(group2_y_hat_valid.squeeze(), group2_y_train)
         p_loss = group1_p_loss + group2_p_loss
         pi_loss = mutual_information(group1_y_hat_valid, group2_y_hat_valid)
         cost = (1 - lambda_) * p_loss + lambda_ * pi_loss
@@ -103,5 +104,7 @@ def train_and_predict_prr_classifier(
         if conditions.early_stop(epoch=epoch, loss_value=cost):
             break
 
-    y_hat_test = net(X_test).squeeze().detach().cpu().numpy()
-    return y_hat_test
+    if on_test:
+        return net(X_test).squeeze().detach().cpu().numpy()
+    else:
+        return net(X_valid).squeeze().detach().cpu().numpy()

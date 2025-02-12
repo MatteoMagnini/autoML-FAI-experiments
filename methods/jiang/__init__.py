@@ -21,7 +21,9 @@ def train_and_predict_jiang_classifier(
         lr: float,
         n_epochs: int,
         batch_size: int,
-        conditions: PyTorchConditions):
+        conditions: PyTorchConditions,
+        on_test: bool = False,
+):
     device = torch.device('cuda') if cuda.is_available() else torch.device('mps') if mps.is_available() else torch.device('cpu')
     net = net.to(device)
     test_sol = 1e-3
@@ -39,28 +41,47 @@ def train_and_predict_jiang_classifier(
     _, y_test, z_test, x_test = test_datasets
     train_dataset = TensorDataset(x_train, y_train, z_train)
     dataloader = DataLoader(train_dataset, batch_size, shuffle=True)
-    y_pred = regularized_learning(
-        dataloader,
-        x_valid,
-        y_valid,
-        z_valid,
-        x_test,
-        y_test,
-        z_test,
-        net,
-        penalty,
-        device,
-        lambda_,
-        lr,
-        nn.functional.binary_cross_entropy,
-        n_epochs,
-        conditions
-    )
 
     # Compute metrics
     # Round to the nearest integer
-    y_pred = np.squeeze(np.array(y_pred))
-    return y_pred
+    if on_test:
+        y_pred = regularized_learning(
+            dataloader,
+            x_train,
+            y_train,
+            z_train,
+            x_test,
+            y_test,
+            z_test,
+            net,
+            penalty,
+            device,
+            lambda_,
+            lr,
+            nn.functional.binary_cross_entropy,
+            n_epochs,
+            conditions
+        )
+        return np.squeeze(np.array(y_pred))
+    else:
+        y_pred = regularized_learning(
+            dataloader,
+            x_train,
+            y_train,
+            z_train,
+            x_valid,
+            y_valid,
+            z_valid,
+            net,
+            penalty,
+            device,
+            lambda_,
+            lr,
+            nn.functional.binary_cross_entropy,
+            n_epochs,
+            conditions
+        )
+        return np.squeeze(np.array(y_pred))
 
 
 def regularized_learning(
