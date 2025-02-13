@@ -1,1 +1,15 @@
-
+PRETTY_NAMES = {
+    "1 - accuracy": "1 - Accuracy",
+    "demographic_parity": "Demographic Parity",
+    "equal_odds": "Equal Odds",
+    "disparate_impact": "Disparate Impact",
+    "fauci": "FaUCI",
+    "jiang": "GDP",
+    "cho": "KDE",
+    "prr": "PRR",
+    "batch_size": "Batch Size",
+    "lambda_value": "Lambda Value",
+    "learning_rate": "Learning Rate",
+    "number_of_layers": "Number of Layers",
+    "number_of_neurons_per_layer": "Neurons per Layer",
+}

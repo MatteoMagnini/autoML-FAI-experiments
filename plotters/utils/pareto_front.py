@@ -1,5 +1,4 @@
 import os
-
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -8,17 +7,7 @@ import numpy as np
 from ConfigSpace import Configuration
 from smac.facade.abstract_facade import AbstractFacade
 
-
-PRETTY_NAMES = {
-    "1 - accuracy": "1 - Accuracy",
-    "demographic_parity": "Demographic Parity",
-    "equal_odds": "Equal Odds",
-    "disparate_impact": "Disparate Impact",
-    "fauci": "FaUCI",
-    "jiang": "GDP",
-    "cho": "KDE",
-    "prr": "PRR",
-}
+from plotters.utils import PRETTY_NAMES
 
 
 def get_pareto_front(smac: AbstractFacade) -> tuple[list[Configuration], list[list[float]]]:
@@ -88,7 +77,7 @@ def plot_pareto_smac(smac: AbstractFacade, file_path: os.path) -> None:
         costs_y=costs_y,
         pareto_costs_x=pareto_costs_x,
         pareto_costs_y=pareto_costs_y,
-        file_path=file_path,
+        file_paths=file_path,
         obj0=smac.scenario.objectives[0],
         obj1=smac.scenario.objectives[0]
     )
@@ -190,7 +179,7 @@ def plot_multiple_pareto_fronts(
     plt.figure(figsize=(10, 6))
 
     # Enhanced colormap with accessible and visually appealing colors
-    colors = plt.cm.get_cmap('Set2', len(methods_incumbents))
+    colors = plt.get_cmap('Set2', len(methods_incumbents))
 
     for idx, (method_name, incumbents) in enumerate(methods_incumbents.items()):
         costs = np.array(incumbents)
