@@ -8,6 +8,9 @@ from sklearn.preprocessing import MinMaxScaler
 from utils.pareto_front import plot_pareto_raw, plot_multiple_pareto_fronts
 from utils.results_collection import read_results
 from results import PATH as RESULTS_PATH
+from plotters.test import PATH as PLOT_TEST_PATH
+from plotters.parallel import PATH as PLOT_PARALLEL_PATH
+from plotters.pareto import PATH as PLOT_PARETO_PATH
 
 
 COORDINATES = sorted([
@@ -22,13 +25,12 @@ COORDINATES = sorted([
 if __name__ == "__main__":
     args = {
         "input_path": RESULTS_PATH,
-        "output_path": RESULTS_PATH,
         "file_pattern": "dataset_approach_metric_metric"
     }
 
     results, objectives = read_results(args)
-    # print(results)
 
+    # Pareto fronts
     for dataset, dataset_dict in results.items():
         print(dataset)
         pareto_fronts = {}
@@ -37,10 +39,10 @@ if __name__ == "__main__":
             for metric, metric_dict in approach_dict.items():
                 print(f"\t\t{metric}")
                 pareto_fronts[approach] = metric_dict["incumbents"]
-                base_path = os.path.join(args["output_path"], f"{dataset}_{approach}_{metric}")
+                base_path = os.path.join(PLOT_PARETO_PATH, f"{dataset}_{approach}_{metric}")
                 plot_pareto_raw(costs=metric_dict["results"], pareto_costs=metric_dict["incumbents"],
                                 file_paths=[base_path + ".eps", base_path + ".png"], obj0=objectives[0], obj1=objectives[1])
-        base_path = os.path.join(args["output_path"], dataset)
+        base_path = os.path.join(PLOT_PARETO_PATH, dataset)
         plot_multiple_pareto_fronts(
             pareto_fronts,
             title=f"Pareto Fronts for {dataset.capitalize()} dataset",
@@ -49,9 +51,9 @@ if __name__ == "__main__":
             file_paths=[base_path + ".eps", base_path + ".png"]
         )
 
-    # Iterate over the results files *_results.csv in the results folder
+    # Parallel coordinates
     for file in os.listdir(RESULTS_PATH):
-        if file.endswith("_results.csv"):
+        if file.endswith("_results.csv") and not file.startswith("test"):
             dataset, approach, metric_left, metric_right, id, _ = file.split("_")
             metric = f"{metric_left}_{metric_right}"
             results = pd.read_csv(os.path.join(RESULTS_PATH, file))
@@ -110,7 +112,7 @@ if __name__ == "__main__":
                 cbar_ax.set_xlabel(PRETTY_NAMES[cost], rotation=0, labelpad=20, fontsize=10)
 
                 # Salvare il grafico
-                plot_path = os.path.join(RESULTS_PATH, f"{dataset}_{approach}_{metric}_{cost}_parallel_coordinates")
+                plot_path = os.path.join(PLOT_PARALLEL_PATH, f"{dataset}_{approach}_{metric}_{cost}_parallel_coordinates")
                 plt.savefig(plot_path + ".eps", bbox_inches="tight")
                 plt.savefig(plot_path + ".png", bbox_inches="tight", dpi=300)
                 plt.close()
@@ -118,3 +120,29 @@ if __name__ == "__main__":
                 # Clean up plt
                 plt.clf()
                 del df_selected, df_selected_original, scaler
+
+    # Validation vs test
+    for file in os.listdir(RESULTS_PATH):
+        if file.startswith("test"):
+            _, dataset, approach, metric_left, metric_right, id, type = file.split("_")
+            validation_file = f"{dataset}_{approach}_{metric_left}_{metric_right}_{id}_{type}"
+            validation_results = pd.read_csv(os.path.join(RESULTS_PATH, validation_file))
+            test_results = pd.read_csv(os.path.join(RESULTS_PATH, file))
+
+            # Generate the plot that show the difference between the validation and test results
+            # The plot has 1 - accuracy on the x-axis and demographic parity on the y-axis
+            plt.figure(figsize=(12, 6))
+            sns.set_style("whitegrid")
+            sns.scatterplot(data=validation_results, x="1 - accuracy", y="demographic_parity", label="Validation")
+            sns.scatterplot(data=test_results, x="1 - accuracy", y="demographic_parity", label="Test")
+            plt.title(f"Validation vs Test results for {dataset.capitalize()} dataset")
+            plt.xlabel("1 - Accuracy")
+            plt.ylabel("Demographic Parity")
+            plt.legend()
+            plot_path = os.path.join(PLOT_TEST_PATH, f"{dataset}_{approach}_{metric_left}_{metric_right}_{id}_validation_vs_test")
+            plt.savefig(plot_path + ".eps", bbox_inches="tight")
+            plt.savefig(plot_path + ".png", bbox_inches="tight", dpi=300)
+            plt.close()
+            del validation_results, test_results
+
+            #

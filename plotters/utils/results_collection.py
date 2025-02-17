@@ -24,6 +24,9 @@ def read_results(args: dict) -> (dict, list):
     reader_dict = get_dict_from_pattern(args["file_pattern"])
     results = {}
     for complete_file in os.listdir(args["input_path"]):
+        # If it starts with test, skip
+        if complete_file.startswith("test"):
+            continue
         if complete_file.endswith(".csv"):
             file = complete_file.split("/")[-1].split(".")[0]
             current_reader = locate_file_position(reader_dict, file)

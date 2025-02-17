@@ -1,5 +1,7 @@
 # Custom exclusions
 old/
+plotters/**/*.png
+plotters/**/*.eps
 analysis/*.csv
 results/*.png
 results/*.eps
