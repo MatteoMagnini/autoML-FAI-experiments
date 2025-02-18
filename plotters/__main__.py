@@ -1,11 +1,13 @@
 import os
+
+import numpy as np
 import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 from pandas.plotting import parallel_coordinates
 from plotters.utils import PRETTY_NAMES
 from sklearn.preprocessing import MinMaxScaler
-from utils.pareto_front import plot_pareto_raw, plot_multiple_pareto_fronts
+from utils.pareto_front import plot_pareto_raw, plot_multiple_pareto_fronts, find_pareto_front
 from utils.results_collection import read_results
 from results import PATH as RESULTS_PATH
 from plotters.test import PATH as PLOT_TEST_PATH
@@ -33,18 +35,19 @@ if __name__ == "__main__":
     # Pareto fronts
     for dataset, dataset_dict in results.items():
         print(dataset)
-        pareto_fronts = {}
+        pareto_fronts_test = {}
         for approach, approach_dict in dataset_dict.items():
             print(f"\t{approach}")
             for metric, metric_dict in approach_dict.items():
                 print(f"\t\t{metric}")
-                pareto_fronts[approach] = metric_dict["incumbents"]
+                pareto_fronts_test[approach] = metric_dict["incumbents"]
                 base_path = os.path.join(PLOT_PARETO_PATH, f"{dataset}_{approach}_{metric}")
                 plot_pareto_raw(costs=metric_dict["results"], pareto_costs=metric_dict["incumbents"],
                                 file_paths=[base_path + ".eps", base_path + ".png"], obj0=objectives[0], obj1=objectives[1])
         base_path = os.path.join(PLOT_PARETO_PATH, dataset)
         plot_multiple_pareto_fronts(
-            pareto_fronts,
+            pareto_fronts_test,
+            None,
             title=f"Pareto Fronts for {dataset.capitalize()} dataset",
             obj0=objectives[0],
             obj1=objectives[1],
@@ -145,4 +148,43 @@ if __name__ == "__main__":
             plt.close()
             del validation_results, test_results
 
-            #
+    # Pareto Test
+    # Generate the pareto fronts like before, but this time for the test results only
+    # You need to reed the configurations from the incumbents and then select those configurations from the test results
+    # Then you can plot the pareto fronts
+    pareto_fronts_test = {}
+    pareto_fronts_valid = {}
+    for file in os.listdir(RESULTS_PATH):
+        if file.startswith("test"):
+            _, dataset, approach, metric_left, metric_right, id, type = file.split("_")
+            validation_file = f"{dataset}_{approach}_{metric_left}_{metric_right}_{id}_incumbents.csv"
+            validation_results = pd.read_csv(os.path.join(RESULTS_PATH, validation_file))
+            test_results = pd.read_csv(os.path.join(RESULTS_PATH, file))
+            # The test incumbents must have the same configurations as the validation incumbents (i.e., COORDINATES)
+            configurations = validation_results[COORDINATES].to_dict(orient="records")
+            test_results = find_pareto_front(test_results, "1 - accuracy", "demographic_parity")
+            test_results = test_results.dropna()
+            test_results = test_results.sort_values("1 - accuracy", ascending=False)
+            pareto_fronts_test[approach] = test_results[["1 - accuracy", "demographic_parity"]].to_numpy()
+            pareto_fronts_valid[approach] = validation_results[["1 - accuracy", "demographic_parity"]].to_numpy()
+
+    base_path = os.path.join(PLOT_TEST_PATH, "adult")
+    plot_multiple_pareto_fronts(
+        pareto_fronts_test,
+        None,
+        title=f"Pareto Fronts for Adult dataset",
+        obj0="1 - accuracy",
+        obj1="demographic_parity",
+        file_paths=[base_path + ".eps", base_path + ".png"]
+    )
+
+    # Plot the validation and test pareto fronts on the same graph with a line connecting the same configurations
+    # in the validation and test results
+    plot_multiple_pareto_fronts(
+        pareto_fronts_valid,
+        pareto_fronts_test,
+        title=f"Pareto Fronts for Adult dataset",
+        obj0="1 - accuracy",
+        obj1="demographic_parity",
+        file_paths=[base_path + "_validation_test.eps", base_path + "_validation_test.png"]
+    )

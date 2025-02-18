@@ -1,13 +1,56 @@
 import os
 import matplotlib.pyplot as plt
 import numpy as np
-
-
+import pandas as pd
 # SMAC stuff
 from ConfigSpace import Configuration
 from smac.facade.abstract_facade import AbstractFacade
-
 from plotters.utils import PRETTY_NAMES
+
+
+def find_pareto_front(results: pd.DataFrame, obj0: str, obj1: str) -> pd.DataFrame:
+    """Finds the Pareto front of the results DataFrame.
+
+    Parameters
+    ----------
+    results : pd.DataFrame
+        The DataFrame containing the results.
+    obj0 : str
+        The name of the first objective.
+    obj1 : str
+        The name of the second objective.
+
+    Returns
+    -------
+    pd.DataFrame
+        The DataFrame containing the Pareto front.
+    """
+    if results.empty:
+        return results
+
+        # Sort: First objective ascending, second objective ascending (per facilitare il controllo dei dominati)
+    results = results.sort_values(by=[obj0, obj1], ascending=[True, True], ignore_index=True)
+
+    pareto_front = []
+    best_so_far = float("inf")  # Best (minimum) value of obj1 found so far
+    last_obj0 = None  # Per tenere traccia dell'ultimo valore di obj0 inserito nel fronte
+
+    # Sweep attraverso i punti ordinati
+    for _, row in results.iterrows():
+        if row[obj0] != last_obj0 and row[obj1] < best_so_far:
+            pareto_front.append(row)
+            best_so_far = row[obj1]
+            last_obj0 = row[obj0]
+
+    pareto_front = pd.DataFrame(pareto_front)
+
+    # Drop duplicates (non dovrebbe servire con la logica attuale, ma per sicurezza)
+    pareto_front = pareto_front.drop_duplicates(subset=[obj0, obj1])
+
+    # Rimuove i corner cases (dove uno dei due obiettivi è 0)
+    pareto_front = pareto_front[(pareto_front[obj0] != 0) & (pareto_front[obj1] != 0)]
+
+    return pareto_front
 
 
 def get_pareto_front(smac: AbstractFacade) -> tuple[list[Configuration], list[list[float]]]:
@@ -155,6 +198,7 @@ def plot_pareto(
 
 def plot_multiple_pareto_fronts(
         methods_incumbents: dict[str, dict],
+        methods_incumbents_test: None or dict[str, dict],
         title: str,
         obj0: str,
         obj1: str,
@@ -188,8 +232,9 @@ def plot_multiple_pareto_fronts(
         if costs.shape[1] != 2:
             raise ValueError(f"Expected 2D costs, but got {costs.shape[1]}D data for method '{method_name}'.")
 
-        # Sort costs
-        sorted_indices = np.argsort(costs[:, 0])
+        # Sort costs based on 0th value, in case of ties, sort based on 1st value
+        # The fist one MUST be ascending, the second one MUST be descending
+        sorted_indices = np.lexsort((costs[:, 1], -costs[:, 0]))
         sorted_costs = costs[sorted_indices]
 
         # Plot the Pareto frontier line
@@ -210,6 +255,30 @@ def plot_multiple_pareto_fronts(
             s=50,
             label=f"{PRETTY_NAMES[method_name]} points"
         )
+
+        # Plot the test points if available
+        if methods_incumbents_test is not None:
+            test_costs = np.array(methods_incumbents_test[method_name])
+            sorted_indices = np.lexsort((test_costs[:, 1], -test_costs[:, 0]))
+            test_costs = test_costs[sorted_indices]
+            if test_costs.shape[1] != 2:
+                raise ValueError(f"Expected 2D costs, but got {test_costs.shape[1]}D data for method '{method_name}'.")
+            plt.plot(
+                test_costs[:, 0],
+                test_costs[:, 1],
+                color=colors(idx),
+                linewidth=2.5,
+                linestyle='--'
+            )
+            plt.scatter(
+                test_costs[:, 0],
+                test_costs[:, 1],
+                color=colors(idx),
+                edgecolors='black',
+                s=50,
+                marker='x',
+                label=f"{PRETTY_NAMES[method_name]} test points"
+            )
 
     # Plot settings
     # plt.title(title)

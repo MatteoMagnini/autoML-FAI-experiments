@@ -6,8 +6,8 @@ from datasets import PATH as DATASET_PATH
 
 
 DEFAULT_SEED = 0
-DEFAULT_TEST_SIZE = 0.2
-DEFAULT_VALIDATION_SIZE = 0.2
+DEFAULT_TEST_SIZE = 1/3
+DEFAULT_VALIDATION_SIZE = 1/3
 DEFAULT_COMPAS_DATASET_URL = "https://raw.githubusercontent.com/propublica/compas-analysis/master/compas-scores-two-years.csv"
 
 
