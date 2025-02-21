@@ -1,13 +1,11 @@
 import os
-
-import numpy as np
 import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 from pandas.plotting import parallel_coordinates
 from plotters.utils import PRETTY_NAMES
 from sklearn.preprocessing import MinMaxScaler
-from utils.pareto_front import plot_pareto_raw, plot_multiple_pareto_fronts, find_pareto_front
+from utils.pareto_front import plot_multiple_pareto_fronts, find_pareto_front
 from utils.results_collection import read_results
 from results import PATH as RESULTS_PATH
 from plotters.test import PATH as PLOT_TEST_PATH
@@ -27,7 +25,6 @@ COORDINATES = sorted([
 if __name__ == "__main__":
     args = {
         "input_path": RESULTS_PATH,
-        "file_pattern": "dataset_approach_metric_metric"
     }
 
     results, objectives = read_results(args)
@@ -35,24 +32,23 @@ if __name__ == "__main__":
     # Pareto fronts
     for dataset, dataset_dict in results.items():
         print(dataset)
-        pareto_fronts_test = {}
-        for approach, approach_dict in dataset_dict.items():
-            print(f"\t{approach}")
-            for metric, metric_dict in approach_dict.items():
-                print(f"\t\t{metric}")
-                pareto_fronts_test[approach] = metric_dict["incumbents"]
-                base_path = os.path.join(PLOT_PARETO_PATH, f"{dataset}_{approach}_{metric}")
-                plot_pareto_raw(costs=metric_dict["results"], pareto_costs=metric_dict["incumbents"],
-                                file_paths=[base_path + ".eps", base_path + ".png"], obj0=objectives[0], obj1=objectives[1])
-        base_path = os.path.join(PLOT_PARETO_PATH, dataset)
-        plot_multiple_pareto_fronts(
-            pareto_fronts_test,
-            None,
-            title=f"Pareto Fronts for {dataset.capitalize()} dataset",
-            obj0=objectives[0],
-            obj1=objectives[1],
-            file_paths=[base_path + ".eps", base_path + ".png"]
-        )
+        for metric, metric_dict in dataset_dict.items():
+            print(f"\t\t{metric}")
+            for attribute, attribute_dict in metric_dict.items():
+                print(f"\t\t\t{attribute}")
+                pareto_fronts_valid = {}
+                for approach, approach_dict in attribute_dict.items():
+                    print(f"\t\t\t\t{approach}")
+                    pareto_fronts_valid[approach] = find_pareto_front(approach_dict["results"], '1 - accuracy', metric)
+                base_path = os.path.join(PLOT_PARETO_PATH, f"{dataset}_{metric}_{attribute}")
+                plot_multiple_pareto_fronts(
+                    pareto_fronts_valid,
+                    None,
+                    title=f"Pareto Fronts for {dataset.capitalize()} dataset",
+                    obj0=objectives[0],
+                    obj1=objectives[1],
+                    file_paths=[base_path + ".eps", base_path + ".png"]
+                )
 
     # Parallel coordinates
     for file in os.listdir(RESULTS_PATH):
@@ -115,7 +111,7 @@ if __name__ == "__main__":
                 cbar_ax.set_xlabel(PRETTY_NAMES[cost], rotation=0, labelpad=20, fontsize=10)
 
                 # Salvare il grafico
-                plot_path = os.path.join(PLOT_PARALLEL_PATH, f"{dataset}_{approach}_{metric}_{cost}_parallel_coordinates")
+                plot_path = os.path.join(PLOT_PARALLEL_PATH, f"{dataset}_{metric}_{id}_{approach}")
                 plt.savefig(plot_path + ".eps", bbox_inches="tight")
                 plt.savefig(plot_path + ".png", bbox_inches="tight", dpi=300)
                 plt.close()
@@ -123,30 +119,6 @@ if __name__ == "__main__":
                 # Clean up plt
                 plt.clf()
                 del df_selected, df_selected_original, scaler
-
-    # Validation vs test
-    for file in os.listdir(RESULTS_PATH):
-        if file.startswith("test"):
-            _, dataset, approach, metric_left, metric_right, id, type = file.split("_")
-            validation_file = f"{dataset}_{approach}_{metric_left}_{metric_right}_{id}_{type}"
-            validation_results = pd.read_csv(os.path.join(RESULTS_PATH, validation_file))
-            test_results = pd.read_csv(os.path.join(RESULTS_PATH, file))
-
-            # Generate the plot that show the difference between the validation and test results
-            # The plot has 1 - accuracy on the x-axis and demographic parity on the y-axis
-            plt.figure(figsize=(12, 6))
-            sns.set_style("whitegrid")
-            sns.scatterplot(data=validation_results, x="1 - accuracy", y="demographic_parity", label="Validation")
-            sns.scatterplot(data=test_results, x="1 - accuracy", y="demographic_parity", label="Test")
-            plt.title(f"Validation vs Test results for {dataset.capitalize()} dataset")
-            plt.xlabel("1 - Accuracy")
-            plt.ylabel("Demographic Parity")
-            plt.legend()
-            plot_path = os.path.join(PLOT_TEST_PATH, f"{dataset}_{approach}_{metric_left}_{metric_right}_{id}_validation_vs_test")
-            plt.savefig(plot_path + ".eps", bbox_inches="tight")
-            plt.savefig(plot_path + ".png", bbox_inches="tight", dpi=300)
-            plt.close()
-            del validation_results, test_results
 
     # Pareto Test
     # Generate the pareto fronts like before, but this time for the test results only
@@ -157,6 +129,7 @@ if __name__ == "__main__":
     for file in os.listdir(RESULTS_PATH):
         if file.startswith("test"):
             _, dataset, approach, metric_left, metric_right, id, type = file.split("_")
+            metric = f"{metric_left}_{metric_right}"
             validation_file = f"{dataset}_{approach}_{metric_left}_{metric_right}_{id}_incumbents.csv"
             validation_results = pd.read_csv(os.path.join(RESULTS_PATH, validation_file))
             test_results = pd.read_csv(os.path.join(RESULTS_PATH, file))
@@ -165,26 +138,41 @@ if __name__ == "__main__":
             test_results = find_pareto_front(test_results, "1 - accuracy", "demographic_parity")
             test_results = test_results.dropna()
             test_results = test_results.sort_values("1 - accuracy", ascending=False)
-            pareto_fronts_test[approach] = test_results[["1 - accuracy", "demographic_parity"]].to_numpy()
-            pareto_fronts_valid[approach] = validation_results[["1 - accuracy", "demographic_parity"]].to_numpy()
+            if dataset not in pareto_fronts_test:
+                pareto_fronts_test[dataset] = {}
+                if metric not in pareto_fronts_test[dataset]:
+                    pareto_fronts_test[dataset][metric] = {}
+                    if id not in pareto_fronts_test[dataset][metric]:
+                        pareto_fronts_test[dataset][metric][id] = {}
+            if dataset not in pareto_fronts_valid:
+                pareto_fronts_valid[dataset] = {}
+                if metric not in pareto_fronts_valid[dataset]:
+                    pareto_fronts_valid[dataset][metric] = {}
+                    if id not in pareto_fronts_valid[dataset][metric]:
+                        pareto_fronts_valid[dataset][metric][id] = {}
+            pareto_fronts_test[dataset][metric][id][approach] = test_results[["1 - accuracy", "demographic_parity"]].to_numpy()
+            pareto_fronts_valid[dataset][metric][id][approach] = validation_results[["1 - accuracy", "demographic_parity"]].to_numpy()
 
-    base_path = os.path.join(PLOT_TEST_PATH, "adult")
-    plot_multiple_pareto_fronts(
-        pareto_fronts_test,
-        None,
-        title=f"Pareto Fronts for Adult dataset",
-        obj0="1 - accuracy",
-        obj1="demographic_parity",
-        file_paths=[base_path + ".eps", base_path + ".png"]
-    )
+    for dataset, dataset_dict in pareto_fronts_test.items():
+        for metric, metric_dict in dataset_dict.items():
+            for id, id_dict in metric_dict.items():
+                base_path = os.path.join(PLOT_TEST_PATH, f"{dataset}_{metric}_{id}")
+                plot_multiple_pareto_fronts(
+                    pareto_fronts_test[dataset][metric][id],
+                    None,
+                    title=f"Pareto Fronts for {PRETTY_NAMES[dataset]} dataset",
+                    obj0="1 - accuracy",
+                    obj1="demographic_parity",
+                    file_paths=[base_path + ".eps", base_path + ".png"]
+                )
 
-    # Plot the validation and test pareto fronts on the same graph with a line connecting the same configurations
-    # in the validation and test results
-    plot_multiple_pareto_fronts(
-        pareto_fronts_valid,
-        pareto_fronts_test,
-        title=f"Pareto Fronts for Adult dataset",
-        obj0="1 - accuracy",
-        obj1="demographic_parity",
-        file_paths=[base_path + "_validation_test.eps", base_path + "_validation_test.png"]
-    )
+                # Plot the validation and test pareto fronts on the same graph with a line connecting the same configurations
+                # in the validation and test results
+                plot_multiple_pareto_fronts(
+                    pareto_fronts_valid[dataset][metric][id],
+                    pareto_fronts_test[dataset][metric][id],
+                    title=f"Pareto Fronts for {PRETTY_NAMES[dataset]} dataset",
+                    obj0="1 - accuracy",
+                    obj1="demographic_parity",
+                    file_paths=[base_path + "_validation_test.eps", base_path + "_validation_test.png"]
+                )

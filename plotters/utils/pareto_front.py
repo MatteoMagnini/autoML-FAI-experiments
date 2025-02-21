@@ -5,10 +5,10 @@ import pandas as pd
 # SMAC stuff
 from ConfigSpace import Configuration
 from smac.facade.abstract_facade import AbstractFacade
-from plotters.utils import PRETTY_NAMES
+from plotters.utils import PRETTY_NAMES, COLOR_MAP
 
 
-def find_pareto_front(results: pd.DataFrame, obj0: str, obj1: str) -> pd.DataFrame:
+def find_pareto_front(results: pd.DataFrame or np.ndarray, obj0: str, obj1: str) -> pd.DataFrame:
     """Finds the Pareto front of the results DataFrame.
 
     Parameters
@@ -25,8 +25,8 @@ def find_pareto_front(results: pd.DataFrame, obj0: str, obj1: str) -> pd.DataFra
     pd.DataFrame
         The DataFrame containing the Pareto front.
     """
-    if results.empty:
-        return results
+    if isinstance(results, np.ndarray):
+        results = pd.DataFrame(results, columns=[obj0, obj1])
 
         # Sort: First objective ascending, second objective ascending (per facilitare il controllo dei dominati)
     results = results.sort_values(by=[obj0, obj1], ascending=[True, True], ignore_index=True)
@@ -90,6 +90,7 @@ def get_pareto_front(smac: AbstractFacade) -> tuple[list[Configuration], list[li
             nondominated_point_mask[:next_point_index]) + 1
 
     return [configs[i] for i in is_efficient], [average_costs[i] for i in is_efficient]
+
 
 def plot_pareto_smac(smac: AbstractFacade, file_path: os.path) -> None:
     """Plots configurations from SMAC and highlights the best configurations in a Pareto front."""
@@ -183,9 +184,6 @@ def plot_pareto(
         linestyle=":",
     )
 
-    # dataset, method = file_paths[0].split("/")[-1].split(".")[0].split("_")[:2]
-    # method = PRETTY_NAMES[method]
-    # ax.set_title("Results for " + method + " on " + dataset)
     ax.set_xlabel(PRETTY_NAMES[obj0], fontsize=16)
     ax.set_ylabel(PRETTY_NAMES[obj1], fontsize=16)
     # plt.show()
@@ -209,21 +207,23 @@ def plot_multiple_pareto_fronts(
 
     Parameters
     ----------
-    methods_incumbents : dict
-        A dictionary where keys are method names and values are lists of incumbents (configurations and costs).
+    methods_incumbents : dict[str, dict]
+        A dictionary with method names as keys and dictionaries of incumbents as values.
+        The incumbents are dictionaries with objective names as keys and lists of incumbents as values.
+    methods_incumbents_test : None or dict[str, dict]
+        A dictionary with method names as keys and dictionaries of test incumbents as values.
+        The test incumbents are dictionaries with objective names as keys and lists of test incumbents as values.
     title : str
-        Title of the plot.
+        The title of the plot.
     obj0 : str
-        Label for the X-axis.
+        The name of the first objective.
     obj1 : str
-        Label for the Y-axis.
-    file_path : os.path
-        Path to save the plot.
+        The name of the second objective.
+    file_paths : os.path or list[os.path]
+        The path where to save the plot
     """
     plt.figure(figsize=(10, 6))
 
-    # Enhanced colormap with accessible and visually appealing colors
-    colors = plt.get_cmap('Set2', len(methods_incumbents))
 
     for idx, (method_name, incumbents) in enumerate(methods_incumbents.items()):
         costs = np.array(incumbents)
@@ -241,8 +241,8 @@ def plot_multiple_pareto_fronts(
         plt.plot(
             sorted_costs[:, 0],
             sorted_costs[:, 1],
-            label=PRETTY_NAMES[method_name],
-            color=colors(idx),
+            label=f"{PRETTY_NAMES[method_name]} Pareto frontier",
+            color=COLOR_MAP[PRETTY_NAMES[method_name]],
             linewidth=2.5,
             linestyle='-'
         )
@@ -250,10 +250,10 @@ def plot_multiple_pareto_fronts(
         plt.scatter(
             sorted_costs[:, 0],
             sorted_costs[:, 1],
-            color=colors(idx),
+            color=COLOR_MAP[PRETTY_NAMES[method_name]],
             edgecolors='black',
             s=50,
-            label=f"{PRETTY_NAMES[method_name]} points"
+            label=f"{PRETTY_NAMES[method_name]} incumbents"
         )
 
         # Plot the test points if available
@@ -266,18 +266,19 @@ def plot_multiple_pareto_fronts(
             plt.plot(
                 test_costs[:, 0],
                 test_costs[:, 1],
-                color=colors(idx),
+                color=COLOR_MAP[PRETTY_NAMES[method_name]],
+                label=f"{PRETTY_NAMES[method_name]} test Pareto frontier",
                 linewidth=2.5,
                 linestyle='--'
             )
             plt.scatter(
                 test_costs[:, 0],
                 test_costs[:, 1],
-                color=colors(idx),
+                color=COLOR_MAP[PRETTY_NAMES[method_name]],
                 edgecolors='black',
                 s=50,
                 marker='x',
-                label=f"{PRETTY_NAMES[method_name]} test points"
+                label=f"{PRETTY_NAMES[method_name]} test incumbents"
             )
 
     # Plot settings
