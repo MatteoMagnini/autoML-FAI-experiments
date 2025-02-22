@@ -1,7 +1,7 @@
 PRETTY_NAMES = {
     "adult": "Adult",
     "compas": "Compas",
-    "1 - accuracy": "1 - Accuracy",
+    "1 - accuracy": "Classification Error",
     "demographic_parity": "Demographic Parity",
     "equal_odds": "Equal Odds",
     "disparate_impact": "Disparate Impact",
