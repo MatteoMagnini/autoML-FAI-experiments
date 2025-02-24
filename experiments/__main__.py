@@ -44,7 +44,7 @@ if __name__ == "__main__":
     scenario = Scenario(
         mlp.configspace,
         objectives=objectives,
-        output_directory=SMAC_CACHE_PATH / setup['dataset'] / setup['fairness_metric'] / setup['protected'] / setup['method'],
+        output_directory=SMAC_CACHE_PATH / setup['dataset'] / setup['fairness_metric'] / str(setup['protected']) / setup['method'],
         walltime_limit=24*60*60,  # After 24 hour, we stop the hyperparameter optimization
         n_trials=10000,  # Evaluate max 10^4 different trials
         n_workers=1  # multiprocessing.cpu_count()
