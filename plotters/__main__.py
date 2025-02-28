@@ -135,23 +135,23 @@ if __name__ == "__main__":
             test_results = pd.read_csv(os.path.join(RESULTS_PATH, file))
             # The test incumbents must have the same configurations as the validation incumbents (i.e., COORDINATES)
             configurations = validation_results[COORDINATES].to_dict(orient="records")
-            test_results = find_pareto_front(test_results, "1 - accuracy", "demographic_parity")
+            test_results = find_pareto_front(test_results, "1 - accuracy", metric)
             test_results = test_results.dropna()
             test_results = test_results.sort_values("1 - accuracy", ascending=False)
             if dataset not in pareto_fronts_test:
                 pareto_fronts_test[dataset] = {}
-                if metric not in pareto_fronts_test[dataset]:
-                    pareto_fronts_test[dataset][metric] = {}
-                    if id not in pareto_fronts_test[dataset][metric]:
-                        pareto_fronts_test[dataset][metric][id] = {}
+            if metric not in pareto_fronts_test[dataset]:
+                pareto_fronts_test[dataset][metric] = {}
+            if id not in pareto_fronts_test[dataset][metric]:
+                pareto_fronts_test[dataset][metric][id] = {}
             if dataset not in pareto_fronts_valid:
                 pareto_fronts_valid[dataset] = {}
-                if metric not in pareto_fronts_valid[dataset]:
-                    pareto_fronts_valid[dataset][metric] = {}
-                    if id not in pareto_fronts_valid[dataset][metric]:
-                        pareto_fronts_valid[dataset][metric][id] = {}
-            pareto_fronts_test[dataset][metric][id][approach] = test_results[["1 - accuracy", "demographic_parity"]].to_numpy()
-            pareto_fronts_valid[dataset][metric][id][approach] = validation_results[["1 - accuracy", "demographic_parity"]].to_numpy()
+            if metric not in pareto_fronts_valid[dataset]:
+                pareto_fronts_valid[dataset][metric] = {}
+            if id not in pareto_fronts_valid[dataset][metric]:
+                pareto_fronts_valid[dataset][metric][id] = {}
+            pareto_fronts_test[dataset][metric][id][approach] = test_results[["1 - accuracy", metric]].to_numpy()
+            pareto_fronts_valid[dataset][metric][id][approach] = validation_results[["1 - accuracy", metric]].to_numpy()
 
     for dataset, dataset_dict in pareto_fronts_test.items():
         for metric, metric_dict in dataset_dict.items():
@@ -162,7 +162,7 @@ if __name__ == "__main__":
                     None,
                     title=f"Pareto Fronts for {PRETTY_NAMES[dataset]} dataset",
                     obj0="1 - accuracy",
-                    obj1="demographic_parity",
+                    obj1=metric,
                     file_paths=[base_path + ".eps", base_path + ".png"]
                 )
 
@@ -173,6 +173,6 @@ if __name__ == "__main__":
                     pareto_fronts_test[dataset][metric][id],
                     title=f"Pareto Fronts for {PRETTY_NAMES[dataset]} dataset",
                     obj0="1 - accuracy",
-                    obj1="demographic_parity",
+                    obj1=metric,
                     file_paths=[base_path + "_validation_test.eps", base_path + "_validation_test.png"]
                 )
