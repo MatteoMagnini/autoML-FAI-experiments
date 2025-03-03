@@ -1,0 +1,153 @@
+{
+    "name": "cee894a167cf8356b6162dffb1f22ef9",
+    "deterministic": false,
+    "objectives": [
+        "1 - accuracy",
+        "demographic_parity"
+    ],
+    "crash_cost": Infinity,
+    "termination_cost_threshold": Infinity,
+    "walltime_limit": 86400,
+    "cputime_limit": Infinity,
+    "trial_walltime_limit": null,
+    "trial_memory_limit": null,
+    "n_trials": 10000,
+    "use_default_config": false,
+    "instances": null,
+    "instance_features": null,
+    "min_budget": null,
+    "max_budget": null,
+    "seed": 0,
+    "n_workers": 1,
+    "_meta": {
+        "facade": {
+            "name": "HyperparameterOptimizationFacade"
+        },
+        "runner": {
+            "name": "TargetFunctionRunner",
+            "code": "b't\\x00j\\x01\\xa0\\x02\\xa1\\x00r\\x07d\\x01n\\tt\\x00j\\x03j\\x04\\xa0\\x02\\xa1\\x00r\\x0fd\\x02n\\x01d\\x03}\\x04|\\x00j\\x05d\\x04\\x19\\x00}\\x05|\\x00j\\x05d\\x05\\x19\\x00}\\x06|\\x00j\\x05d\\x06\\x19\\x00}\\x07|\\x00j\\x05d\\x07\\x19\\x00}\\x08i\\x00}\\tt\\x06d\\x08d\\t|\\x02d\\n\\x8d\\x03}\\ng\\x00}\\x0bt\\x07\\x83\\x00}\\x0ct\\x08\\x83\\x00}\\rt\\t|\\n\\xa0\\n|\\x05\\xa1\\x01\\x83\\x01D\\x00\\x90\\x01]\\x19\\\\\\x02}\\x0e\\\\\\x02}\\x0f}\\x10|\\x05j\\x0b|\\x0f\\x19\\x00|\\x05j\\x0b|\\x10\\x19\\x00\\x02\\x02}\\x11}\\x12t\\x0c|\\x11|\\x12|\\x06\\x83\\x03}\\x13|\\x13\\xa0\\r|\\x08\\xa1\\x01\\x01\\x00t\\x0e\\xa0\\x0f\\xa1\\x00\\x8f\\xd5\\x01\\x00t\\x0e\\xa0\\x10d\\x0b\\xa1\\x01\\x01\\x00t\\x11|\\x11j\\x12d\\x0c\\x19\\x00|\\x00j\\x13\\x18\\x00|\\x01\\xa0\\x14d\\r\\xa1\\x01|\\x01\\xa0\\x14d\\x0e\\xa1\\x01d\\x0f\\x8d\\x03}\\x14|\\x14\\xa0\\x15|\\x04\\xa1\\x01\\x01\\x00t\\x16|\\x14|\\x07\\x83\\x02}\\x15t\\x17\\xa0\\x17\\xa1\\x00}\\x16|\\x00j\\x18|\\x14|\\x13|\\x01\\xa0\\x14d\\x10\\xa1\\x01|\\x15|\\x01\\xa0\\x14d\\x11\\xa1\\x01|\\x01\\xa0\\x14d\\x12\\xa1\\x01|\\x00j\\x05d\\x13\\x19\\x00|\\x07d\\x14d\\x15\\x8d\\t}\\x17t\\x19|\\x00\\xa0\\x1a\\xa1\\x00\\x1b\\x00}\\x18|\\x01\\xa0\\x14d\\x10\\xa1\\x01\\x9b\\x00d\\x16|\\x01\\xa0\\x14d\\x11\\xa1\\x01\\x9b\\x00d\\x16|\\x01\\xa0\\x14d\\x12\\xa1\\x01\\x9b\\x00d\\x16|\\x01\\xa0\\x14d\\r\\xa1\\x01\\x9b\\x00d\\x16|\\x01\\xa0\\x14d\\x0e\\xa1\\x01\\x9b\\x00\\x9d\\t}\\x19|\\x19\\x9b\\x00d\\x16|\\x0e\\x9b\\x00d\\x17\\x9d\\x04}\\x1a|\\x18j\\x1bd\\td\\td\\x18\\x8d\\x02\\x01\\x00t\\x1c|\\x18|\\x1a\\x1b\\x00d\\x19\\x83\\x02\\x8f\\x13}\\x1b|\\x1b\\xa0\\x1dd\\x1a\\xa0\\x1et\\x1ft |\\x17\\x83\\x02\\xa1\\x01\\xa1\\x01\\x01\\x00W\\x00d\\x00\\x04\\x00\\x04\\x00\\x83\\x03\\x01\\x00n\\x081\\x00s\\xf0w\\x01\\x01\\x00\\x01\\x00\\x01\\x00Y\\x00\\x01\\x00t\\x17\\xa0\\x17\\xa1\\x00}\\x1ct!\\xa0\"d\\x1b\\xa1\\x01\\x01\\x00t!\\xa0\"d\\x1c|\\x1c|\\x16\\x18\\x00\\x9b\\x00\\x9d\\x02\\xa1\\x01\\x01\\x00|\\x12j\\x0bd\\x00d\\x00\\x85\\x02d\\x1df\\x02\\x19\\x00j#d\\td\\x1e\\x8d\\x01}\\x1d|\\x12j\\x0bd\\x00d\\x00\\x85\\x02|\\x08f\\x02\\x19\\x00j#d\\td\\x1e\\x8d\\x01}\\x1e|\\x0b\\xa0$t%|\\x1e|\\x17|\\x1dt!\\x83\\x04\\xa1\\x01\\x01\\x00W\\x00d\\x00\\x04\\x00\\x04\\x00\\x83\\x03\\x01\\x00n\\t1\\x00\\x90\\x01s7w\\x01\\x01\\x00\\x01\\x00\\x01\\x00Y\\x00\\x01\\x00t&d\\x1fd \\x84\\x00|\\x0bD\\x00\\x83\\x01\\x83\\x01d\\x08\\x1b\\x00}\\x1ft&d!d \\x84\\x00|\\x0bD\\x00\\x83\\x01\\x83\\x01d\\x08\\x1b\\x00} |\\x1f| d\"\\x9c\\x02}\\tq=t\\'|\\x01\\x83\\x01}!|\\x0c\\xa0$|!|\\tB\\x00\\xa1\\x01\\x01\\x00t\\x0c|\\x05|\\x06|\\x06\\x83\\x03}\\x13|\\x13\\xa0\\r|\\x08\\xa1\\x01\\x01\\x00t\\x11|\\x05j\\x12d\\x0c\\x19\\x00|\\x00j\\x13\\x18\\x00|\\x01\\xa0\\x14d\\r\\xa1\\x01|\\x01\\xa0\\x14d\\x0e\\xa1\\x01d\\x0f\\x8d\\x03}\\x14|\\x14\\xa0\\x15|\\x04\\xa1\\x01\\x01\\x00t\\x16|\\x14|\\x07\\x83\\x02}\\x15t\\x17\\xa0\\x17\\xa1\\x00}\\x16|\\x00j\\x18|\\x14|\\x13|\\x01\\xa0\\x14d\\x10\\xa1\\x01|\\x15|\\x01\\xa0\\x14d\\x11\\xa1\\x01|\\x01\\xa0\\x14d\\x12\\xa1\\x01|\\x00j\\x05d\\x13\\x19\\x00|\\x07d\\x14d\\x15\\x8d\\t}\\x17t\\x19|\\x00\\xa0\\x1a\\xa1\\x00\\x1b\\x00}\\x18d#|\\x01\\xa0\\x14d\\x10\\xa1\\x01\\x9b\\x00d\\x16|\\x01\\xa0\\x14d\\x11\\xa1\\x01\\x9b\\x00d\\x16|\\x01\\xa0\\x14d\\x12\\xa1\\x01\\x9b\\x00d\\x16|\\x01\\xa0\\x14d\\r\\xa1\\x01\\x9b\\x00d\\x16|\\x01\\xa0\\x14d\\x0e\\xa1\\x01\\x9b\\x00d\\x17\\x9d\\x0b}\\x1at\\x1c|\\x18|\\x1a\\x1b\\x00d\\x19\\x83\\x02\\x8f\\x13}\\x1b|\\x1b\\xa0\\x1dd\\x1a\\xa0\\x1et\\x1ft |\\x17\\x83\\x02\\xa1\\x01\\xa1\\x01\\x01\\x00W\\x00d\\x00\\x04\\x00\\x04\\x00\\x83\\x03\\x01\\x00n\\t1\\x00\\x90\\x01s\\xeew\\x01\\x01\\x00\\x01\\x00\\x01\\x00Y\\x00\\x01\\x00t\\x17\\xa0\\x17\\xa1\\x00}\\x1ct!\\xa0\"d\\x1b\\xa1\\x01\\x01\\x00t!\\xa0\"d\\x1c|\\x1c|\\x16\\x18\\x00\\x9b\\x00\\x9d\\x02\\xa1\\x01\\x01\\x00|\\x06j\\x0bd\\x00d\\x00\\x85\\x02d\\x1df\\x02\\x19\\x00j#d\\td\\x1e\\x8d\\x01}\"|\\x06j\\x0bd\\x00d\\x00\\x85\\x02|\\x08f\\x02\\x19\\x00j#d\\td\\x1e\\x8d\\x01}#|\\r\\xa0$|!t%|#|\\x17|\"t!\\x83\\x04B\\x00\\xa1\\x01\\x01\\x00|\\tS\\x00'"
+        },
+        "model": {
+            "name": "RandomForest",
+            "types": [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "bounds": [
+                [
+                    0,
+                    1.0
+                ],
+                [
+                    0,
+                    1.0
+                ],
+                [
+                    0,
+                    1.0
+                ],
+                [
+                    0,
+                    1.0
+                ],
+                [
+                    0,
+                    1.0
+                ]
+            ],
+            "pca_components": 7,
+            "n_trees": 10,
+            "n_points_per_tree": -1,
+            "ratio_features": 1.0,
+            "min_samples_split": 2,
+            "min_samples_leaf": 1,
+            "max_depth": 1048576,
+            "eps_purity": 1e-08,
+            "max_nodes": 1048576,
+            "bootstrapping": true
+        },
+        "acquisition_maximizer": {
+            "name": "LocalAndSortedRandomSearch",
+            "acquisition_function": {
+                "name": "EI",
+                "xi": 0.0,
+                "log": true
+            },
+            "challengers": 10000,
+            "seed": 0,
+            "random_search": {
+                "name": "RandomSearch",
+                "acquisition_function": {
+                    "name": "EI",
+                    "xi": 0.0,
+                    "log": true
+                },
+                "challengers": 5000,
+                "seed": 0
+            },
+            "local_search": {
+                "name": "LocalSearch",
+                "acquisition_function": {
+                    "name": "EI",
+                    "xi": 0.0,
+                    "log": true
+                },
+                "challengers": 5000,
+                "seed": 0,
+                "max_steps": null,
+                "n_steps_plateau_walk": 10,
+                "vectorization_min_obtain": 2,
+                "vectorization_max_obtain": 64
+            }
+        },
+        "acquisition_function": {
+            "name": "EI",
+            "xi": 0.0,
+            "log": true
+        },
+        "intensifier": {
+            "name": "Intensifier",
+            "max_incumbents": 10,
+            "seed": 0
+        },
+        "initial_design": {
+            "name": "SobolInitialDesign",
+            "n_configs": 5,
+            "n_configs_per_hyperparameter": 10,
+            "additional_configs": [],
+            "seed": 0
+        },
+        "random_design": {
+            "name": "ProbabilityRandomDesign",
+            "seed": 0,
+            "probability": 0.2
+        },
+        "runhistory_encoder": {
+            "name": "RunHistoryLogScaledEncoder",
+            "considered_states": [
+                1,
+                2,
+                4
+            ],
+            "lower_budget_states": [],
+            "scale_percentage": 5,
+            "seed": 0
+        },
+        "multi_objective_algorithm": {
+            "name": "ParEGO",
+            "rho": 0.05,
+            "seed": 0
+        },
+        "config_selector": {
+            "name": "ConfigSelector",
+            "retrain_after": 8,
+            "retries": 16,
+            "min_trials": 1
+        },
+        "version": "2.2.0"
+    },
+    "output_directory": "/home/dev/persistent/autoML-FAI-experiments/experiments/smac_cache/compas/demographic_parity/5/cho/cee894a167cf8356b6162dffb1f22ef9/0"
+}
