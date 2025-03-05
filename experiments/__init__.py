@@ -4,7 +4,7 @@ from pathlib import Path
 import numpy as np
 import torch
 from torch import nn
-from analysis.metrics import demographic_parity
+from analysis.metrics import demographic_parity, disparate_impact, equalized_odds
 from _logging import INDENT, LOG_FLOAT_PRECISION
 from experiments.setup import NEURONS_PER_LAYER
 
@@ -89,7 +89,7 @@ class PytorchNN(nn.Module):
         return x
 
 
-def evaluate_predictions(protected: np.array, y_pred: np.array, y_true: np.array, logger: Logger) -> dict[str: float]:
+def evaluate_predictions(fairness_metric: str, protected: np.array, y_pred: np.array, y_true: np.array, logger: Logger) -> dict[str: float]:
     """
     Evaluate the predictions. Compute the following metrics:
     - Accuracy
@@ -101,6 +101,7 @@ def evaluate_predictions(protected: np.array, y_pred: np.array, y_true: np.array
     # - Disparate impact
     # - Equalized odds
 
+    @param fairness_metric: fairness metric
     @param protected: protected features
     @param y_pred: predicted labels
     @param y_true: true labels
@@ -116,21 +117,24 @@ def evaluate_predictions(protected: np.array, y_pred: np.array, y_true: np.array
     # recall = tp / (tp + fn) if tp + fn > 0 else 0
     # f1_score = 2 * precision * recall / (precision + recall) if precision + recall > 0 else 0
     # auc = roc_auc_score(y_true, y_pred)
-    dp = demographic_parity(protected, y_pred)
-    # eo = equalized_odds(protected, y_true, y_pred)
-    # di = disparate_impact(protected, y_pred)
+    if fairness_metric == 'demographic_parity':
+        fairness_value = demographic_parity(protected, y_pred)
+    elif fairness_metric == 'disparate_impact':
+        fairness_value = disparate_impact(protected, y_pred)
+    elif fairness_metric == 'equalized_odds':
+        fairness_value = equalized_odds(protected, y_true, y_pred)
+    else:
+        raise ValueError(f"Unknown fairness metric: {fairness_metric}")
     logger.info(f"metrics:")
     # for metric, value in zip(METRIC_LIST_NAMES, [accuracy, precision, recall, f1_score, auc, dp, di, eo]):
     #     logger.info(f"{INDENT}{metric}: {value:.{LOG_FLOAT_PRECISION}f}")
     logger.info(f"{INDENT}accuracy: {accuracy:.{LOG_FLOAT_PRECISION}f}")
-    logger.info(f"{INDENT}demographic_parity: {dp:.{LOG_FLOAT_PRECISION}f}")
+    logger.info(f"{INDENT}{fairness_metric}: {fairness_value:.{LOG_FLOAT_PRECISION}f}")
     return {
         "1 - accuracy": 1 - accuracy,
         # "1 - precision": 1 - precision,
         # "1 - recall": 1 - recall,
         # "1 - f1": 1 - f1_score,
         # "1 - auc": 1 - auc,
-        "demographic_parity": dp,
-        # "1 - disparate_impact": 1 - di,
-        # "equalized_odds": eo
+        fairness_metric: fairness_value
     }

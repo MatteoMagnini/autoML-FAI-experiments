@@ -14,6 +14,7 @@ from experiments.setup import PATH as CONFIG_PATH, from_yaml_file_to_dict, updat
 from experiments.smac_cache import PATH as SMAC_CACHE_PATH
 from results import save_incumbents
 
+
 if __name__ == "__main__":
     conf_file_name = sys.argv[1]
     setup = from_yaml_file_to_dict(CONFIG_PATH / conf_file_name)
@@ -33,7 +34,7 @@ if __name__ == "__main__":
         mlp = DPPMLP(setup)
     else:
         raise ValueError(f"Unknown method {setup['method']}")
-    objectives = ["1 - accuracy", "demographic_parity"]
+    objectives = ["1 - accuracy", setup["fairness_metric"]]
 
     # Check if results are already available
     if ValidResultSingleton().check_if_results_exist(mlp.get_name()):

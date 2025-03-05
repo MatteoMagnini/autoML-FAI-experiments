@@ -73,12 +73,12 @@ class PytorchMLP(MLP):
                 logger.debug(f"training time: {end_time - start_time}")
                 valid_y = valid_data.iloc[:, -1].reset_index(drop=True)
                 valid_p = valid_data.iloc[:, protected].reset_index(drop=True)
-                fold_results.append(evaluate_predictions(valid_p, predictions, valid_y, logger))
+                fold_results.append(evaluate_predictions(self.setup["fairness_metric"], valid_p, predictions, valid_y, logger))
 
-            fairness_metric = sum([result["demographic_parity"] for result in fold_results]) / 5
+            fairness_metric = sum([result[self.setup["fairness_metric"]] for result in fold_results]) / 5
             one_minus_accuracy = sum([result["1 - accuracy"] for result in fold_results]) / 5
             results = {
-                "demographic_parity": fairness_metric,
+                self.setup["fairness_metric"]: fairness_metric,
                 "1 - accuracy": one_minus_accuracy
             }
 
@@ -117,6 +117,6 @@ class PytorchMLP(MLP):
         logger.debug(f"training time: {end_time - start_time}")
         test_y = test.iloc[:, -1].reset_index(drop=True)
         test_p = test.iloc[:, protected].reset_index(drop=True)
-        test_singleton.append(conf_info | evaluate_predictions(test_p, predictions, test_y, logger))
+        test_singleton.append(conf_info | evaluate_predictions(self.setup["fairness_metric"], test_p, predictions, test_y, logger))
 
         return results

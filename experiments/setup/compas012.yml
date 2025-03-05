@@ -1,0 +1,5 @@
+dataset: compas
+method: prr
+fairness_metric: equalized_odds
+protected: 1
+epochs: 100
