@@ -3,7 +3,7 @@ PRETTY_NAMES = {
     "compas": "Compas",
     "1 - accuracy": "Classification Error",
     "demographic_parity": "Demographic Parity",
-    "equal_odds": "Equal Odds",
+    "equalized_odds": "Equalized Odds",
     "disparate_impact": "Disparate Impact",
     "fauci": "FaUCI",
     "jiang": "GDP",

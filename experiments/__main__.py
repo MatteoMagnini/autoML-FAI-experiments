@@ -79,7 +79,7 @@ if __name__ == "__main__":
     for incumbent in incumbents:
         cost = smac.runhistory.average_cost(incumbent)
         print("---", cost)
-    save_incumbents(smac, incumbents, mlp.get_name() + "_incumbents.csv")
+    save_incumbents(smac, incumbents, setup["fairness_metric"], mlp.get_name() + "_incumbents.csv")
     ValidResultSingleton().save_results(mlp.get_name())
     TestResultSingleton().save_results(mlp.get_name())
 

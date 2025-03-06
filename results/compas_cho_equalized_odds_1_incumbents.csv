@@ -1,4 +1,4 @@
-batch_size,lambda_value,learning_rate,number_of_layers,number_of_neurons_per_layer,1 - accuracy,demographic_parity
+batch_size,lambda_value,learning_rate,number_of_layers,number_of_neurons_per_layer,1 - accuracy,equalized_odds
 62,0.9394942240782,0.0356745379399,5,406,0.4506123429120308,0.0
 757,0.9877058658822,0.000104310883,4,928,0.011436891145527973,0.009377280296757818
 665,0.3133740170333,0.0049063110624,4,968,0.1820052743049621,0.003926334157586098

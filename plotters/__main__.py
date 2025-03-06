@@ -57,7 +57,7 @@ if __name__ == "__main__":
             metric = f"{metric_left}_{metric_right}"
             results = pd.read_csv(os.path.join(RESULTS_PATH, file))
 
-            for cost in ["1 - accuracy", "demographic_parity"]:
+            for cost in ["1 - accuracy", metric]:
                 selected_cols = [cost] + COORDINATES
                 df_selected = results.copy()[selected_cols].dropna()
 
