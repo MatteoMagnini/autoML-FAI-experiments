@@ -1,0 +1,2 @@
+batch_size,lambda_value,learning_rate,number_of_layers,number_of_neurons_per_layer,1 - accuracy,demographic_parity
+297,0.6205646954477,0.000210147218,2,697,inf,inf
