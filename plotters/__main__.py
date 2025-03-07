@@ -46,7 +46,7 @@ if __name__ == "__main__":
                     None,
                     title=f"Pareto Fronts for {dataset.capitalize()} dataset",
                     obj0=objectives[0],
-                    obj1=objectives[1],
+                    obj1=metric,
                     file_paths=[base_path + ".eps", base_path + ".png"]
                 )
 

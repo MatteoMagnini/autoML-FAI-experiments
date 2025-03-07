@@ -6,7 +6,7 @@ from torch import device as torch_device
 from torch.utils.data import DataLoader
 from datasets.pipelines.pytorch_data_pipeline import FairnessPyTorchDataset, CustomDataset
 from experiments import PyTorchConditions
-from methods.fauci.pt_metric import discrete_demographic_parity
+from methods.fauci.pt_metric import discrete_demographic_parity, discrete_equalized_odds
 
 PATH = Path(__file__).parents[0]
 epsilon = 1e-5
@@ -45,7 +45,7 @@ def train_and_predict_fauci_classifier(
     costs = []
     optimizer = optim.Adam(net.parameters(), lr=lr)
 
-    def fairness_cost(y_pred, z_b):
+    def fairness_cost(y_pred, y_true, z_b):
         if isinstance(y_pred, torch.Tensor):
             y_pred_detached = y_pred.detach()
         else:
@@ -54,6 +54,8 @@ def train_and_predict_fauci_classifier(
         # DP_Constraint
         if metric == "demographic_parity":
             return discrete_demographic_parity(z_b, y_pred)
+        elif metric == "equalized_odds":
+            return discrete_equalized_odds(z_b, y_true, y_pred)
         else:
             raise ValueError(f"Unknown fairness metric {metric}")
 
@@ -67,11 +69,10 @@ def train_and_predict_fauci_classifier(
             )
             y_hat = net(xz_batch)
             cost = 0.0
-            m = z_batch.shape[0]
 
             # prediction loss
             p_loss = loss_function(y_hat.view_as(y_batch), y_batch)
-            cost += (1 - lambda_) * p_loss + lambda_ * fairness_cost(y_hat, z_batch)
+            cost += (1 - lambda_) * p_loss + lambda_ * fairness_cost(y_hat, y_batch, z_batch)
 
             optimizer.zero_grad()
             if (torch.isnan(cost)).any():
@@ -82,7 +83,7 @@ def train_and_predict_fauci_classifier(
 
         y_hat_valid = net(XZ_train)
         p_loss = loss_function(y_hat_valid.squeeze(), Y_train)
-        cost = (1 - lambda_) * p_loss + lambda_ * fairness_cost(y_hat_valid, Z_train)
+        cost = (1 - lambda_) * p_loss + lambda_ * fairness_cost(y_hat_valid, Y_train, Z_train)
 
         # Early stopping
         if conditions.early_stop(epoch=epoch, loss_value=cost):
