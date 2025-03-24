@@ -112,38 +112,25 @@ def double_conditional_probability_in_range(
     return predicted[rows].mean()
 
 
-def discrete_demographic_parity(
-        protected,
-        y_pred,
-        weights_strategy: int = Strategy.EQUAL
-):
-    """
-    Calculate the demographic parity of a model.
-    The protected attribute can be binary or categorical.
-
-    @param protected: the protected attribute.
-    @param y_pred: the predicted labels.
-    @param weights_strategy: the strategy to compute the weights.
-    @return: the demographic impact error.
-    """
-    unique_protected = protected.unique()
+def discrete_demographic_parity(protected, y_pred, weights_strategy: int = Strategy.EQUAL):
+    unique_protected, counts = protected.unique(return_counts=True)
+    total_samples = protected.numel()
     absolute_probability = y_pred.mean()
 
-    def _single_conditional_probability(value: int):
-        return single_conditional_probability(y_pred, protected, value)
+    probabilities = torch.tensor(
+        [(y_pred[protected == value].mean() if (protected == value).any() else 0.0) for value in unique_protected],
+        device=y_pred.device
+    )
 
-    probabilities = [_single_conditional_probability(value) for value in unique_protected]
-    number_of_samples = [len(protected[protected == value]) for value in unique_protected]
-    total_samples = sum(number_of_samples)
     if weights_strategy == Strategy.EQUAL:
         weights = 1 / len(unique_protected)
-        return sum([abs(probability - absolute_probability) * weights for probability in probabilities])
+        return torch.sum(torch.abs(probabilities - absolute_probability) * weights)
+
     elif weights_strategy == Strategy.FREQUENCY:
-        return sum([abs(probability - absolute_probability) * number_of_samples[i] / total_samples
-                    for i, probability in enumerate(probabilities)])
+        return torch.sum(torch.abs(probabilities - absolute_probability) * counts / total_samples)
+
     elif weights_strategy == Strategy.INVERSE_FREQUENCY:
-        return sum([abs(probability - absolute_probability) * total_samples / number_of_samples[i]
-                    for i, probability in enumerate(probabilities)])
+        return torch.sum(torch.abs(probabilities - absolute_probability) * total_samples / counts)
 
 
 def discrete_equalized_odds(

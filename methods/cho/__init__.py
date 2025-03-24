@@ -111,13 +111,13 @@ def train_and_predict_cho_classifier(
     device = torch_device('cuda') if cuda.is_available() else torch_device('mps') if mps.is_available() else torch_device('cpu')
     # Retrieve train/test split pytorch tensors for index=split
     train_tensors, valid_tensors, test_tensors = dataset.get_dataset_in_tensor()
-    X_train, Y_train, Z_train, XZ_train = train_tensors
-    X_valid, Y_valid, Z_valid, XZ_valid = valid_tensors
-    X_test, Y_test, Z_test, XZ_test = test_tensors
+    X_train, Y_train, Z_train, Z1_train, Z2_train, XZ_train, XZ1Z2_train = train_tensors
+    X_valid, Y_valid, Z_valid, Z1_valid, Z2_valid, XZ_valid, XZ1Z2_valid = valid_tensors
+    X_test, Y_test, Z_test, Z1_test, Z2_test, XZ_test, XZ1Z2_test = test_tensors
 
     sensitive_attrs = dataset.sensitive_attrs
 
-    custom_dataset = CustomDataset(XZ_train, Y_train, Z_train)
+    custom_dataset = CustomDataset(XZ_train, Y_train, Z_train, Z1_train, Z2_train)
     if batch_size == "full":
         batch_size_ = XZ_train.shape[0]
     elif isinstance(batch_size, int):
@@ -143,6 +143,9 @@ def train_and_predict_cho_classifier(
         if metric == "demographic_parity":
             Pr_Ytilde1 = cdf_tau(y_pred_detached, H, TAU)
             for z in sensitive_attrs:
+                # Skip if no samples for z
+                if len(z_b[z_b == z]) == 0:
+                    continue
                 Pr_Ytilde1_Z = cdf_tau(y_pred_detached[z_b == z], H, TAU)
                 m_z = z_b[z_b == z].shape[0]
 
@@ -218,7 +221,7 @@ def train_and_predict_cho_classifier(
 
     conditions.on_train_begin()
     for epoch in range(n_epochs):
-        for i, (xz_batch, y_batch, z_batch) in enumerate(data_loader):
+        for i, (xz_batch, y_batch, z_batch, _, _) in enumerate(data_loader):
             xz_batch, y_batch, z_batch = (
                 xz_batch.to(device),
                 y_batch.to(device),

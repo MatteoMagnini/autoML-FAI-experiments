@@ -4,6 +4,6 @@ from methods.dpp import train_and_predict_dpp_classifier
 
 class DPPMLP(PytorchMLP):
 
-    def train_and_predict_classifier(self, dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions, on_test=False):
+    def train_and_predict_classifier(self, dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions, on_test=False, fauci_fast_mode=False):
         return train_and_predict_dpp_classifier(dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions, on_test)
 

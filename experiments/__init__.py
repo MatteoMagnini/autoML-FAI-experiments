@@ -113,10 +113,9 @@ def evaluate_predictions(fairness_metric: str, protected: np.array, y_pred: np.a
     fp = np.sum(np.logical_and(binary_predictions == 1, y_true == 0))
     fn = np.sum(np.logical_and(binary_predictions == 0, y_true == 1))
     accuracy = (tp + tn) / (tp + tn + fp + fn)
-    # precision = tp / (tp + fp) if tp + fp > 0 else 0
-    # recall = tp / (tp + fn) if tp + fn > 0 else 0
-    # f1_score = 2 * precision * recall / (precision + recall) if precision + recall > 0 else 0
-    # auc = roc_auc_score(y_true, y_pred)
+
+    # If there are more than 1 protected features, then a fake protected feature is created
+    # to compute the fairness metrics
     if fairness_metric == 'demographic_parity':
         fairness_value = demographic_parity(protected, y_pred)
     elif fairness_metric == 'disparate_impact':

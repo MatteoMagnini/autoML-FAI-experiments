@@ -42,11 +42,13 @@ if __name__ == "__main__":
         sys.exit(0)
 
     # Define our environment variables
+    fauci_fast_mode = "(fast)" if "fast_mode" in setup.keys() and setup["fast_mode"] else ""
+    multiplier = 2 if '+' in setup["protected"] else 1
     scenario = Scenario(
         mlp.configspace,
         objectives=objectives,
-        output_directory=SMAC_CACHE_PATH / setup['dataset'] / setup['fairness_metric'] / str(setup['protected']) / setup['method'],
-        walltime_limit=24*60*60,  # After 24 hour, we stop the hyperparameter optimization
+        output_directory=SMAC_CACHE_PATH / setup['dataset'] / setup['fairness_metric'] / str(setup['protected']) / (setup['method'] + fauci_fast_mode),
+        walltime_limit=multiplier*24*60*60,  # After 24 hour, we stop the hyperparameter optimization, 48 hours for intersectionality
         n_trials=10000,  # Evaluate max 10^4 different trials
         n_workers=1  # multiprocessing.cpu_count()
     )

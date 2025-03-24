@@ -83,7 +83,6 @@ def train_and_predict_dpp_classifier(
         n_epochs: int,
         batch_size: int,
         conditions: PyTorchConditions,
-        on_test: bool = False,
 ):
     device = torch_device('cuda') if cuda.is_available() else torch_device('mps') if mps.is_available() else torch_device('cpu')
 

@@ -50,7 +50,14 @@ class MLP:
         return f"{self.setup['dataset']}_{self.setup['method']}_{self.setup['fairness_metric']}_{self.setup['protected']}"
 
     def get_sub_path(self) -> str:
-        return f"{self.setup['dataset']}{os.sep}{self.setup['method']}{os.sep}{self.setup['fairness_metric']}{os.sep}{self.setup['protected']}"
+        if "fast_mode" in self.setup.keys():
+            fast_mode = self.setup["fast_mode"]
+            if fast_mode:
+                return f"{self.setup['dataset']}{os.sep}{self.setup['method']}(fast){os.sep}{self.setup['fairness_metric']}{os.sep}{self.setup['protected']}"
+            else:
+                return f"{self.setup['dataset']}{os.sep}{self.setup['method']}{os.sep}{self.setup['fairness_metric']}{os.sep}{self.setup['protected']}"
+        else:
+            return f"{self.setup['dataset']}{os.sep}{self.setup['method']}{os.sep}{self.setup['fairness_metric']}{os.sep}{self.setup['protected']}"
 
 
 def plot_pareto(smac: HPOFacade, incumbents: list[Configuration]) -> None:

@@ -36,9 +36,9 @@ def train_and_predict_jiang_classifier(
         valid_datasets,
         test_datasets,
     ) = dataset.get_dataset_in_tensor()
-    _, y_train, z_train, x_train = train_datasets
-    _, y_valid, z_valid, x_valid = valid_datasets
-    _, y_test, z_test, x_test = test_datasets
+    _, y_train, z_train, _, _, x_train, _ = train_datasets
+    _, y_valid, z_valid, _, _, x_valid, _ = valid_datasets
+    _, y_test, z_test, _, _, x_test, _ = test_datasets
     train_dataset = TensorDataset(x_train, y_train, z_train)
     dataloader = DataLoader(train_dataset, batch_size, shuffle=True)
 

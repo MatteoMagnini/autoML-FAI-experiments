@@ -1,0 +1,6 @@
+dataset: adult
+method: fauci
+fairness_metric: demographic_parity
+protected: 8+7
+epochs: 100
+fast_mode: True

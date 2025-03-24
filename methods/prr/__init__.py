@@ -52,9 +52,9 @@ def train_and_predict_prr_classifier(
 
     # Retrieve train/test split pytorch tensors for index=split
     train_tensors, valid_tensors, test_tensors = dataset.get_dataset_in_tensor()
-    X_train, Y_train, Z_train, XZ_train = train_tensors
-    X_valid, Y_valid, Z_valid, XZ_valid = valid_tensors
-    X_test, Y_test, Z_test, XZ_test = test_tensors
+    X_train, Y_train, Z_train, _, _, XZ_train, _ = train_tensors
+    X_valid, Y_valid, Z_valid, _, _, XZ_valid, _ = valid_tensors
+    X_test, Y_test, Z_test, _, _, XZ_test, _ = test_tensors
 
     custom_dataset = CustomDataset(XZ_train, Y_train, Z_train)
     # cast the values of Z to 0 and 1
