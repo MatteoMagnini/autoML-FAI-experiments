@@ -1,0 +1,33 @@
+{
+  "stats": {
+    "submitted": 1,
+    "finished": 0,
+    "running": 1
+  },
+  "data": [
+    [
+      1,
+      null,
+      209652396,
+      null,
+      2147483647.0,
+      0.0,
+      0,
+      0.0,
+      0.0,
+      {}
+    ]
+  ],
+  "configs": {
+    "1": {
+      "batch_size": 297,
+      "lambda_value": 0.6205646954477,
+      "learning_rate": 0.000210147218,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 697
+    }
+  },
+  "config_origins": {
+    "1": "Initial Design: Sobol"
+  }
+}

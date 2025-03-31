@@ -6,6 +6,8 @@ PRETTY_NAMES = {
     "equalized_odds": "Equalized Odds",
     "disparate_impact": "Disparate Impact",
     "fauci": "FaUCI",
+    "fauci(fast)": "FaUCI (Fast)",
+    "fauci(Exhaustive)": "FaUCI (Exhaustive)",
     "jiang": "GDP",
     "cho": "KDE",
     "prr": "PRR",
@@ -22,4 +24,6 @@ COLOR_MAP = {
     "GDP": "#fc8d62",
     "KDE": "#8da0cb",
     "PRR": "#e78ac3",
+    "FaUCI (Fast)": "#a6d854",
+    "FaUCI (Exhaustive)": "#ffd92f",
 }

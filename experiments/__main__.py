@@ -4,6 +4,7 @@ from smac import Scenario
 from smac import HyperparameterOptimizationFacade as HPOFacade
 from automl import plot_pareto, ValidResultSingleton, TestResultSingleton
 from automl.auto_cho import ChoMLP
+from automl.auto_df import DFMLP
 from automl.auto_dpp import DPPMLP
 from automl.auto_fauci import FauciMLP
 from smac.multi_objective.parego import ParEGO
@@ -32,6 +33,8 @@ if __name__ == "__main__":
         mlp = PRRMLP(setup)
     elif setup["method"] == "dpp":
         mlp = DPPMLP(setup)
+    elif setup["method"] == "df":
+        mlp = DFMLP(setup)
     else:
         raise ValueError(f"Unknown method {setup['method']}")
     objectives = ["1 - accuracy", setup["fairness_metric"]]
@@ -48,7 +51,7 @@ if __name__ == "__main__":
         mlp.configspace,
         objectives=objectives,
         output_directory=SMAC_CACHE_PATH / setup['dataset'] / setup['fairness_metric'] / str(setup['protected']) / (setup['method'] + fauci_fast_mode),
-        walltime_limit=multiplier*24*60*60,  # After 24 hour, we stop the hyperparameter optimization, 48 hours for intersectionality
+        walltime_limit=10*60,  # After 24 hour, we stop the hyperparameter optimization, 48 hours for intersectionality
         n_trials=10000,  # Evaluate max 10^4 different trials
         n_workers=1  # multiprocessing.cpu_count()
     )

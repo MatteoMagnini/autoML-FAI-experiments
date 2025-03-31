@@ -47,6 +47,12 @@ class MLP:
         raise NotImplementedError
 
     def get_name(self) -> str:
+        if "fast_mode" in self.setup.keys():
+            fast_mode = self.setup["fast_mode"]
+            if fast_mode:
+                return f"{self.setup['dataset']}_{self.setup['method']}(fast)_{self.setup['fairness_metric']}_{self.setup['protected']}"
+            else:
+                return f"{self.setup['dataset']}_{self.setup['method']}(Exhaustive)_{self.setup['fairness_metric']}_{self.setup['protected']}"
         return f"{self.setup['dataset']}_{self.setup['method']}_{self.setup['fairness_metric']}_{self.setup['protected']}"
 
     def get_sub_path(self) -> str:
