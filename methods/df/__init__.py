@@ -28,8 +28,6 @@ def train_and_predict_df_classifier(
     X_valid, Y_valid, Z_valid, Z1_valid, Z2_valid, XZ_valid, XZ1Z2_valid = valid_tensors
     X_test, Y_test, Z_test, Z1_test, Z2_test, XZ_test, XZ1Z2_test = test_tensors
 
-    sensitive_attrs = dataset.sensitive_attrs
-
     custom_dataset = CustomDataset(XZ_train, Y_train, Z_train, Z1_train, Z2_train)
     if batch_size == "full":
         batch_size_ = XZ_train.shape[0]
@@ -42,12 +40,10 @@ def train_and_predict_df_classifier(
     loss_function = nn.BCELoss()
     costs = []
     optimizer = optim.Adam(net.parameters(), lr=lr)
-    z = Z_train if dataset.intersectionality else torch.concat([Z1_train, Z2_train], dim=1)
-    z_uniques = torch.unique(z, dim=0)
 
     conditions.on_train_begin()
     for epoch in range(n_epochs):
-        for i, (xz_batch, y_batch, z_batch, _, _) in enumerate(data_loader):
+        for i, (xz_batch, y_batch, z_batch, z1_batch, z2_batch) in enumerate(data_loader):
             xz_batch, y_batch, z_batch = (
                 xz_batch.to(device),
                 y_batch.to(device),
@@ -57,6 +53,8 @@ def train_and_predict_df_classifier(
             cost = 0.0
             loss = loss_function(y_hat.squeeze(), y_batch)
             # update Count model
+            z = z_batch if not dataset.intersectionality else torch.stack([z1_batch, z2_batch], dim=1)
+            z_uniques = torch.unique(z, dim=0)
             count_class, count_total = compute_batch_counts(z, z_uniques, y_hat)
             # fairness constraint
             loss_df = fairness_loss(0., count_class, count_total)
@@ -70,7 +68,9 @@ def train_and_predict_df_classifier(
 
         y_hat_valid = net(XZ_train)
         loss = loss_function(y_hat_valid.squeeze(), Y_train)
-        count_class, count_total = compute_batch_counts(Z_train, z_uniques, y_hat_valid)
+        z = Z_train if not dataset.intersectionality else torch.stack([Z1_train, Z2_train], dim=1)
+        z_uniques = torch.unique(z, dim=0)
+        count_class, count_total = compute_batch_counts(z, z_uniques, y_hat_valid)
         loss_df = fairness_loss(0., count_class, count_total)
         cost = (1 - lambda_) * loss + lambda_ * loss_df
 

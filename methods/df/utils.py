@@ -143,14 +143,12 @@ def subgroup_fairness_train(probabilitiesOfPositive, alphaSP):
 
 # %% empirical count on train set
 def compute_batch_counts(protectedAttributes, intersectGroups, predictions):
-    # intersectGroups should be pre-defined so that stochastic update of p(y|S)
-    # can be maintained correctly among different batches
+    matches = (protectedAttributes[:, None, :] == intersectGroups).all(dim=2)
+    indices = torch.nonzero(matches, as_tuple=True)[1]
 
-    # compute counts for each intersectional group
-    countsClassOne = torch.zeros((len(intersectGroups)), dtype=torch.float)
-    countsTotal = torch.zeros((len(intersectGroups)), dtype=torch.float)
-    for i in range(len(predictions)):
-        index = torch.where(intersectGroups == protectedAttributes[i])[0][0]
-        countsTotal[index] = countsTotal[index] + 1
-        countsClassOne[index] = countsClassOne[index] + predictions[i]
+    countsTotal = torch.bincount(indices, minlength=len(intersectGroups)).to(torch.float)
+
+    countsClassOne = torch.zeros_like(countsTotal)
+    countsClassOne.scatter_add_(0, indices, torch.squeeze(predictions))
+
     return countsClassOne, countsTotal
