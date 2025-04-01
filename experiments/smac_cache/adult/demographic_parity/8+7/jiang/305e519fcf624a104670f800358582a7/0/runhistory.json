@@ -1,0 +1,1232 @@
+{
+  "stats": {
+    "submitted": 53,
+    "finished": 53,
+    "running": 0
+  },
+  "data": [
+    [
+      1,
+      null,
+      209652396,
+      null,
+      [
+        0.1760385484936383,
+        0.07377124652266502
+      ],
+      7110.379931211472,
+      1,
+      1743294823.2557948,
+      1743301933.638557,
+      {}
+    ],
+    [
+      2,
+      null,
+      209652396,
+      null,
+      [
+        0.15742751408919076,
+        0.0751914519071579
+      ],
+      827.7099194526672,
+      1,
+      1743301933.6464324,
+      1743302761.3587568,
+      {}
+    ],
+    [
+      3,
+      null,
+      209652396,
+      null,
+      [
+        0.1648902157884194,
+        0.05990987196564675
+      ],
+      1674.9334926605225,
+      1,
+      1743302761.36589,
+      1743304436.3015275,
+      {}
+    ],
+    [
+      4,
+      null,
+      209652396,
+      null,
+      [
+        0.1673780486654738,
+        0.1090312910079956
+      ],
+      19518.961567878723,
+      1,
+      1743304436.3091066,
+      1743323955.273005,
+      {}
+    ],
+    [
+      5,
+      null,
+      209652396,
+      null,
+      [
+        0.34486358034262227,
+        0.0
+      ],
+      684.2372868061066,
+      1,
+      1743323955.281262,
+      1743324639.520807,
+      {}
+    ],
+    [
+      6,
+      null,
+      209652396,
+      null,
+      [
+        0.16212605973085017,
+        0.05445495754480363
+      ],
+      556.7153503894806,
+      1,
+      1743324640.2274396,
+      1743325196.944746,
+      {}
+    ],
+    [
+      7,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.0008298802375793456
+      ],
+      1242.440348148346,
+      1,
+      1743325196.9546118,
+      1743326439.3969526,
+      {}
+    ],
+    [
+      8,
+      null,
+      209652396,
+      null,
+      [
+        0.17686796129909904,
+        0.042206109762191774
+      ],
+      688.9184329509735,
+      1,
+      1743326439.4062326,
+      1743327128.3266132,
+      {}
+    ],
+    [
+      9,
+      null,
+      209652396,
+      null,
+      [
+        0.1758237305392994,
+        0.041816234141588214
+      ],
+      893.439462184906,
+      1,
+      1743327128.3374417,
+      1743328021.7789974,
+      {}
+    ],
+    [
+      10,
+      null,
+      209652396,
+      null,
+      [
+        0.16234140111385623,
+        0.05772473484277725
+      ],
+      2229.5197529792786,
+      1,
+      1743328021.790264,
+      1743330251.3121042,
+      {}
+    ],
+    [
+      11,
+      null,
+      209652396,
+      null,
+      [
+        0.16458330268210508,
+        0.05000500246882439
+      ],
+      1182.6277167797089,
+      1,
+      1743330251.341395,
+      1743331433.971187,
+      {}
+    ],
+    [
+      12,
+      null,
+      209652396,
+      null,
+      [
+        0.16406134527392013,
+        0.053320562839508055
+      ],
+      700.1598417758942,
+      1,
+      1743331433.9843507,
+      1743332134.1463032,
+      {}
+    ],
+    [
+      13,
+      null,
+      209652396,
+      null,
+      [
+        0.16439915953389003,
+        0.05574330538511276
+      ],
+      2563.903299808502,
+      1,
+      1743332134.1591933,
+      1743334698.0645137,
+      {}
+    ],
+    [
+      14,
+      null,
+      209652396,
+      null,
+      [
+        0.17140142791340396,
+        0.04454591125249862
+      ],
+      1749.590717792511,
+      1,
+      1743334698.9013088,
+      1743336448.494033,
+      {}
+    ],
+    [
+      15,
+      null,
+      209652396,
+      null,
+      [
+        0.1980279565608907,
+        0.034872065633535385
+      ],
+      5183.464094877243,
+      1,
+      1743336448.5081336,
+      1743341631.9743438,
+      {}
+    ],
+    [
+      16,
+      null,
+      209652396,
+      null,
+      [
+        0.1789867958281132,
+        0.04113237008452416
+      ],
+      5388.994546413422,
+      1,
+      1743341631.9897242,
+      1743347020.9864562,
+      {}
+    ],
+    [
+      17,
+      null,
+      209652396,
+      null,
+      [
+        0.19452715717685778,
+        0.03888574749231338
+      ],
+      5833.927867174149,
+      1,
+      1743347021.002737,
+      1743352854.9328046,
+      {}
+    ],
+    [
+      18,
+      null,
+      209652396,
+      null,
+      [
+        0.17017270505294457,
+        0.04466508656740189
+      ],
+      3937.819658279419,
+      1,
+      1743352854.9615796,
+      1743356792.7834983,
+      {}
+    ],
+    [
+      19,
+      null,
+      209652396,
+      null,
+      [
+        0.1678077977479175,
+        0.04637112811207772
+      ],
+      1434.158059835434,
+      1,
+      1743356792.801155,
+      1743358226.961365,
+      {}
+    ],
+    [
+      20,
+      null,
+      209652396,
+      null,
+      [
+        0.17011132714725527,
+        0.10390564218163492
+      ],
+      2857.3538665771484,
+      1,
+      1743358226.978593,
+      1743361084.334503,
+      {}
+    ],
+    [
+      21,
+      null,
+      209652396,
+      null,
+      [
+        0.16532032325445498,
+        0.05436474502086639
+      ],
+      325.2401661872864,
+      1,
+      1743361084.3513927,
+      1743361409.5936074,
+      {}
+    ],
+    [
+      22,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.0
+      ],
+      156.50862073898315,
+      1,
+      1743361409.6425273,
+      1743361566.153205,
+      {}
+    ],
+    [
+      23,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        2.1576881408691407e-07
+      ],
+      741.7727491855621,
+      1,
+      1743361567.0996318,
+      1743362308.8742366,
+      {}
+    ],
+    [
+      24,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        9.745359420776369e-08
+      ],
+      477.75164914131165,
+      1,
+      1743362308.8898444,
+      1743362786.6435177,
+      {}
+    ],
+    [
+      25,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        7.50720500946045e-07
+      ],
+      926.7053577899933,
+      1,
+      1743362786.6609068,
+      1743363713.3683972,
+      {}
+    ],
+    [
+      26,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        2.1755695343017578e-08
+      ],
+      2778.653326511383,
+      1,
+      1743363713.3853579,
+      1743366492.0408163,
+      {}
+    ],
+    [
+      27,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        2.5033950805664065e-08
+      ],
+      2316.567002773285,
+      1,
+      1743366492.058439,
+      1743368808.6277003,
+      {}
+    ],
+    [
+      28,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        2.2649765014648438e-08
+      ],
+      2497.9197206497192,
+      1,
+      1743368808.645115,
+      1743371306.5669677,
+      {}
+    ],
+    [
+      29,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        2.250075340270996e-07
+      ],
+      3946.4442768096924,
+      1,
+      1743371306.5849254,
+      1743375253.031452,
+      {}
+    ],
+    [
+      30,
+      null,
+      209652396,
+      null,
+      [
+        0.16363121423001664,
+        0.07779749870300293
+      ],
+      1698.6023967266083,
+      1,
+      1743375253.0590677,
+      1743376951.663545,
+      {}
+    ],
+    [
+      31,
+      null,
+      209652396,
+      null,
+      [
+        0.5512052157261738,
+        0.0
+      ],
+      1060.5957684516907,
+      1,
+      1743376952.4198508,
+      1743378013.0176857,
+      {}
+    ],
+    [
+      32,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.0
+      ],
+      575.0246691703796,
+      1,
+      1743378013.0363927,
+      1743378588.0632029,
+      {}
+    ],
+    [
+      33,
+      null,
+      209652396,
+      null,
+      [
+        0.4503304108094527,
+        0.0
+      ],
+      1062.5529544353485,
+      1,
+      1743378588.0818515,
+      1743379650.636964,
+      {}
+    ],
+    [
+      34,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        1.7881393432617187e-08
+      ],
+      1438.990392923355,
+      1,
+      1743379650.65602,
+      1743381089.6486194,
+      {}
+    ],
+    [
+      35,
+      null,
+      209652396,
+      null,
+      [
+        0.5486867882077463,
+        0.0
+      ],
+      4966.1778700351715,
+      1,
+      1743381089.6678798,
+      1743386055.8478572,
+      {}
+    ],
+    [
+      36,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        2.920627593994141e-08
+      ],
+      1715.14435172081,
+      1,
+      1743386055.86755,
+      1743387771.0140102,
+      {}
+    ],
+    [
+      37,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        1.606345176696777e-07
+      ],
+      9432.54255104065,
+      1,
+      1743387771.0335112,
+      1743397203.5781837,
+      {}
+    ],
+    [
+      38,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.014435999095439911
+      ],
+      2055.0615017414093,
+      1,
+      1743397204.517792,
+      1743399259.581212,
+      {}
+    ],
+    [
+      39,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.0007626062631607056
+      ],
+      3243.878561973572,
+      1,
+      1743399259.6034374,
+      1743402503.4841616,
+      {}
+    ],
+    [
+      40,
+      null,
+      209652396,
+      null,
+      [
+        0.16126659457497777,
+        0.04751858070492744
+      ],
+      2153.064156293869,
+      1,
+      1743402503.505018,
+      1743404656.571304,
+      {}
+    ],
+    [
+      41,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.008002493977546692
+      ],
+      2160.781258583069,
+      1,
+      1743404656.592515,
+      1743406817.375975,
+      {}
+    ],
+    [
+      42,
+      null,
+      209652396,
+      null,
+      [
+        0.24074810122714316,
+        0.016015729308128356
+      ],
+      1722.1347222328186,
+      1,
+      1743406817.3964846,
+      1743408539.5333087,
+      {}
+    ],
+    [
+      43,
+      null,
+      209652396,
+      null,
+      [
+        0.2319031706007754,
+        0.028959702253341674
+      ],
+      1466.8402252197266,
+      1,
+      1743408539.5556355,
+      1743410006.398035,
+      {}
+    ],
+    [
+      44,
+      null,
+      209652396,
+      null,
+      [
+        0.23144244963107238,
+        0.027054881900548933
+      ],
+      2106.322072982788,
+      1,
+      1743410006.4208007,
+      1743412112.7450652,
+      {}
+    ],
+    [
+      45,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.0007698649168014526
+      ],
+      1485.0200791358948,
+      1,
+      1743412112.7694795,
+      1743413597.7917156,
+      {}
+    ],
+    [
+      46,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.013304132223129272
+      ],
+      5574.7038633823395,
+      1,
+      1743413598.6018848,
+      1743419173.307739,
+      {}
+    ],
+    [
+      47,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.014507349878549578
+      ],
+      11400.004467248917,
+      1,
+      1743419173.3318923,
+      1743430573.3388035,
+      {}
+    ],
+    [
+      48,
+      null,
+      209652396,
+      null,
+      [
+        0.23844466142370332,
+        0.019152911603450774
+      ],
+      15866.073345422745,
+      1,
+      1743430573.3798192,
+      1743446439.455908,
+      {}
+    ],
+    [
+      49,
+      null,
+      209652396,
+      null,
+      [
+        0.17499481286906438,
+        0.08562221989035608
+      ],
+      2220.2616198062897,
+      1,
+      1743446439.4822137,
+      1743448659.747017,
+      {}
+    ],
+    [
+      50,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.013467523008584979
+      ],
+      5784.162436246872,
+      1,
+      1743448659.771668,
+      1743454443.9363775,
+      {}
+    ],
+    [
+      51,
+      null,
+      209652396,
+      null,
+      [
+        0.23835252383156574,
+        0.020422439575195316
+      ],
+      6346.788280725479,
+      1,
+      1743454443.9610677,
+      1743460790.751495,
+      {}
+    ],
+    [
+      52,
+      null,
+      209652396,
+      null,
+      [
+        0.24041026338930532,
+        0.016764301359653472
+      ],
+      6210.944714546204,
+      1,
+      1743460790.782096,
+      1743467001.7291453,
+      {}
+    ],
+    [
+      53,
+      null,
+      209652396,
+      null,
+      [
+        0.14925833458767593,
+        0.10322389885783197
+      ],
+      2336.8927738666534,
+      1,
+      1743467001.7561355,
+      1743469338.6510057,
+      {}
+    ]
+  ],
+  "configs": {
+    "1": {
+      "batch_size": 297,
+      "lambda_value": 0.6205646954477,
+      "learning_rate": 0.000210147218,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 697
+    },
+    "2": {
+      "batch_size": 979,
+      "lambda_value": 0.3596079321578,
+      "learning_rate": 0.0535361448362,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 65
+    },
+    "3": {
+      "batch_size": 652,
+      "lambda_value": 0.7642785040662,
+      "learning_rate": 0.0014379647071,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 136
+    },
+    "4": {
+      "batch_size": 94,
+      "lambda_value": 0.005704017356,
+      "learning_rate": 0.0050831004951,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 339
+    },
+    "5": {
+      "batch_size": 241,
+      "lambda_value": 0.9708397453651,
+      "learning_rate": 0.0329667406801,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 407
+    },
+    "6": {
+      "batch_size": 882,
+      "lambda_value": 0.82061925561,
+      "learning_rate": 0.0011485772284,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 79
+    },
+    "7": {
+      "batch_size": 928,
+      "lambda_value": 0.9753121523757,
+      "learning_rate": 0.0006342696641,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 73
+    },
+    "8": {
+      "batch_size": 913,
+      "lambda_value": 0.9137434878016,
+      "learning_rate": 0.0014289002498,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 77
+    },
+    "9": {
+      "batch_size": 948,
+      "lambda_value": 0.9031858154948,
+      "learning_rate": 0.0001442278885,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 69
+    },
+    "10": {
+      "batch_size": 884,
+      "lambda_value": 0.755703272663,
+      "learning_rate": 0.000420054117,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 70
+    },
+    "11": {
+      "batch_size": 878,
+      "lambda_value": 0.7514787992957,
+      "learning_rate": 0.0004976745322,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 64
+    },
+    "12": {
+      "batch_size": 874,
+      "lambda_value": 0.7615342868282,
+      "learning_rate": 0.000449104415,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 71
+    },
+    "13": {
+      "batch_size": 921,
+      "lambda_value": 0.7251710850363,
+      "learning_rate": 0.0007744742787,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 71
+    },
+    "14": {
+      "batch_size": 915,
+      "lambda_value": 0.8954889395418,
+      "learning_rate": 0.000152689258,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 65
+    },
+    "15": {
+      "batch_size": 154,
+      "lambda_value": 0.9153966264769,
+      "learning_rate": 0.0001520314788,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 65
+    },
+    "16": {
+      "batch_size": 164,
+      "lambda_value": 0.9012146587657,
+      "learning_rate": 0.0001574324298,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 65
+    },
+    "17": {
+      "batch_size": 153,
+      "lambda_value": 0.9132183103354,
+      "learning_rate": 0.0001113860436,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 69
+    },
+    "18": {
+      "batch_size": 147,
+      "lambda_value": 0.8733535009595,
+      "learning_rate": 0.0001353600343,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 64
+    },
+    "19": {
+      "batch_size": 462,
+      "lambda_value": 0.8792221056282,
+      "learning_rate": 0.0001457585795,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 67
+    },
+    "20": {
+      "batch_size": 277,
+      "lambda_value": 0.0788153739624,
+      "learning_rate": 0.0011246047718,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 788
+    },
+    "21": {
+      "batch_size": 895,
+      "lambda_value": 0.7897473442105,
+      "learning_rate": 0.011623077444,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 411
+    },
+    "22": {
+      "batch_size": 597,
+      "lambda_value": 0.4199483890762,
+      "learning_rate": 0.0062957704128,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 1002
+    },
+    "23": {
+      "batch_size": 282,
+      "lambda_value": 0.9988200542531,
+      "learning_rate": 0.0013729650476,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 94
+    },
+    "24": {
+      "batch_size": 527,
+      "lambda_value": 0.9925990102667,
+      "learning_rate": 0.038940019905,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 96
+    },
+    "25": {
+      "batch_size": 301,
+      "lambda_value": 0.9828596085069,
+      "learning_rate": 0.0018799265934,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 100
+    },
+    "26": {
+      "batch_size": 59,
+      "lambda_value": 0.9748671131295,
+      "learning_rate": 0.0137107321513,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 107
+    },
+    "27": {
+      "batch_size": 58,
+      "lambda_value": 0.9904279279893,
+      "learning_rate": 0.001326041783,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 95
+    },
+    "28": {
+      "batch_size": 36,
+      "lambda_value": 0.9807325610821,
+      "learning_rate": 0.0107527661104,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 100
+    },
+    "29": {
+      "batch_size": 54,
+      "lambda_value": 0.972686129744,
+      "learning_rate": 0.0003694766962,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 72
+    },
+    "30": {
+      "batch_size": 497,
+      "lambda_value": 0.4323787825414,
+      "learning_rate": 0.0004186695981,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 866
+    },
+    "31": {
+      "batch_size": 87,
+      "lambda_value": 0.9722842659677,
+      "learning_rate": 0.0111345260253,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 952
+    },
+    "32": {
+      "batch_size": 242,
+      "lambda_value": 0.5897873412338,
+      "learning_rate": 0.0912677296139,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 140
+    },
+    "33": {
+      "batch_size": 84,
+      "lambda_value": 0.9738546239387,
+      "learning_rate": 0.0276339083625,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 988
+    },
+    "34": {
+      "batch_size": 90,
+      "lambda_value": 0.9730572026986,
+      "learning_rate": 0.0081177990498,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 961
+    },
+    "35": {
+      "batch_size": 34,
+      "lambda_value": 0.9734936466897,
+      "learning_rate": 0.0562332068021,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 1009
+    },
+    "36": {
+      "batch_size": 81,
+      "lambda_value": 0.9740866645116,
+      "learning_rate": 0.0019652883437,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 972
+    },
+    "37": {
+      "batch_size": 37,
+      "lambda_value": 0.9719451908286,
+      "learning_rate": 0.0011123443156,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 1004
+    },
+    "38": {
+      "batch_size": 164,
+      "lambda_value": 0.9498162286622,
+      "learning_rate": 0.0001394596829,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 65
+    },
+    "39": {
+      "batch_size": 153,
+      "lambda_value": 0.9812657943407,
+      "learning_rate": 0.0001618112396,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 65
+    },
+    "40": {
+      "batch_size": 203,
+      "lambda_value": 0.836270266563,
+      "learning_rate": 0.0026409543209,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 612
+    },
+    "41": {
+      "batch_size": 167,
+      "lambda_value": 0.9611420014131,
+      "learning_rate": 0.0001575429004,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 64
+    },
+    "42": {
+      "batch_size": 194,
+      "lambda_value": 0.9505389133231,
+      "learning_rate": 0.000166578832,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 64
+    },
+    "43": {
+      "batch_size": 154,
+      "lambda_value": 0.9275241970724,
+      "learning_rate": 0.0001596813016,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 64
+    },
+    "44": {
+      "batch_size": 153,
+      "lambda_value": 0.9331455374383,
+      "learning_rate": 0.0001545885732,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 65
+    },
+    "45": {
+      "batch_size": 532,
+      "lambda_value": 0.9950206123621,
+      "learning_rate": 0.0001392002249,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 64
+    },
+    "46": {
+      "batch_size": 40,
+      "lambda_value": 0.9338553051791,
+      "learning_rate": 0.0005216289437,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 77
+    },
+    "47": {
+      "batch_size": 51,
+      "lambda_value": 0.9337888339893,
+      "learning_rate": 0.0035930807564,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 65
+    },
+    "48": {
+      "batch_size": 63,
+      "lambda_value": 0.9329630564977,
+      "learning_rate": 0.0065356824811,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 72
+    },
+    "49": {
+      "batch_size": 539,
+      "lambda_value": 0.4096195582972,
+      "learning_rate": 0.0014614146338,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 269
+    },
+    "50": {
+      "batch_size": 34,
+      "lambda_value": 0.9328052795594,
+      "learning_rate": 0.0030246524722,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 86
+    },
+    "51": {
+      "batch_size": 54,
+      "lambda_value": 0.9315640649955,
+      "learning_rate": 0.0002930566091,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 68
+    },
+    "52": {
+      "batch_size": 38,
+      "lambda_value": 0.9333241908043,
+      "learning_rate": 0.0026719883851,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 76
+    },
+    "53": {
+      "batch_size": 582,
+      "lambda_value": 0.0387496336331,
+      "learning_rate": 0.0003356147463,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 83
+    }
+  },
+  "config_origins": {
+    "1": "Initial Design: Sobol",
+    "2": "Initial Design: Sobol",
+    "3": "Initial Design: Sobol",
+    "4": "Initial Design: Sobol",
+    "5": "Initial Design: Sobol",
+    "6": "Acquisition Function Maximizer: Local Search",
+    "7": "Acquisition Function Maximizer: Local Search",
+    "8": "Acquisition Function Maximizer: Local Search",
+    "9": "Acquisition Function Maximizer: Local Search",
+    "10": "Acquisition Function Maximizer: Local Search",
+    "11": "Acquisition Function Maximizer: Local Search",
+    "12": "Acquisition Function Maximizer: Local Search",
+    "13": "Acquisition Function Maximizer: Local Search",
+    "14": "Acquisition Function Maximizer: Local Search",
+    "15": "Acquisition Function Maximizer: Local Search",
+    "16": "Acquisition Function Maximizer: Local Search",
+    "17": "Acquisition Function Maximizer: Local Search",
+    "18": "Acquisition Function Maximizer: Local Search",
+    "19": "Acquisition Function Maximizer: Local Search",
+    "20": "Random Search",
+    "21": "Random Search",
+    "22": "Random Search",
+    "23": "Acquisition Function Maximizer: Local Search",
+    "24": "Acquisition Function Maximizer: Local Search",
+    "25": "Acquisition Function Maximizer: Local Search",
+    "26": "Acquisition Function Maximizer: Local Search",
+    "27": "Acquisition Function Maximizer: Local Search",
+    "28": "Acquisition Function Maximizer: Local Search",
+    "29": "Acquisition Function Maximizer: Local Search",
+    "30": "Random Search",
+    "31": "Acquisition Function Maximizer: Local Search",
+    "32": "Random Search",
+    "33": "Acquisition Function Maximizer: Local Search",
+    "34": "Acquisition Function Maximizer: Local Search",
+    "35": "Acquisition Function Maximizer: Local Search",
+    "36": "Acquisition Function Maximizer: Local Search",
+    "37": "Acquisition Function Maximizer: Local Search",
+    "38": "Acquisition Function Maximizer: Local Search",
+    "39": "Acquisition Function Maximizer: Local Search",
+    "40": "Random Search",
+    "41": "Acquisition Function Maximizer: Local Search",
+    "42": "Acquisition Function Maximizer: Local Search",
+    "43": "Acquisition Function Maximizer: Local Search",
+    "44": "Acquisition Function Maximizer: Local Search",
+    "45": "Acquisition Function Maximizer: Local Search",
+    "46": "Acquisition Function Maximizer: Local Search",
+    "47": "Acquisition Function Maximizer: Local Search",
+    "48": "Acquisition Function Maximizer: Local Search",
+    "49": "Random Search",
+    "50": "Acquisition Function Maximizer: Local Search",
+    "51": "Acquisition Function Maximizer: Local Search",
+    "52": "Acquisition Function Maximizer: Local Search",
+    "53": "Random Search"
+  }
+}
