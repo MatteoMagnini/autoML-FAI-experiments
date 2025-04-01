@@ -51,7 +51,7 @@ if __name__ == "__main__":
         mlp.configspace,
         objectives=objectives,
         output_directory=SMAC_CACHE_PATH / setup['dataset'] / setup['fairness_metric'] / str(setup['protected']) / (setup['method'] + fauci_fast_mode),
-        walltime_limit=10*60,  # After 24 hour, we stop the hyperparameter optimization, 48 hours for intersectionality
+        walltime_limit=multiplier*24*60*60,  # After 24 hour, we stop the hyperparameter optimization, 48 hours for intersectionality
         n_trials=10000,  # Evaluate max 10^4 different trials
         n_workers=1  # multiprocessing.cpu_count()
     )
