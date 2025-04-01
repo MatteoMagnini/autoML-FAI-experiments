@@ -7,33 +7,24 @@ from datasets.pipelines.pytorch_data_pipeline import FairnessPyTorchDataset, Cus
 from experiments import PyTorchConditions
 
 
-def mutual_information(first_group: torch.tensor, second_group: torch.tensor) -> torch.tensor:
-    # For the mutual information,
-    # Pr[y|s] = sum{(xi,si),si=s} sigma(xi,si) / #D[xs]
-    # D[xs]
-    first_group_size = first_group.shape[0]
-    second_group_size = second_group.shape[0]
-    first_group_size_tensor = torch.tensor(first_group_size)
-    second_group_size_tensor = torch.tensor(second_group_size)
-    dxisi = torch.stack((second_group_size_tensor, first_group_size_tensor))
+def mutual_information(groups: list[torch.Tensor], device) -> torch.Tensor:
+    group_sizes = torch.tensor([g.shape[0] for g in groups], dtype=torch.float, device=device)
+    total_size = torch.sum(group_sizes)
     # Pr[y|s]
-    y_pred_female = torch.sum(first_group)
-    y_pred_male = torch.sum(second_group)
-    p_ys = torch.stack((y_pred_male, y_pred_female)) / dxisi
+    p_ys = torch.tensor([torch.sum(g).to(device) for g in groups], device=device) / group_sizes
     # Pr[y]
-    p = torch.cat((first_group, second_group), 0)
-    p_y = torch.sum(p) / (first_group_size + second_group_size)
-    # P(siyi)
-    p_s1y1 = torch.log(p_ys[1]) - torch.log(p_y)
-    p_s1y0 = torch.log(1 - p_ys[1]) - torch.log(1 - p_y)
-    p_s0y1 = torch.log(p_ys[0]) - torch.log(p_y)
-    p_s0y0 = torch.log(1 - p_ys[0]) - torch.log(1 - p_y)
-    # PI
-    pi_s1y1 = first_group * p_s1y1
-    pi_s1y0 = (1 - first_group) * p_s1y0
-    pi_s0y1 = second_group * p_s0y1
-    pi_s0y0 = (1 - second_group) * p_s0y0
-    pi = torch.sum(pi_s1y1) + torch.sum(pi_s1y0) + torch.sum(pi_s0y1) + torch.sum(pi_s0y0)
+    p_y = torch.sum(torch.cat(groups)).to(device) / total_size
+
+    log_p_ys = torch.log(p_ys)
+    log_1_p_ys = torch.log(1 - p_ys)
+    log_p_y = torch.log(p_y)
+    log_1_p_y = torch.log(1 - p_y)
+
+    pi = torch.tensor(0.0, device=device)
+    for i, group in enumerate(groups):
+        pi += torch.sum(group * (log_p_ys[i] - log_p_y))
+        pi += torch.sum((1 - group) * (log_1_p_ys[i] - log_1_p_y))
+
     return pi
 
 
@@ -52,11 +43,11 @@ def train_and_predict_prr_classifier(
 
     # Retrieve train/test split pytorch tensors for index=split
     train_tensors, valid_tensors, test_tensors = dataset.get_dataset_in_tensor()
-    X_train, Y_train, Z_train, _, _, XZ_train, _ = train_tensors
-    X_valid, Y_valid, Z_valid, _, _, XZ_valid, _ = valid_tensors
-    X_test, Y_test, Z_test, _, _, XZ_test, _ = test_tensors
+    X_train, Y_train, Z_train, Z1_train, Z2_train, XZ_train, XZ1Z2_train = train_tensors
+    X_valid, Y_valid, Z_valid, Z1_valid, Z2_valid, XZ_valid, XZ1Z2_valid = valid_tensors
+    X_test, Y_test, Z_test, Z1_test, Z2_test, XZ_test, XZ1Z2_test = test_tensors
 
-    custom_dataset = CustomDataset(XZ_train, Y_train, Z_train)
+    custom_dataset = CustomDataset(XZ_train, Y_train, Z_train, Z1_train, Z2_train)
     # cast the values of Z to 0 and 1
     custom_dataset.Z = custom_dataset.Z.type(torch.int64)
     Z_valid = Z_valid.type(torch.int64)
@@ -67,37 +58,26 @@ def train_and_predict_prr_classifier(
 
     conditions.on_train_begin()
     for epoch in range(n_epochs):
-        for i, (xz_batch, y_batch, z_batch) in enumerate(data_loader):
-            # Split the datasets into two different groups w.r.t. the sensitive attribute
-            # Here we assume that the sensitive attribute is binary!
-            group1_x_batch = xz_batch[z_batch == 0][:, :-1].to(device)
-            group1_y_batch = y_batch[z_batch == 0].to(device)
-            group2_x_batch = xz_batch[z_batch == 1][:, :-1].to(device)
-            group2_y_batch = y_batch[z_batch == 1].to(device)
-
-            group1_output = net(group1_x_batch).squeeze()
-            group2_output = net(group2_x_batch).squeeze()
-
+        for i, (xz_batch, y_batch, z_batch, _, _) in enumerate(data_loader):
+            groups_x_batch = [xz_batch[z_batch == i][:, :-1].to(device) for i in range(len(torch.unique(z_batch)))]
+            groups_y_batch = [y_batch[z_batch == i].to(device) for i in range(len(torch.unique(z_batch)))]
+            # Remove empty groups
+            groups_x_batch = [group_x_batch for group_x_batch in groups_x_batch if group_x_batch.shape[0] > 0]
+            groups_y_batch = [group_y_batch for group_y_batch in groups_y_batch if group_y_batch.shape[0] > 0]
+            groups_output = [net(group_x_batch).squeeze().to(device) for group_x_batch in groups_x_batch]
             optimizer.zero_grad()
-            usual_loss = loss_function(group1_output, group1_y_batch) + loss_function(group2_output, group2_y_batch)
-            pi_loss = mutual_information(group1_output, group2_output)
+            usual_loss = sum([loss_function(group_output, group_y_batch) for group_output, group_y_batch in zip(groups_output, groups_y_batch) if group_output.shape[0] > 0]).to(device)
+            pi_loss = mutual_information(groups_output, device)
             loss = (1 - lambda_) * usual_loss + lambda_ * pi_loss
             loss.backward()
             optimizer.step()
 
-        # Split the datasets into two different groups w.r.t. the sensitive attribute
-        # Here we assume that the sensitive attribute is binary!
-        group1_x_train = X_train[Z_train == 0].to(device)
-        group1_y_train = Y_train[Z_train == 0].to(device)
-        group2_x_train = X_train[Z_train == 1].to(device)
-        group2_y_train = Y_train[Z_train == 1].to(device)
-
-        group1_y_hat_valid = net(group1_x_train).squeeze()
-        group2_y_hat_valid = net(group2_x_train).squeeze()
-        group1_p_loss = loss_function(group1_y_hat_valid.squeeze(), group1_y_train)
-        group2_p_loss = loss_function(group2_y_hat_valid.squeeze(), group2_y_train)
-        p_loss = group1_p_loss + group2_p_loss
-        pi_loss = mutual_information(group1_y_hat_valid, group2_y_hat_valid)
+        groups_x_train = [XZ_train[Z_train == i][:, :-1].to(device) for i in range(len(torch.unique(Z_train)))]
+        groups_y_train = [Y_train[Z_train == i].to(device) for i in range(len(torch.unique(Z_train)))]
+        groups_y_hat_valid = [net(group_x_train).squeeze().to(device) for group_x_train in groups_x_train]
+        groups_p_loss = [loss_function(group_y_hat_valid.squeeze(), group_y_train) for group_y_hat_valid, group_y_train in zip(groups_y_hat_valid, groups_y_train) if group_y_train.shape[0] > 0]
+        p_loss = sum(groups_p_loss)
+        pi_loss = mutual_information(groups_y_hat_valid, device)
         cost = (1 - lambda_) * p_loss + lambda_ * pi_loss
 
         # Early stopping

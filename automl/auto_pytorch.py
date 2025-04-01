@@ -13,6 +13,7 @@ from experiments import PytorchNN, PyTorchConditions, evaluate_predictions
 class PytorchMLP(MLP):
 
     features_to_drop = 1
+    extra_features_to_drop = 0
 
     def train_and_predict_classifier(self, dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions, on_test=False, fauci_fast_mode=False):
         raise NotImplementedError("Method not implemented")
@@ -46,7 +47,7 @@ class PytorchMLP(MLP):
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
                 model = PytorchNN(
-                    inputs=train_data.shape[1] - self.features_to_drop,
+                    inputs=train_data.shape[1] - self.features_to_drop - self.extra_features_to_drop,
                     hidden_layers=config.get("number_of_layers"),
                     neurons=config.get("number_of_neurons_per_layer"),
                 )
@@ -96,7 +97,7 @@ class PytorchMLP(MLP):
         pt_dataset = FairnessPyTorchDataset(train, test, test)
         pt_dataset.prepare_ndarray(protected)
         model = PytorchNN(
-            inputs=train.shape[1] - self.features_to_drop,
+            inputs=train.shape[1] - self.features_to_drop - self.extra_features_to_drop,
             hidden_layers=config.get("number_of_layers"),
             neurons=config.get("number_of_neurons_per_layer"),
         )
