@@ -45,7 +45,12 @@ if __name__ == "__main__":
         sys.exit(0)
 
     # Define our environment variables
-    fauci_fast_mode = "(fast)" if "fast_mode" in setup.keys() and setup["fast_mode"] else ""
+    fauci_fast_mode = ""
+    if "fast_mode" in setup.keys():
+        if setup["fast_mode"]:
+            fauci_fast_mode = "(fast)"
+        else:
+            fauci_fast_mode = "(exhaustive)"
     multiplier = 2 if '+' in setup["protected"] else 1
     scenario = Scenario(
         mlp.configspace,
