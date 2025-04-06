@@ -1,4 +1,4 @@
-dataset: adult
+dataset: compas
 method: fauci
 fairness_metric: demographic_parity
 protected: 8+7
