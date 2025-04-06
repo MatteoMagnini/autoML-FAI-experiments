@@ -1,0 +1,3174 @@
+{
+  "stats": {
+    "submitted": 136,
+    "finished": 136,
+    "running": 0
+  },
+  "data": [
+    [
+      1,
+      null,
+      209652396,
+      null,
+      [
+        0.1792944775729207,
+        0.00823690116405487
+      ],
+      7007.109215259552,
+      1,
+      1743670599.021509,
+      1743677606.1337583,
+      {}
+    ],
+    [
+      2,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.004134231209754944
+      ],
+      902.8036575317383,
+      1,
+      1743677606.1411498,
+      1743678508.9469013,
+      {}
+    ],
+    [
+      3,
+      null,
+      209652396,
+      null,
+      [
+        0.4555188008032319,
+        7.574558258056639e-06
+      ],
+      912.6377894878387,
+      1,
+      1743678508.95357,
+      1743679421.5933318,
+      {}
+    ],
+    [
+      4,
+      null,
+      209652396,
+      null,
+      [
+        0.15755018973581844,
+        0.10938020214438438
+      ],
+      16175.162878751755,
+      1,
+      1743679421.6032166,
+      1743695596.7692933,
+      {}
+    ],
+    [
+      5,
+      null,
+      209652396,
+      null,
+      [
+        0.4481339626549207,
+        0.0
+      ],
+      1252.876392364502,
+      1,
+      1743695596.7829733,
+      1743696849.6631083,
+      {}
+    ],
+    [
+      6,
+      null,
+      209652396,
+      null,
+      [
+        Infinity,
+        Infinity
+      ],
+      0.0,
+      2,
+      1743696850.3711152,
+      1743697527.7732847,
+      {
+        "traceback": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 186, in run\n    rval = self(config_copy, target_function, kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 259, in __call__\n    return algorithm(config, **algorithm_kwargs)\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_pytorch.py\", line 58, in train\n    predictions = self.train_and_predict_classifier(\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_df.py\", line 8, in train_and_predict_classifier\n    return train_and_predict_df_classifier(dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions, on_test)\n  File \"/home/dev/persistent/autoML-FAI-experiments/methods/df/__init__.py\", line 54, in train_and_predict_df_classifier\n    loss = loss_function(y_hat.squeeze(), y_batch)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1553, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1562, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/loss.py\", line 621, in forward\n    return F.binary_cross_entropy(input, target, weight=self.weight, reduction=self.reduction)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/functional.py\", line 3163, in binary_cross_entropy\n    raise ValueError(\nValueError: Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.\n",
+        "error": "ValueError('Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.')"
+      }
+    ],
+    [
+      7,
+      null,
+      209652396,
+      null,
+      [
+        Infinity,
+        Infinity
+      ],
+      0.0,
+      2,
+      1743697527.7832506,
+      1743697531.532599,
+      {
+        "traceback": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 186, in run\n    rval = self(config_copy, target_function, kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 259, in __call__\n    return algorithm(config, **algorithm_kwargs)\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_pytorch.py\", line 58, in train\n    predictions = self.train_and_predict_classifier(\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_df.py\", line 8, in train_and_predict_classifier\n    return train_and_predict_df_classifier(dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions, on_test)\n  File \"/home/dev/persistent/autoML-FAI-experiments/methods/df/__init__.py\", line 54, in train_and_predict_df_classifier\n    loss = loss_function(y_hat.squeeze(), y_batch)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1553, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1562, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/loss.py\", line 621, in forward\n    return F.binary_cross_entropy(input, target, weight=self.weight, reduction=self.reduction)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/functional.py\", line 3163, in binary_cross_entropy\n    raise ValueError(\nValueError: Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.\n",
+        "error": "ValueError('Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.')"
+      }
+    ],
+    [
+      8,
+      null,
+      209652396,
+      null,
+      [
+        0.5635673417859047,
+        1.749396324157715e-05
+      ],
+      1888.290808916092,
+      1,
+      1743697531.542992,
+      1743699419.8359404,
+      {}
+    ],
+    [
+      9,
+      null,
+      209652396,
+      null,
+      [
+        0.4584682883335578,
+        8.481740951538086e-07
+      ],
+      2401.576536178589,
+      1,
+      1743699419.8472452,
+      1743701821.4264266,
+      {}
+    ],
+    [
+      10,
+      null,
+      209652396,
+      null,
+      [
+        0.44853326799434584,
+        6.258487701416016e-07
+      ],
+      2454.1341712474823,
+      1,
+      1743701821.4364843,
+      1743704275.5727575,
+      {}
+    ],
+    [
+      11,
+      null,
+      209652396,
+      null,
+      [
+        0.3368322229100672,
+        1.7688274383544918e-05
+      ],
+      4991.006364583969,
+      1,
+      1743704275.5831134,
+      1743709266.5915942,
+      {}
+    ],
+    [
+      12,
+      null,
+      209652396,
+      null,
+      [
+        0.5767901166104759,
+        4.49836254119873e-06
+      ],
+      7107.900853872299,
+      1,
+      1743709266.602526,
+      1743716374.505443,
+      {}
+    ],
+    [
+      13,
+      null,
+      209652396,
+      null,
+      [
+        0.4471362321661722,
+        6.818771362304688e-07
+      ],
+      4068.2005546092987,
+      1,
+      1743716374.516123,
+      1743720442.7187245,
+      {}
+    ],
+    [
+      14,
+      null,
+      209652396,
+      null,
+      [
+        0.23469788829070265,
+        9.388327598571777e-06
+      ],
+      1416.237200975418,
+      1,
+      1743720443.5185306,
+      1743721859.7576265,
+      {}
+    ],
+    [
+      15,
+      null,
+      209652396,
+      null,
+      [
+        0.34808837248957003,
+        6.622076034545898e-07
+      ],
+      5817.011796712875,
+      1,
+      1743721859.7695835,
+      1743727676.7833054,
+      {}
+    ],
+    [
+      16,
+      null,
+      209652396,
+      null,
+      [
+        0.5516817668763776,
+        1.925230026245117e-07
+      ],
+      5357.438958406448,
+      1,
+      1743727676.7960198,
+      1743733034.2369947,
+      {}
+    ],
+    [
+      17,
+      null,
+      209652396,
+      null,
+      [
+        0.16857587980342473,
+        0.026542569994926452
+      ],
+      2773.824751138687,
+      1,
+      1743733034.2492077,
+      1743735808.076094,
+      {}
+    ],
+    [
+      18,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        7.721364498138428e-05
+      ],
+      1620.6581938266754,
+      1,
+      1743735808.1448236,
+      1743737428.8056107,
+      {}
+    ],
+    [
+      19,
+      null,
+      209652396,
+      null,
+      [
+        0.5518660373450792,
+        5.960464477539063e-08
+      ],
+      2408.187308549881,
+      1,
+      1743737428.8190455,
+      1743739837.0084982,
+      {}
+    ],
+    [
+      20,
+      null,
+      209652396,
+      null,
+      [
+        0.15466356551685892,
+        0.0810715165734291
+      ],
+      4212.6402933597565,
+      1,
+      1743739837.0228496,
+      1743744049.6651902,
+      {}
+    ],
+    [
+      21,
+      null,
+      209652396,
+      null,
+      [
+        0.34406505454409647,
+        2.121329307556153e-06
+      ],
+      940.9082591533661,
+      1,
+      1743744049.6800332,
+      1743744990.590286,
+      {}
+    ],
+    [
+      22,
+      null,
+      209652396,
+      null,
+      [
+        0.3141659036868618,
+        0.009097220301628113
+      ],
+      1743.5061662197113,
+      1,
+      1743744990.6106431,
+      1743746734.1186802,
+      {}
+    ],
+    [
+      23,
+      null,
+      209652396,
+      null,
+      [
+        0.3252359720174091,
+        0.0010792243480682371
+      ],
+      582.9922544956207,
+      1,
+      1743746734.9888563,
+      1743747317.9830287,
+      {}
+    ],
+    [
+      24,
+      null,
+      209652396,
+      null,
+      [
+        0.7587912155277425,
+        5.26905059814453e-07
+      ],
+      4673.624876022339,
+      1,
+      1743747317.9977052,
+      1743751991.62463,
+      {}
+    ],
+    [
+      25,
+      null,
+      209652396,
+      null,
+      [
+        0.3369709880937426,
+        7.868409156799318e-06
+      ],
+      1301.2515361309052,
+      1,
+      1743751991.6402807,
+      1743753292.8938978,
+      {}
+    ],
+    [
+      26,
+      null,
+      209652396,
+      null,
+      [
+        0.3441413336622917,
+        1.2934207916259768e-07
+      ],
+      3478.6656959056854,
+      1,
+      1743753292.9105318,
+      1743756771.578339,
+      {}
+    ],
+    [
+      27,
+      null,
+      209652396,
+      null,
+      [
+        0.16710194240134363,
+        0.0222572261095047
+      ],
+      4779.435729265213,
+      1,
+      1743756771.5958843,
+      1743761551.0337462,
+      {}
+    ],
+    [
+      28,
+      null,
+      209652396,
+      null,
+      [
+        Infinity,
+        Infinity
+      ],
+      0.0,
+      2,
+      1743761551.0508454,
+      1743764047.8578134,
+      {
+        "traceback": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 186, in run\n    rval = self(config_copy, target_function, kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 259, in __call__\n    return algorithm(config, **algorithm_kwargs)\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_pytorch.py\", line 108, in train\n    predictions = self.train_and_predict_classifier(\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_df.py\", line 8, in train_and_predict_classifier\n    return train_and_predict_df_classifier(dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions, on_test)\n  File \"/home/dev/persistent/autoML-FAI-experiments/methods/df/__init__.py\", line 54, in train_and_predict_df_classifier\n    loss = loss_function(y_hat.squeeze(), y_batch)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1553, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1562, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/loss.py\", line 621, in forward\n    return F.binary_cross_entropy(input, target, weight=self.weight, reduction=self.reduction)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/functional.py\", line 3163, in binary_cross_entropy\n    raise ValueError(\nValueError: Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.\n",
+        "error": "ValueError('Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.')"
+      }
+    ],
+    [
+      29,
+      null,
+      209652396,
+      null,
+      [
+        0.17001922727970634,
+        0.03214409828186035
+      ],
+      524.5646181106567,
+      1,
+      1743764047.876483,
+      1743764572.4433703,
+      {}
+    ],
+    [
+      30,
+      null,
+      209652396,
+      null,
+      [
+        0.1728141147302824,
+        0.017342184185981747
+      ],
+      597.0602426528931,
+      1,
+      1743764572.4768322,
+      1743765169.539572,
+      {}
+    ],
+    [
+      31,
+      null,
+      209652396,
+      null,
+      [
+        0.5496695891905473,
+        5.245208740234376e-08
+      ],
+      675.4178247451782,
+      1,
+      1743765170.527917,
+      1743765845.9476423,
+      {}
+    ],
+    [
+      32,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        6.556510925292968e-09
+      ],
+      329.4950301647186,
+      1,
+      1743765845.9661355,
+      1743766175.4633422,
+      {}
+    ],
+    [
+      33,
+      null,
+      209652396,
+      null,
+      [
+        Infinity,
+        Infinity
+      ],
+      0.0,
+      2,
+      1743766175.5138345,
+      1743766707.0099359,
+      {
+        "traceback": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 186, in run\n    rval = self(config_copy, target_function, kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 259, in __call__\n    return algorithm(config, **algorithm_kwargs)\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_pytorch.py\", line 58, in train\n    predictions = self.train_and_predict_classifier(\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_df.py\", line 8, in train_and_predict_classifier\n    return train_and_predict_df_classifier(dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions, on_test)\n  File \"/home/dev/persistent/autoML-FAI-experiments/methods/df/__init__.py\", line 54, in train_and_predict_df_classifier\n    loss = loss_function(y_hat.squeeze(), y_batch)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1553, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1562, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/loss.py\", line 621, in forward\n    return F.binary_cross_entropy(input, target, weight=self.weight, reduction=self.reduction)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/functional.py\", line 3163, in binary_cross_entropy\n    raise ValueError(\nValueError: Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.\n",
+        "error": "ValueError('Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.')"
+      }
+    ],
+    [
+      34,
+      null,
+      209652396,
+      null,
+      [
+        0.5089757264906966,
+        3.838539123535157e-06
+      ],
+      2438.494390964508,
+      1,
+      1743766707.0760043,
+      1743769145.5748458,
+      {}
+    ],
+    [
+      35,
+      null,
+      209652396,
+      null,
+      [
+        Infinity,
+        Infinity
+      ],
+      0.0,
+      2,
+      1743769145.5963259,
+      1743769281.4018545,
+      {
+        "traceback": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 186, in run\n    rval = self(config_copy, target_function, kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 259, in __call__\n    return algorithm(config, **algorithm_kwargs)\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_pytorch.py\", line 58, in train\n    predictions = self.train_and_predict_classifier(\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_df.py\", line 8, in train_and_predict_classifier\n    return train_and_predict_df_classifier(dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions, on_test)\n  File \"/home/dev/persistent/autoML-FAI-experiments/methods/df/__init__.py\", line 54, in train_and_predict_df_classifier\n    loss = loss_function(y_hat.squeeze(), y_batch)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1553, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1562, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/loss.py\", line 621, in forward\n    return F.binary_cross_entropy(input, target, weight=self.weight, reduction=self.reduction)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/functional.py\", line 3163, in binary_cross_entropy\n    raise ValueError(\nValueError: Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.\n",
+        "error": "ValueError('Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.')"
+      }
+    ],
+    [
+      36,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.0
+      ],
+      348.31094622612,
+      1,
+      1743769281.4429734,
+      1743769629.7559419,
+      {}
+    ],
+    [
+      37,
+      null,
+      209652396,
+      null,
+      [
+        Infinity,
+        Infinity
+      ],
+      0.0,
+      2,
+      1743769629.7777505,
+      1743769832.7365053,
+      {
+        "traceback": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 186, in run\n    rval = self(config_copy, target_function, kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 259, in __call__\n    return algorithm(config, **algorithm_kwargs)\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_pytorch.py\", line 58, in train\n    predictions = self.train_and_predict_classifier(\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_df.py\", line 8, in train_and_predict_classifier\n    return train_and_predict_df_classifier(dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions, on_test)\n  File \"/home/dev/persistent/autoML-FAI-experiments/methods/df/__init__.py\", line 54, in train_and_predict_df_classifier\n    loss = loss_function(y_hat.squeeze(), y_batch)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1553, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1562, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/loss.py\", line 621, in forward\n    return F.binary_cross_entropy(input, target, weight=self.weight, reduction=self.reduction)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/functional.py\", line 3163, in binary_cross_entropy\n    raise ValueError(\nValueError: Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.\n",
+        "error": "ValueError('Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.')"
+      }
+    ],
+    [
+      38,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        1.7642974853515625e-07
+      ],
+      784.4981844425201,
+      1,
+      1743769833.83277,
+      1743770618.3329554,
+      {}
+    ],
+    [
+      39,
+      null,
+      209652396,
+      null,
+      [
+        0.2313822270409097,
+        0.0021055412292480475
+      ],
+      278.436448097229,
+      1,
+      1743770618.358235,
+      1743770896.7972155,
+      {}
+    ],
+    [
+      40,
+      null,
+      209652396,
+      null,
+      [
+        0.5518660373450792,
+        8.529424667358398e-07
+      ],
+      566.8732936382294,
+      1,
+      1743770896.8212655,
+      1743771463.696885,
+      {}
+    ],
+    [
+      41,
+      null,
+      209652396,
+      null,
+      [
+        0.18485310611059114,
+        0.018858814239501955
+      ],
+      470.7389941215515,
+      1,
+      1743771463.715926,
+      1743771934.4569902,
+      {}
+    ],
+    [
+      42,
+      null,
+      209652396,
+      null,
+      [
+        0.550115423094465,
+        5.360841751098633e-06
+      ],
+      257.58747458457947,
+      1,
+      1743771934.480733,
+      1743772192.0708127,
+      {}
+    ],
+    [
+      43,
+      null,
+      209652396,
+      null,
+      [
+        0.3440799086008667,
+        7.218122482299805e-07
+      ],
+      317.333132982254,
+      1,
+      1743772192.089245,
+      1743772509.4244776,
+      {}
+    ],
+    [
+      44,
+      null,
+      209652396,
+      null,
+      [
+        0.5532015255069147,
+        4.4047832489013675e-07
+      ],
+      1077.1398839950562,
+      1,
+      1743772509.4481153,
+      1743773586.5904398,
+      {}
+    ],
+    [
+      45,
+      null,
+      209652396,
+      null,
+      [
+        0.5518660373450792,
+        1.6117095947265624e-06
+      ],
+      327.3796317577362,
+      1,
+      1743773586.6145916,
+      1743773913.996768,
+      {}
+    ],
+    [
+      46,
+      null,
+      209652396,
+      null,
+      [
+        0.44818059024645845,
+        7.343292236328124e-07
+      ],
+      1628.4740269184113,
+      1,
+      1743773915.1251557,
+      1743775543.6012197,
+      {}
+    ],
+    [
+      47,
+      null,
+      209652396,
+      null,
+      [
+        0.14938114227036384,
+        0.10298018902540204
+      ],
+      2081.1236827373505,
+      1,
+      1743775543.6257553,
+      1743777624.7523055,
+      {}
+    ],
+    [
+      48,
+      null,
+      209652396,
+      null,
+      [
+        0.6509288123809082,
+        3.553032875061035e-06
+      ],
+      561.46111536026,
+      1,
+      1743777624.7918284,
+      1743778186.2561984,
+      {}
+    ],
+    [
+      49,
+      null,
+      209652396,
+      null,
+      [
+        0.16971227173322984,
+        0.027214134931564334
+      ],
+      780.4644503593445,
+      1,
+      1743778186.282528,
+      1743778966.7493749,
+      {}
+    ],
+    [
+      50,
+      null,
+      209652396,
+      null,
+      [
+        0.21467444528821775,
+        0.0005817103385925293
+      ],
+      261.9065406322479,
+      1,
+      1743778966.7762082,
+      1743779228.6850445,
+      {}
+    ],
+    [
+      51,
+      null,
+      209652396,
+      null,
+      [
+        0.22775792678487292,
+        0.0036445730924606324
+      ],
+      315.7134087085724,
+      1,
+      1743779228.7130153,
+      1743779544.42883,
+      {}
+    ],
+    [
+      52,
+      null,
+      209652396,
+      null,
+      [
+        0.1657813648831613,
+        0.05620766162872315
+      ],
+      1658.522079706192,
+      1,
+      1743779544.501061,
+      1743781203.0258157,
+      {}
+    ],
+    [
+      53,
+      null,
+      209652396,
+      null,
+      [
+        0.15263655263655262,
+        0.08956465169787406
+      ],
+      1498.7042701244354,
+      1,
+      1743781203.0576875,
+      1743782701.7645278,
+      {}
+    ],
+    [
+      54,
+      null,
+      209652396,
+      null,
+      [
+        Infinity,
+        Infinity
+      ],
+      0.0,
+      2,
+      1743782703.1960533,
+      1743782956.6752808,
+      {
+        "traceback": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 186, in run\n    rval = self(config_copy, target_function, kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 259, in __call__\n    return algorithm(config, **algorithm_kwargs)\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_pytorch.py\", line 58, in train\n    predictions = self.train_and_predict_classifier(\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_df.py\", line 8, in train_and_predict_classifier\n    return train_and_predict_df_classifier(dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions, on_test)\n  File \"/home/dev/persistent/autoML-FAI-experiments/methods/df/__init__.py\", line 54, in train_and_predict_df_classifier\n    loss = loss_function(y_hat.squeeze(), y_batch)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1553, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1562, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/loss.py\", line 621, in forward\n    return F.binary_cross_entropy(input, target, weight=self.weight, reduction=self.reduction)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/functional.py\", line 3163, in binary_cross_entropy\n    raise ValueError(\nValueError: Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.\n",
+        "error": "ValueError('Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.')"
+      }
+    ],
+    [
+      55,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.0
+      ],
+      258.8738362789154,
+      1,
+      1743782956.709573,
+      1743783215.5859663,
+      {}
+    ],
+    [
+      56,
+      null,
+      209652396,
+      null,
+      [
+        0.15880949309093023,
+        0.06068704932928085
+      ],
+      1461.9747087955475,
+      1,
+      1743783215.6113782,
+      1743784677.588097,
+      {}
+    ],
+    [
+      57,
+      null,
+      209652396,
+      null,
+      [
+        0.3448328678119098,
+        1.2457370758056642e-07
+      ],
+      688.744565486908,
+      1,
+      1743784677.6197233,
+      1743785366.366601,
+      {}
+    ],
+    [
+      58,
+      null,
+      209652396,
+      null,
+      [
+        0.16221864530247762,
+        0.024789567291736602
+      ],
+      687.5382664203644,
+      1,
+      1743785366.3939116,
+      1743786053.9343693,
+      {}
+    ],
+    [
+      59,
+      null,
+      209652396,
+      null,
+      [
+        0.15979241196307065,
+        0.05475850731134415
+      ],
+      727.6263809204102,
+      1,
+      1743786053.9699187,
+      1743786781.5987694,
+      {}
+    ],
+    [
+      60,
+      null,
+      209652396,
+      null,
+      [
+        0.15325069950818454,
+        0.08344706803560256
+      ],
+      924.7171149253845,
+      1,
+      1743786781.6341248,
+      1743787706.3537018,
+      {}
+    ],
+    [
+      61,
+      null,
+      209652396,
+      null,
+      [
+        0.44541640589544784,
+        0.0
+      ],
+      160.96010065078735,
+      1,
+      1743787706.3886952,
+      1743787867.3511367,
+      {}
+    ],
+    [
+      62,
+      null,
+      209652396,
+      null,
+      [
+        0.34388077935982125,
+        6.55651092529297e-09
+      ],
+      243.57985639572144,
+      1,
+      1743787868.7979245,
+      1743788112.3797123,
+      {}
+    ],
+    [
+      63,
+      null,
+      209652396,
+      null,
+      [
+        0.5480725375934956,
+        5.316734313964843e-07
+      ],
+      966.6280074119568,
+      1,
+      1743788112.413836,
+      1743789079.0442004,
+      {}
+    ],
+    [
+      64,
+      null,
+      209652396,
+      null,
+      [
+        0.24102451400355593,
+        1.8280744552612304e-06
+      ],
+      593.5910093784332,
+      1,
+      1743789079.078483,
+      1743789672.6719494,
+      {}
+    ],
+    [
+      65,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        3.3378601074218747e-08
+      ],
+      648.5862457752228,
+      1,
+      1743789672.7068558,
+      1743790321.2954652,
+      {}
+    ],
+    [
+      66,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.0
+      ],
+      135.29373168945312,
+      1,
+      1743790321.323794,
+      1743790456.619531,
+      {}
+    ],
+    [
+      67,
+      null,
+      209652396,
+      null,
+      [
+        0.5545835941045522,
+        0.0
+      ],
+      390.89303255081177,
+      1,
+      1743790456.6480203,
+      1743790847.542898,
+      {}
+    ],
+    [
+      68,
+      null,
+      209652396,
+      null,
+      [
+        0.1596387031267271,
+        0.07837770998477936
+      ],
+      960.6194829940796,
+      1,
+      1743790847.5718243,
+      1743791808.19326,
+      {}
+    ],
+    [
+      69,
+      null,
+      209652396,
+      null,
+      [
+        0.4481339626549207,
+        1.971125602722168e-06
+      ],
+      295.38738465309143,
+      1,
+      1743791808.2235718,
+      1743792103.6130095,
+      {}
+    ],
+    [
+      70,
+      null,
+      209652396,
+      null,
+      [
+        0.34388077935982125,
+        0.0
+      ],
+      379.4622597694397,
+      1,
+      1743792103.6686664,
+      1743792483.1333895,
+      {}
+    ],
+    [
+      71,
+      null,
+      209652396,
+      null,
+      [
+        0.4512210789156897,
+        3.0696392059326174e-07
+      ],
+      890.3528053760529,
+      1,
+      1743792484.6749322,
+      1743793375.0296314,
+      {}
+    ],
+    [
+      72,
+      null,
+      209652396,
+      null,
+      [
+        Infinity,
+        Infinity
+      ],
+      0.0,
+      2,
+      1743793375.067605,
+      1743793381.0132878,
+      {
+        "traceback": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 186, in run\n    rval = self(config_copy, target_function, kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 259, in __call__\n    return algorithm(config, **algorithm_kwargs)\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_pytorch.py\", line 58, in train\n    predictions = self.train_and_predict_classifier(\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_df.py\", line 8, in train_and_predict_classifier\n    return train_and_predict_df_classifier(dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions, on_test)\n  File \"/home/dev/persistent/autoML-FAI-experiments/methods/df/__init__.py\", line 54, in train_and_predict_df_classifier\n    loss = loss_function(y_hat.squeeze(), y_batch)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1553, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1562, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/loss.py\", line 621, in forward\n    return F.binary_cross_entropy(input, target, weight=self.weight, reduction=self.reduction)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/functional.py\", line 3163, in binary_cross_entropy\n    raise ValueError(\nValueError: Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.\n",
+        "error": "ValueError('Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.')"
+      }
+    ],
+    [
+      73,
+      null,
+      209652396,
+      null,
+      [
+        0.16092870015025704,
+        0.04003316283226013
+      ],
+      576.4581182003021,
+      1,
+      1743793381.0791645,
+      1743793957.539056,
+      {}
+    ],
+    [
+      74,
+      null,
+      209652396,
+      null,
+      [
+        0.7583919856374945,
+        2.586841583251953e-07
+      ],
+      1399.1120779514313,
+      1,
+      1743793957.5712907,
+      1743795356.6854846,
+      {}
+    ],
+    [
+      75,
+      null,
+      209652396,
+      null,
+      [
+        0.1713093469081493,
+        0.03602339208126068
+      ],
+      334.9776840209961,
+      1,
+      1743795356.7200437,
+      1743795691.7002382,
+      {}
+    ],
+    [
+      76,
+      null,
+      209652396,
+      null,
+      [
+        0.44661430305142885,
+        3.0755996704101563e-07
+      ],
+      1766.0626883506775,
+      1,
+      1743795691.7418947,
+      1743797457.8070798,
+      {}
+    ],
+    [
+      77,
+      null,
+      209652396,
+      null,
+      [
+        0.1901351992669358,
+        0.009593805670738222
+      ],
+      304.50065660476685,
+      1,
+      1743797457.846842,
+      1743797762.3500621,
+      {}
+    ],
+    [
+      78,
+      null,
+      209652396,
+      null,
+      [
+        0.48609964440802766,
+        0.0007815009355545043
+      ],
+      697.0696668624878,
+      1,
+      1743797763.8080964,
+      1743798460.8797035,
+      {}
+    ],
+    [
+      79,
+      null,
+      209652396,
+      null,
+      [
+        0.15521650895902395,
+        0.09008343383669852
+      ],
+      1688.3272879123688,
+      1,
+      1743798460.9196396,
+      1743800149.2493155,
+      {}
+    ],
+    [
+      80,
+      null,
+      209652396,
+      null,
+      [
+        0.23942742939748926,
+        2.437829971313477e-07
+      ],
+      2457.2204670906067,
+      1,
+      1743800149.2822316,
+      1743802606.5050957,
+      {}
+    ],
+    [
+      81,
+      null,
+      209652396,
+      null,
+      [
+        0.17345917218671708,
+        0.035140545666217805
+      ],
+      577.255832195282,
+      1,
+      1743802606.551475,
+      1743803183.8103986,
+      {}
+    ],
+    [
+      82,
+      null,
+      209652396,
+      null,
+      [
+        0.21654739094858852,
+        0.007123609185218811
+      ],
+      457.82129073143005,
+      1,
+      1743803183.8507326,
+      1743803641.674416,
+      {}
+    ],
+    [
+      83,
+      null,
+      209652396,
+      null,
+      [
+        0.20880803126312109,
+        0.01825198709964752
+      ],
+      609.387930393219,
+      1,
+      1743803641.7166052,
+      1743804251.1070993,
+      {}
+    ],
+    [
+      84,
+      null,
+      209652396,
+      null,
+      [
+        0.5518660373450792,
+        0.0
+      ],
+      190.5058138370514,
+      1,
+      1743804251.1508622,
+      1743804441.6590877,
+      {}
+    ],
+    [
+      85,
+      null,
+      209652396,
+      null,
+      [
+        0.45052954005049817,
+        0.0
+      ],
+      179.72008347511292,
+      1,
+      1743804441.6928265,
+      1743804621.4147985,
+      {}
+    ],
+    [
+      86,
+      null,
+      209652396,
+      null,
+      [
+        0.3458612353821935,
+        8.149743080139161e-06
+      ],
+      238.57625555992126,
+      1,
+      1743804623.0050805,
+      1743804861.5833523,
+      {}
+    ],
+    [
+      87,
+      null,
+      209652396,
+      null,
+      [
+        0.34950117248021445,
+        2.9008984565734867e-05
+      ],
+      176.503680229187,
+      1,
+      1743804861.6259665,
+      1743805038.1316712,
+      {}
+    ],
+    [
+      88,
+      null,
+      209652396,
+      null,
+      [
+        0.17502498310881545,
+        0.10043316438794136
+      ],
+      1653.5117902755737,
+      1,
+      1743805038.1747944,
+      1743806691.6889381,
+      {}
+    ],
+    [
+      89,
+      null,
+      209652396,
+      null,
+      [
+        0.45052954005049817,
+        3.993511199951173e-08
+      ],
+      774.3254563808441,
+      1,
+      1743806691.7225406,
+      1743807466.0499141,
+      {}
+    ],
+    [
+      90,
+      null,
+      209652396,
+      null,
+      [
+        0.4539172977047229,
+        3.5886168479919437e-05
+      ],
+      1291.1946878433228,
+      1,
+      1743807466.1072986,
+      1743808757.304092,
+      {}
+    ],
+    [
+      91,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.0
+      ],
+      138.04358649253845,
+      1,
+      1743808757.3475037,
+      1743808895.3933945,
+      {}
+    ],
+    [
+      92,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.0
+      ],
+      549.4109501838684,
+      1,
+      1743808895.4370606,
+      1743809444.8503282,
+      {}
+    ],
+    [
+      93,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.0
+      ],
+      217.37151432037354,
+      1,
+      1743809444.886324,
+      1743809662.2598324,
+      {}
+    ],
+    [
+      94,
+      null,
+      209652396,
+      null,
+      [
+        0.4503611233401653,
+        6.276369094848633e-07
+      ],
+      612.975702047348,
+      1,
+      1743809664.053712,
+      1743810277.031232,
+      {}
+    ],
+    [
+      95,
+      null,
+      209652396,
+      null,
+      [
+        0.216270596210716,
+        8.06671380996704e-05
+      ],
+      364.31018924713135,
+      1,
+      1743810277.0792065,
+      1743810641.3919106,
+      {}
+    ],
+    [
+      96,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        1.4579296112060545e-06
+      ],
+      322.18659949302673,
+      1,
+      1743810641.4384391,
+      1743810963.6276646,
+      {}
+    ],
+    [
+      97,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        1.4926791191101073e-05
+      ],
+      219.39863109588623,
+      1,
+      1743810963.6721873,
+      1743811183.0731537,
+      {}
+    ],
+    [
+      98,
+      null,
+      209652396,
+      null,
+      [
+        0.5518660373450792,
+        1.5795230865478515e-07
+      ],
+      396.2980616092682,
+      1,
+      1743811183.1192186,
+      1743811579.4197032,
+      {}
+    ],
+    [
+      99,
+      null,
+      209652396,
+      null,
+      [
+        0.4449250054040473,
+        5.617141723632812e-06
+      ],
+      732.7706878185272,
+      1,
+      1743811579.4661248,
+      1743812312.2392886,
+      {}
+    ],
+    [
+      100,
+      null,
+      209652396,
+      null,
+      [
+        0.3472591577381997,
+        0.0
+      ],
+      871.8453948497772,
+      1,
+      1743812312.284413,
+      1743813184.1321867,
+      {}
+    ],
+    [
+      101,
+      null,
+      209652396,
+      null,
+      [
+        0.16062144280707152,
+        0.05998520314693452
+      ],
+      720.1974897384644,
+      1,
+      1743813184.2009656,
+      1743813904.401048,
+      {}
+    ],
+    [
+      102,
+      null,
+      209652396,
+      null,
+      [
+        0.6576548471758052,
+        6.675720214843749e-08
+      ],
+      1024.3580195903778,
+      1,
+      1743813906.2174633,
+      1743814930.5775034,
+      {}
+    ],
+    [
+      103,
+      null,
+      209652396,
+      null,
+      [
+        0.15669054538815017,
+        0.05623849734663964
+      ],
+      1222.8620648384094,
+      1,
+      1743814930.6260707,
+      1743816153.4906843,
+      {}
+    ],
+    [
+      104,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        4.82797622680664e-08
+      ],
+      271.7794244289398,
+      1,
+      1743816153.5302386,
+      1743816425.3117182,
+      {}
+    ],
+    [
+      105,
+      null,
+      209652396,
+      null,
+      [
+        0.3423451528241948,
+        0.0
+      ],
+      413.09753942489624,
+      1,
+      1743816425.3593836,
+      1743816838.4593723,
+      {}
+    ],
+    [
+      106,
+      null,
+      209652396,
+      null,
+      [
+        0.22444033214991296,
+        0.0011716568470001223
+      ],
+      342.2926745414734,
+      1,
+      1743816838.4977477,
+      1743817180.792449,
+      {}
+    ],
+    [
+      107,
+      null,
+      209652396,
+      null,
+      [
+        0.166794496435215,
+        0.03861114621162415
+      ],
+      743.2467310428619,
+      1,
+      1743817180.8402483,
+      1743817924.0893695,
+      {}
+    ],
+    [
+      108,
+      null,
+      209652396,
+      null,
+      [
+        0.22063139361043554,
+        0.00756412386894226
+      ],
+      262.9271230697632,
+      1,
+      1743817924.1388807,
+      1743818187.0685802,
+      {}
+    ],
+    [
+      109,
+      null,
+      209652396,
+      null,
+      [
+        0.15816470442218944,
+        0.05712138250470161
+      ],
+      679.1407897472382,
+      1,
+      1743818187.1168098,
+      1743818866.2600214,
+      {}
+    ],
+    [
+      110,
+      null,
+      209652396,
+      null,
+      [
+        Infinity,
+        Infinity
+      ],
+      0.0,
+      2,
+      1743818868.182574,
+      1743818873.9073243,
+      {
+        "traceback": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 186, in run\n    rval = self(config_copy, target_function, kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 259, in __call__\n    return algorithm(config, **algorithm_kwargs)\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_pytorch.py\", line 58, in train\n    predictions = self.train_and_predict_classifier(\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_df.py\", line 8, in train_and_predict_classifier\n    return train_and_predict_df_classifier(dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions, on_test)\n  File \"/home/dev/persistent/autoML-FAI-experiments/methods/df/__init__.py\", line 54, in train_and_predict_df_classifier\n    loss = loss_function(y_hat.squeeze(), y_batch)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1553, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1562, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/loss.py\", line 621, in forward\n    return F.binary_cross_entropy(input, target, weight=self.weight, reduction=self.reduction)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/functional.py\", line 3163, in binary_cross_entropy\n    raise ValueError(\nValueError: Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.\n",
+        "error": "ValueError('Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.')"
+      }
+    ],
+    [
+      111,
+      null,
+      209652396,
+      null,
+      [
+        Infinity,
+        Infinity
+      ],
+      0.0,
+      2,
+      1743818873.9461598,
+      1743818989.8323615,
+      {
+        "traceback": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 186, in run\n    rval = self(config_copy, target_function, kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 259, in __call__\n    return algorithm(config, **algorithm_kwargs)\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_pytorch.py\", line 58, in train\n    predictions = self.train_and_predict_classifier(\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_df.py\", line 8, in train_and_predict_classifier\n    return train_and_predict_df_classifier(dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions, on_test)\n  File \"/home/dev/persistent/autoML-FAI-experiments/methods/df/__init__.py\", line 54, in train_and_predict_df_classifier\n    loss = loss_function(y_hat.squeeze(), y_batch)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1553, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1562, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/loss.py\", line 621, in forward\n    return F.binary_cross_entropy(input, target, weight=self.weight, reduction=self.reduction)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/functional.py\", line 3163, in binary_cross_entropy\n    raise ValueError(\nValueError: Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.\n",
+        "error": "ValueError('Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.')"
+      }
+    ],
+    [
+      112,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.0
+      ],
+      443.5714478492737,
+      1,
+      1743818989.873742,
+      1743819433.4472747,
+      {}
+    ],
+    [
+      113,
+      null,
+      209652396,
+      null,
+      [
+        0.17158583041816577,
+        0.010073143243789674
+      ],
+      1507.935081243515,
+      1,
+      1743819433.4986806,
+      1743820941.4364247,
+      {}
+    ],
+    [
+      114,
+      null,
+      209652396,
+      null,
+      [
+        0.34056382604286795,
+        3.3015012741088868e-06
+      ],
+      434.0514032840729,
+      1,
+      1743820941.49034,
+      1743821375.5442948,
+      {}
+    ],
+    [
+      115,
+      null,
+      209652396,
+      null,
+      [
+        Infinity,
+        Infinity
+      ],
+      0.0,
+      2,
+      1743821375.5956414,
+      1743821615.8251085,
+      {
+        "traceback": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 186, in run\n    rval = self(config_copy, target_function, kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/smac/runner/target_function_runner.py\", line 259, in __call__\n    return algorithm(config, **algorithm_kwargs)\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_pytorch.py\", line 58, in train\n    predictions = self.train_and_predict_classifier(\n  File \"/home/dev/persistent/autoML-FAI-experiments/automl/auto_df.py\", line 8, in train_and_predict_classifier\n    return train_and_predict_df_classifier(dataset, net, metric, lambda_, lr, n_epochs, batch_size, conditions, on_test)\n  File \"/home/dev/persistent/autoML-FAI-experiments/methods/df/__init__.py\", line 54, in train_and_predict_df_classifier\n    loss = loss_function(y_hat.squeeze(), y_batch)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1553, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/module.py\", line 1562, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/modules/loss.py\", line 621, in forward\n    return F.binary_cross_entropy(input, target, weight=self.weight, reduction=self.reduction)\n  File \"/usr/local/lib/python3.10/site-packages/torch/nn/functional.py\", line 3163, in binary_cross_entropy\n    raise ValueError(\nValueError: Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.\n",
+        "error": "ValueError('Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])) is deprecated. Please ensure they have the same size.')"
+      }
+    ],
+    [
+      116,
+      null,
+      209652396,
+      null,
+      [
+        0.17855743813827646,
+        0.11124249398708344
+      ],
+      5718.833448410034,
+      1,
+      1743821615.8721955,
+      1743827334.7077444,
+      {}
+    ],
+    [
+      117,
+      null,
+      209652396,
+      null,
+      [
+        0.5528795319962985,
+        9.417533874511718e-08
+      ],
+      1437.8237266540527,
+      1,
+      1743827334.7491558,
+      1743828772.574908,
+      {}
+    ],
+    [
+      118,
+      null,
+      209652396,
+      null,
+      [
+        0.238597497878935,
+        1.725494861602783e-05
+      ],
+      296.473751783371,
+      1,
+      1743828774.4740493,
+      1743829070.949754,
+      {}
+    ],
+    [
+      119,
+      null,
+      209652396,
+      null,
+      [
+        0.3440799086008667,
+        0.0
+      ],
+      186.18774700164795,
+      1,
+      1743829071.0192382,
+      1743829257.2093885,
+      {}
+    ],
+    [
+      120,
+      null,
+      209652396,
+      null,
+      [
+        0.16298646800143807,
+        0.040923970341682436
+      ],
+      640.7419619560242,
+      1,
+      1743829257.2567308,
+      1743829898.000611,
+      {}
+    ],
+    [
+      121,
+      null,
+      209652396,
+      null,
+      [
+        0.1541720707139869,
+        0.1009539569914341
+      ],
+      1773.1311612129211,
+      1,
+      1743829898.0430028,
+      1743831671.1762154,
+      {}
+    ],
+    [
+      122,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        4.82797622680664e-08
+      ],
+      667.9996252059937,
+      1,
+      1743831671.231594,
+      1743832339.2336428,
+      {}
+    ],
+    [
+      123,
+      null,
+      209652396,
+      null,
+      [
+        0.1989184690531996,
+        0.011719214916229247
+      ],
+      295.8801386356354,
+      1,
+      1743832339.294862,
+      1743832635.1771016,
+      {}
+    ],
+    [
+      124,
+      null,
+      209652396,
+      null,
+      [
+        0.6559200913991333,
+        6.437301635742188e-08
+      ],
+      479.5992479324341,
+      1,
+      1743832635.2387893,
+      1743833114.8405564,
+      {}
+    ],
+    [
+      125,
+      null,
+      209652396,
+      null,
+      [
+        0.1590860143255353,
+        0.05620088994503021
+      ],
+      1534.4120993614197,
+      1,
+      1743833114.8825781,
+      1743834649.29661,
+      {}
+    ],
+    [
+      126,
+      null,
+      209652396,
+      null,
+      [
+        0.45066832409646784,
+        4.5180320739746094e-07
+      ],
+      1339.511398077011,
+      1,
+      1743834651.3441198,
+      1743835990.8575506,
+      {}
+    ],
+    [
+      127,
+      null,
+      209652396,
+      null,
+      [
+        0.3440799086008667,
+        5.841255187988282e-08
+      ],
+      1056.046802520752,
+      1,
+      1743835990.9329207,
+      1743837046.9825518,
+      {}
+    ],
+    [
+      128,
+      null,
+      209652396,
+      null,
+      [
+        0.3282936725301995,
+        0.00012593865394592283
+      ],
+      2638.6507959365845,
+      1,
+      1743837047.0293565,
+      1743839685.6828432,
+      {}
+    ],
+    [
+      129,
+      null,
+      209652396,
+      null,
+      [
+        0.22827944092914154,
+        0.00010894596576690674
+      ],
+      582.0444734096527,
+      1,
+      1743839685.7394805,
+      1743840267.7865882,
+      {}
+    ],
+    [
+      130,
+      null,
+      209652396,
+      null,
+      [
+        0.1618500053380293,
+        0.054105204939842236
+      ],
+      394.6307723522186,
+      1,
+      1743840267.8460855,
+      1743840662.4793818,
+      {}
+    ],
+    [
+      131,
+      null,
+      209652396,
+      null,
+      [
+        0.34486358034262227,
+        5.7220458984374985e-08
+      ],
+      572.1910381317139,
+      1,
+      1743840662.5376003,
+      1743841234.7314148,
+      {}
+    ],
+    [
+      132,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        2.0980834960937505e-07
+      ],
+      268.5905702114105,
+      1,
+      1743841234.7886477,
+      1743841503.3817255,
+      {}
+    ],
+    [
+      133,
+      null,
+      209652396,
+      null,
+      [
+        0.17874157185534428,
+        0.04030628293752671
+      ],
+      300.5237522125244,
+      1,
+      1743841503.4371686,
+      1743841803.9633467,
+      {}
+    ],
+    [
+      134,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.0
+      ],
+      398.22405529022217,
+      1,
+      1743841806.0554223,
+      1743842204.2816546,
+      {}
+    ],
+    [
+      135,
+      null,
+      209652396,
+      null,
+      [
+        0.2384139441774172,
+        1.7488002777099607e-06
+      ],
+      840.2009572982788,
+      1,
+      1743842204.3399568,
+      1743843044.5435574,
+      {}
+    ],
+    [
+      136,
+      null,
+      209652396,
+      null,
+      [
+        0.38543484756059604,
+        6.010532379150391e-06
+      ],
+      854.8322207927704,
+      1,
+      1743843044.6040823,
+      1743843899.4389524,
+      {}
+    ]
+  ],
+  "configs": {
+    "1": {
+      "batch_size": 297,
+      "lambda_value": 0.6205646954477,
+      "learning_rate": 0.000210147218,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 697
+    },
+    "2": {
+      "batch_size": 979,
+      "lambda_value": 0.3596079321578,
+      "learning_rate": 0.0535361448362,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 65
+    },
+    "3": {
+      "batch_size": 652,
+      "lambda_value": 0.7642785040662,
+      "learning_rate": 0.0014379647071,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 136
+    },
+    "4": {
+      "batch_size": 94,
+      "lambda_value": 0.005704017356,
+      "learning_rate": 0.0050831004951,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 339
+    },
+    "5": {
+      "batch_size": 241,
+      "lambda_value": 0.9708397453651,
+      "learning_rate": 0.0329667406801,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 407
+    },
+    "6": {
+      "batch_size": 296,
+      "lambda_value": 0.9465259942038,
+      "learning_rate": 0.0002132754979,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 603
+    },
+    "7": {
+      "batch_size": 427,
+      "lambda_value": 0.911761522424,
+      "learning_rate": 0.0001847390482,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 562
+    },
+    "8": {
+      "batch_size": 506,
+      "lambda_value": 0.9214750677078,
+      "learning_rate": 0.0001317906673,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 546
+    },
+    "9": {
+      "batch_size": 303,
+      "lambda_value": 0.9972372355137,
+      "learning_rate": 0.0004887716481,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 598
+    },
+    "10": {
+      "batch_size": 304,
+      "lambda_value": 0.9541537152325,
+      "learning_rate": 0.0006237713056,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 574
+    },
+    "11": {
+      "batch_size": 321,
+      "lambda_value": 0.938937916129,
+      "learning_rate": 0.0001372129918,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 552
+    },
+    "12": {
+      "batch_size": 403,
+      "lambda_value": 0.9783044597111,
+      "learning_rate": 0.0002005770113,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 573
+    },
+    "13": {
+      "batch_size": 315,
+      "lambda_value": 0.969195303307,
+      "learning_rate": 0.0005741613037,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 544
+    },
+    "14": {
+      "batch_size": 652,
+      "lambda_value": 0.7800202708188,
+      "learning_rate": 0.000783478536,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 86
+    },
+    "15": {
+      "batch_size": 159,
+      "lambda_value": 0.9542835976861,
+      "learning_rate": 0.0004414305733,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 544
+    },
+    "16": {
+      "batch_size": 142,
+      "lambda_value": 0.9168233231487,
+      "learning_rate": 0.0014966165334,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 283
+    },
+    "17": {
+      "batch_size": 190,
+      "lambda_value": 0.4593559640657,
+      "learning_rate": 0.0073355691801,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 67
+    },
+    "18": {
+      "batch_size": 62,
+      "lambda_value": 0.2186028007396,
+      "learning_rate": 0.0521443636333,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 66
+    },
+    "19": {
+      "batch_size": 81,
+      "lambda_value": 0.7930082208905,
+      "learning_rate": 0.0583020588095,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 89
+    },
+    "20": {
+      "batch_size": 277,
+      "lambda_value": 0.0788153739624,
+      "learning_rate": 0.0011246047718,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 788
+    },
+    "21": {
+      "batch_size": 895,
+      "lambda_value": 0.7897473442105,
+      "learning_rate": 0.011623077444,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 411
+    },
+    "22": {
+      "batch_size": 597,
+      "lambda_value": 0.4199483890762,
+      "learning_rate": 0.0062957704128,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 1002
+    },
+    "23": {
+      "batch_size": 474,
+      "lambda_value": 0.8749793433439,
+      "learning_rate": 0.0001102216502,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 411
+    },
+    "24": {
+      "batch_size": 149,
+      "lambda_value": 0.9541537152325,
+      "learning_rate": 0.0006237713056,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 392
+    },
+    "25": {
+      "batch_size": 368,
+      "lambda_value": 0.7074847246097,
+      "learning_rate": 0.0023898254734,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 269
+    },
+    "26": {
+      "batch_size": 71,
+      "lambda_value": 0.8923015099882,
+      "learning_rate": 0.001808941881,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 299
+    },
+    "27": {
+      "batch_size": 116,
+      "lambda_value": 0.4510837416557,
+      "learning_rate": 0.0054885229985,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 598
+    },
+    "28": {
+      "batch_size": 40,
+      "lambda_value": 0.2249141842599,
+      "learning_rate": 0.0056128111475,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 212
+    },
+    "29": {
+      "batch_size": 255,
+      "lambda_value": 0.3746025542062,
+      "learning_rate": 0.0003767361868,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 496
+    },
+    "30": {
+      "batch_size": 497,
+      "lambda_value": 0.4323787825414,
+      "learning_rate": 0.0004186695981,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 866
+    },
+    "31": {
+      "batch_size": 62,
+      "lambda_value": 0.7842471008173,
+      "learning_rate": 0.0430204149975,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 71
+    },
+    "32": {
+      "batch_size": 242,
+      "lambda_value": 0.5897873412338,
+      "learning_rate": 0.0912677296139,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 140
+    },
+    "33": {
+      "batch_size": 64,
+      "lambda_value": 0.2468549245426,
+      "learning_rate": 0.0094287155979,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 723
+    },
+    "34": {
+      "batch_size": 218,
+      "lambda_value": 0.9426687647059,
+      "learning_rate": 0.0002024117591,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 341
+    },
+    "35": {
+      "batch_size": 64,
+      "lambda_value": 0.9412155333208,
+      "learning_rate": 0.0010280620536,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 336
+    },
+    "36": {
+      "batch_size": 252,
+      "lambda_value": 0.1295589319796,
+      "learning_rate": 0.0499798840043,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 710
+    },
+    "37": {
+      "batch_size": 44,
+      "lambda_value": 0.2249141842599,
+      "learning_rate": 0.0131708710364,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 144
+    },
+    "38": {
+      "batch_size": 116,
+      "lambda_value": 0.5981690040693,
+      "learning_rate": 0.0114053208602,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 389
+    },
+    "39": {
+      "batch_size": 749,
+      "lambda_value": 0.4840107650808,
+      "learning_rate": 0.0234433390482,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 133
+    },
+    "40": {
+      "batch_size": 203,
+      "lambda_value": 0.836270266563,
+      "learning_rate": 0.0026409543209,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 612
+    },
+    "41": {
+      "batch_size": 343,
+      "lambda_value": 0.430196980649,
+      "learning_rate": 0.0006627614282,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 64
+    },
+    "42": {
+      "batch_size": 611,
+      "lambda_value": 0.7288004268209,
+      "learning_rate": 0.004259739599,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 369
+    },
+    "43": {
+      "batch_size": 481,
+      "lambda_value": 0.8465598647944,
+      "learning_rate": 0.0041610128694,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 255
+    },
+    "44": {
+      "batch_size": 133,
+      "lambda_value": 0.9311588711815,
+      "learning_rate": 0.0006237713056,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 574
+    },
+    "45": {
+      "batch_size": 698,
+      "lambda_value": 0.8892119720028,
+      "learning_rate": 0.0004284007778,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 546
+    },
+    "46": {
+      "batch_size": 84,
+      "lambda_value": 0.9465259942038,
+      "learning_rate": 0.0001945444613,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 391
+    },
+    "47": {
+      "batch_size": 94,
+      "lambda_value": 0.0321600842452,
+      "learning_rate": 0.0086263132386,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 285
+    },
+    "48": {
+      "batch_size": 464,
+      "lambda_value": 0.9156462667832,
+      "learning_rate": 0.0002835446911,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 67
+    },
+    "49": {
+      "batch_size": 539,
+      "lambda_value": 0.4096195582972,
+      "learning_rate": 0.0014614146338,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 269
+    },
+    "50": {
+      "batch_size": 534,
+      "lambda_value": 0.6678345602872,
+      "learning_rate": 0.0001667053277,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 104
+    },
+    "51": {
+      "batch_size": 635,
+      "lambda_value": 0.516991437692,
+      "learning_rate": 0.0229282052152,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 106
+    },
+    "52": {
+      "batch_size": 204,
+      "lambda_value": 0.1548774723687,
+      "learning_rate": 0.0011246047718,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 308
+    },
+    "53": {
+      "batch_size": 582,
+      "lambda_value": 0.0387496336331,
+      "learning_rate": 0.0003356147463,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 83
+    },
+    "54": {
+      "batch_size": 74,
+      "lambda_value": 0.9121968741405,
+      "learning_rate": 0.0011031792873,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 362
+    },
+    "55": {
+      "batch_size": 394,
+      "lambda_value": 0.4524190810978,
+      "learning_rate": 0.0128694264374,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 729
+    },
+    "56": {
+      "batch_size": 50,
+      "lambda_value": 0.2468549245426,
+      "learning_rate": 0.005462032419,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 310
+    },
+    "57": {
+      "batch_size": 34,
+      "lambda_value": 0.8853796000595,
+      "learning_rate": 0.0014368370601,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 280
+    },
+    "58": {
+      "batch_size": 771,
+      "lambda_value": 0.2890708099789,
+      "learning_rate": 0.0007673214034,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 128
+    },
+    "59": {
+      "batch_size": 526,
+      "lambda_value": 0.1558490208903,
+      "learning_rate": 0.0010597119829,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 71
+    },
+    "60": {
+      "batch_size": 390,
+      "lambda_value": 0.0651361235224,
+      "learning_rate": 0.0003356147463,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 68
+    },
+    "61": {
+      "batch_size": 900,
+      "lambda_value": 0.4300912433377,
+      "learning_rate": 0.0152683361273,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 574
+    },
+    "62": {
+      "batch_size": 595,
+      "lambda_value": 0.3706839481182,
+      "learning_rate": 0.0951236349835,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 72
+    },
+    "63": {
+      "batch_size": 206,
+      "lambda_value": 0.95338808871,
+      "learning_rate": 0.0016988647116,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 71
+    },
+    "64": {
+      "batch_size": 391,
+      "lambda_value": 0.9472492536541,
+      "learning_rate": 0.0001474724712,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 353
+    },
+    "65": {
+      "batch_size": 48,
+      "lambda_value": 0.5823596969608,
+      "learning_rate": 0.0241498634091,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 71
+    },
+    "66": {
+      "batch_size": 921,
+      "lambda_value": 0.0402320288874,
+      "learning_rate": 0.0695202977577,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 410
+    },
+    "67": {
+      "batch_size": 217,
+      "lambda_value": 0.6966025769503,
+      "learning_rate": 0.0609459009151,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 409
+    },
+    "68": {
+      "batch_size": 34,
+      "lambda_value": 0.2671074801836,
+      "learning_rate": 0.0037159750218,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 178
+    },
+    "69": {
+      "batch_size": 435,
+      "lambda_value": 0.6182493089424,
+      "learning_rate": 0.0313142741224,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 206
+    },
+    "70": {
+      "batch_size": 193,
+      "lambda_value": 0.4888227212062,
+      "learning_rate": 0.0678987026873,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 198
+    },
+    "71": {
+      "batch_size": 150,
+      "lambda_value": 0.953474554869,
+      "learning_rate": 0.0022378625193,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 73
+    },
+    "72": {
+      "batch_size": 61,
+      "lambda_value": 0.2739722403438,
+      "learning_rate": 0.054893213391,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 284
+    },
+    "73": {
+      "batch_size": 962,
+      "lambda_value": 0.1658029844256,
+      "learning_rate": 0.0009078367561,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 387
+    },
+    "74": {
+      "batch_size": 54,
+      "lambda_value": 0.9826533842145,
+      "learning_rate": 0.0003970302493,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 468
+    },
+    "75": {
+      "batch_size": 632,
+      "lambda_value": 0.2859097380484,
+      "learning_rate": 0.0213235547463,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 145
+    },
+    "76": {
+      "batch_size": 98,
+      "lambda_value": 0.8484443833326,
+      "learning_rate": 0.000285439054,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 364
+    },
+    "77": {
+      "batch_size": 745,
+      "lambda_value": 0.5293743173916,
+      "learning_rate": 0.0002020537003,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 351
+    },
+    "78": {
+      "batch_size": 353,
+      "lambda_value": 0.9667656546864,
+      "learning_rate": 0.0001317906673,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 342
+    },
+    "79": {
+      "batch_size": 326,
+      "lambda_value": 0.0255209493511,
+      "learning_rate": 0.0047701456566,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 644
+    },
+    "80": {
+      "batch_size": 66,
+      "lambda_value": 0.7850084127424,
+      "learning_rate": 0.0002891005159,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 544
+    },
+    "81": {
+      "batch_size": 917,
+      "lambda_value": 0.2528729324812,
+      "learning_rate": 0.0002112474838,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 84
+    },
+    "82": {
+      "batch_size": 348,
+      "lambda_value": 0.5191954030238,
+      "learning_rate": 0.012424877803,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 185
+    },
+    "83": {
+      "batch_size": 869,
+      "lambda_value": 0.3577941791914,
+      "learning_rate": 0.0001144897283,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 85
+    },
+    "84": {
+      "batch_size": 588,
+      "lambda_value": 0.8148829947769,
+      "learning_rate": 0.0433063202464,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 714
+    },
+    "85": {
+      "batch_size": 603,
+      "lambda_value": 0.7481965207707,
+      "learning_rate": 0.050363997522,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 431
+    },
+    "86": {
+      "batch_size": 829,
+      "lambda_value": 0.799121782268,
+      "learning_rate": 0.0006191180937,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 452
+    },
+    "87": {
+      "batch_size": 873,
+      "lambda_value": 0.5880683420959,
+      "learning_rate": 0.0395920253849,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 245
+    },
+    "88": {
+      "batch_size": 959,
+      "lambda_value": 0.0099039525899,
+      "learning_rate": 0.0001330037572,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 856
+    },
+    "89": {
+      "batch_size": 46,
+      "lambda_value": 0.8704156633409,
+      "learning_rate": 0.0056643097111,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 383
+    },
+    "90": {
+      "batch_size": 367,
+      "lambda_value": 0.9224830174954,
+      "learning_rate": 0.0001413124133,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 227
+    },
+    "91": {
+      "batch_size": 921,
+      "lambda_value": 0.045952784102,
+      "learning_rate": 0.0916943950772,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 253
+    },
+    "92": {
+      "batch_size": 46,
+      "lambda_value": 0.4865568660237,
+      "learning_rate": 0.0930614516865,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 341
+    },
+    "93": {
+      "batch_size": 501,
+      "lambda_value": 0.4344636044526,
+      "learning_rate": 0.0343406853747,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 551
+    },
+    "94": {
+      "batch_size": 297,
+      "lambda_value": 0.7086818012296,
+      "learning_rate": 0.0313142741224,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 186
+    },
+    "95": {
+      "batch_size": 443,
+      "lambda_value": 0.6437472902831,
+      "learning_rate": 0.0027191994978,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 74
+    },
+    "96": {
+      "batch_size": 494,
+      "lambda_value": 0.353104235872,
+      "learning_rate": 0.0460274439121,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 151
+    },
+    "97": {
+      "batch_size": 612,
+      "lambda_value": 0.7445442247914,
+      "learning_rate": 0.0046312981207,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 136
+    },
+    "98": {
+      "batch_size": 355,
+      "lambda_value": 0.9137569290511,
+      "learning_rate": 0.034912055568,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 196
+    },
+    "99": {
+      "batch_size": 368,
+      "lambda_value": 0.909812591867,
+      "learning_rate": 0.0001691438055,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 546
+    },
+    "100": {
+      "batch_size": 70,
+      "lambda_value": 0.2378175826209,
+      "learning_rate": 0.0298861171254,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 324
+    },
+    "101": {
+      "batch_size": 103,
+      "lambda_value": 0.2833626254686,
+      "learning_rate": 0.0005003261748,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 490
+    },
+    "102": {
+      "batch_size": 140,
+      "lambda_value": 0.9892684677722,
+      "learning_rate": 0.0011503879465,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 499
+    },
+    "103": {
+      "batch_size": 441,
+      "lambda_value": 0.1020683828299,
+      "learning_rate": 0.0037946946911,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 771
+    },
+    "104": {
+      "batch_size": 702,
+      "lambda_value": 0.5869302019977,
+      "learning_rate": 0.0560363321077,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 94
+    },
+    "105": {
+      "batch_size": 105,
+      "lambda_value": 0.5175676044407,
+      "learning_rate": 0.0804624104669,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 720
+    },
+    "106": {
+      "batch_size": 614,
+      "lambda_value": 0.6068515756567,
+      "learning_rate": 0.0036712101887,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 170
+    },
+    "107": {
+      "batch_size": 167,
+      "lambda_value": 0.3954554875731,
+      "learning_rate": 0.0006200074568,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 161
+    },
+    "108": {
+      "batch_size": 854,
+      "lambda_value": 0.3963655762458,
+      "learning_rate": 0.0382207622359,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 66
+    },
+    "109": {
+      "batch_size": 893,
+      "lambda_value": 0.0856850495382,
+      "learning_rate": 0.0040492005727,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 90
+    },
+    "110": {
+      "batch_size": 61,
+      "lambda_value": 0.9426226867274,
+      "learning_rate": 0.0001101323734,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 78
+    },
+    "111": {
+      "batch_size": 37,
+      "lambda_value": 0.95338808871,
+      "learning_rate": 0.0012916785509,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 70
+    },
+    "112": {
+      "batch_size": 162,
+      "lambda_value": 0.6345200987664,
+      "learning_rate": 0.0465896088769,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 255
+    },
+    "113": {
+      "batch_size": 302,
+      "lambda_value": 0.6000835993738,
+      "learning_rate": 0.0016686897851,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 72
+    },
+    "114": {
+      "batch_size": 292,
+      "lambda_value": 0.7750107417492,
+      "learning_rate": 0.001684136844,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 376
+    },
+    "115": {
+      "batch_size": 37,
+      "lambda_value": 0.3196429582809,
+      "learning_rate": 0.0161882911295,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 69
+    },
+    "116": {
+      "batch_size": 59,
+      "lambda_value": 0.0095926156531,
+      "learning_rate": 0.0001270365839,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 406
+    },
+    "117": {
+      "batch_size": 127,
+      "lambda_value": 0.978092313941,
+      "learning_rate": 0.0005057971755,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 477
+    },
+    "118": {
+      "batch_size": 519,
+      "lambda_value": 0.7118106842182,
+      "learning_rate": 0.0023394215899,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 101
+    },
+    "119": {
+      "batch_size": 567,
+      "lambda_value": 0.688480718827,
+      "learning_rate": 0.0288474910682,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 274
+    },
+    "120": {
+      "batch_size": 86,
+      "lambda_value": 0.3463699666654,
+      "learning_rate": 0.005200038389,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 66
+    },
+    "121": {
+      "batch_size": 526,
+      "lambda_value": 0.0110672945031,
+      "learning_rate": 0.0004543184753,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 71
+    },
+    "122": {
+      "batch_size": 47,
+      "lambda_value": 0.6099641339953,
+      "learning_rate": 0.0943476007877,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 109
+    },
+    "123": {
+      "batch_size": 962,
+      "lambda_value": 0.5118644527825,
+      "learning_rate": 0.0014324827944,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 442
+    },
+    "124": {
+      "batch_size": 403,
+      "lambda_value": 0.9712543394276,
+      "learning_rate": 0.001872117548,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 341
+    },
+    "125": {
+      "batch_size": 100,
+      "lambda_value": 0.1735929381461,
+      "learning_rate": 0.0063114184755,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 354
+    },
+    "126": {
+      "batch_size": 117,
+      "lambda_value": 0.8742968313517,
+      "learning_rate": 0.0011254495828,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 76
+    },
+    "127": {
+      "batch_size": 53,
+      "lambda_value": 0.8653509100851,
+      "learning_rate": 0.0009139898276,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 236
+    },
+    "128": {
+      "batch_size": 177,
+      "lambda_value": 0.7925788673406,
+      "learning_rate": 0.000182127577,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 353
+    },
+    "129": {
+      "batch_size": 459,
+      "lambda_value": 0.7816321208377,
+      "learning_rate": 0.0003019301053,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 84
+    },
+    "130": {
+      "batch_size": 456,
+      "lambda_value": 0.1806480120926,
+      "learning_rate": 0.0007435520618,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 77
+    },
+    "131": {
+      "batch_size": 231,
+      "lambda_value": 0.7207981554854,
+      "learning_rate": 0.0274411888787,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 137
+    },
+    "132": {
+      "batch_size": 725,
+      "lambda_value": 0.5275737085407,
+      "learning_rate": 0.0962149393336,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 78
+    },
+    "133": {
+      "batch_size": 851,
+      "lambda_value": 0.1713056759189,
+      "learning_rate": 0.0440941246919,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 89
+    },
+    "134": {
+      "batch_size": 165,
+      "lambda_value": 0.7241323307468,
+      "learning_rate": 0.0628344665292,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 301
+    },
+    "135": {
+      "batch_size": 304,
+      "lambda_value": 0.8962430625959,
+      "learning_rate": 0.000819191059,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 400
+    },
+    "136": {
+      "batch_size": 256,
+      "lambda_value": 0.8793650188499,
+      "learning_rate": 0.0001599890426,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 399
+    }
+  },
+  "config_origins": {
+    "1": "Initial Design: Sobol",
+    "2": "Initial Design: Sobol",
+    "3": "Initial Design: Sobol",
+    "4": "Initial Design: Sobol",
+    "5": "Initial Design: Sobol",
+    "6": "Acquisition Function Maximizer: Local Search",
+    "7": "Acquisition Function Maximizer: Local Search",
+    "8": "Acquisition Function Maximizer: Local Search",
+    "9": "Acquisition Function Maximizer: Local Search",
+    "10": "Acquisition Function Maximizer: Local Search",
+    "11": "Acquisition Function Maximizer: Local Search",
+    "12": "Acquisition Function Maximizer: Local Search",
+    "13": "Acquisition Function Maximizer: Local Search",
+    "14": "Acquisition Function Maximizer: Local Search",
+    "15": "Acquisition Function Maximizer: Local Search",
+    "16": "Acquisition Function Maximizer: Local Search",
+    "17": "Acquisition Function Maximizer: Local Search",
+    "18": "Acquisition Function Maximizer: Local Search",
+    "19": "Acquisition Function Maximizer: Local Search",
+    "20": "Random Search",
+    "21": "Random Search",
+    "22": "Random Search",
+    "23": "Acquisition Function Maximizer: Local Search",
+    "24": "Acquisition Function Maximizer: Local Search",
+    "25": "Acquisition Function Maximizer: Local Search",
+    "26": "Acquisition Function Maximizer: Local Search",
+    "27": "Acquisition Function Maximizer: Local Search",
+    "28": "Acquisition Function Maximizer: Local Search",
+    "29": "Acquisition Function Maximizer: Local Search",
+    "30": "Random Search",
+    "31": "Acquisition Function Maximizer: Local Search",
+    "32": "Random Search",
+    "33": "Acquisition Function Maximizer: Local Search",
+    "34": "Acquisition Function Maximizer: Local Search",
+    "35": "Acquisition Function Maximizer: Local Search",
+    "36": "Acquisition Function Maximizer: Local Search",
+    "37": "Acquisition Function Maximizer: Local Search",
+    "38": "Acquisition Function Maximizer: Local Search",
+    "39": "Acquisition Function Maximizer: Local Search",
+    "40": "Random Search",
+    "41": "Acquisition Function Maximizer: Local Search",
+    "42": "Acquisition Function Maximizer: Local Search",
+    "43": "Acquisition Function Maximizer: Local Search",
+    "44": "Acquisition Function Maximizer: Local Search",
+    "45": "Acquisition Function Maximizer: Local Search",
+    "46": "Acquisition Function Maximizer: Local Search",
+    "47": "Acquisition Function Maximizer: Local Search",
+    "48": "Acquisition Function Maximizer: Local Search",
+    "49": "Random Search",
+    "50": "Acquisition Function Maximizer: Local Search",
+    "51": "Acquisition Function Maximizer: Local Search",
+    "52": "Acquisition Function Maximizer: Local Search",
+    "53": "Random Search",
+    "54": "Acquisition Function Maximizer: Local Search",
+    "55": "Acquisition Function Maximizer: Local Search",
+    "56": "Acquisition Function Maximizer: Local Search",
+    "57": "Acquisition Function Maximizer: Local Search",
+    "58": "Acquisition Function Maximizer: Local Search",
+    "59": "Random Search",
+    "60": "Acquisition Function Maximizer: Local Search",
+    "61": "Random Search",
+    "62": "Acquisition Function Maximizer: Local Search",
+    "63": "Acquisition Function Maximizer: Local Search",
+    "64": "Acquisition Function Maximizer: Local Search",
+    "65": "Acquisition Function Maximizer: Local Search",
+    "66": "Random Search",
+    "67": "Random Search",
+    "68": "Acquisition Function Maximizer: Local Search",
+    "69": "Random Search",
+    "70": "Random Search",
+    "71": "Acquisition Function Maximizer: Local Search",
+    "72": "Acquisition Function Maximizer: Local Search",
+    "73": "Random Search",
+    "74": "Acquisition Function Maximizer: Local Search",
+    "75": "Random Search",
+    "76": "Acquisition Function Maximizer: Local Search",
+    "77": "Acquisition Function Maximizer: Local Search",
+    "78": "Acquisition Function Maximizer: Local Search",
+    "79": "Acquisition Function Maximizer: Local Search",
+    "80": "Acquisition Function Maximizer: Local Search",
+    "81": "Random Search",
+    "82": "Acquisition Function Maximizer: Local Search",
+    "83": "Random Search",
+    "84": "Acquisition Function Maximizer: Local Search",
+    "85": "Random Search",
+    "86": "Acquisition Function Maximizer: Local Search",
+    "87": "Acquisition Function Maximizer: Local Search",
+    "88": "Random Search",
+    "89": "Acquisition Function Maximizer: Local Search",
+    "90": "Acquisition Function Maximizer: Local Search",
+    "91": "Acquisition Function Maximizer: Local Search",
+    "92": "Acquisition Function Maximizer: Local Search",
+    "93": "Random Search",
+    "94": "Acquisition Function Maximizer: Local Search",
+    "95": "Acquisition Function Maximizer: Local Search",
+    "96": "Acquisition Function Maximizer: Local Search",
+    "97": "Acquisition Function Maximizer: Local Search",
+    "98": "Random Search",
+    "99": "Acquisition Function Maximizer: Local Search",
+    "100": "Acquisition Function Maximizer: Local Search",
+    "101": "Random Search",
+    "102": "Acquisition Function Maximizer: Local Search",
+    "103": "Random Search",
+    "104": "Acquisition Function Maximizer: Local Search",
+    "105": "Random Search",
+    "106": "Acquisition Function Maximizer: Local Search",
+    "107": "Acquisition Function Maximizer: Local Search",
+    "108": "Acquisition Function Maximizer: Local Search",
+    "109": "Acquisition Function Maximizer: Local Search",
+    "110": "Acquisition Function Maximizer: Local Search",
+    "111": "Acquisition Function Maximizer: Local Search",
+    "112": "Acquisition Function Maximizer: Local Search",
+    "113": "Acquisition Function Maximizer: Local Search",
+    "114": "Acquisition Function Maximizer: Local Search",
+    "115": "Acquisition Function Maximizer: Local Search",
+    "116": "Acquisition Function Maximizer: Local Search",
+    "117": "Acquisition Function Maximizer: Local Search",
+    "118": "Acquisition Function Maximizer: Local Search",
+    "119": "Acquisition Function Maximizer: Local Search",
+    "120": "Acquisition Function Maximizer: Local Search",
+    "121": "Acquisition Function Maximizer: Local Search",
+    "122": "Acquisition Function Maximizer: Local Search",
+    "123": "Acquisition Function Maximizer: Local Search",
+    "124": "Acquisition Function Maximizer: Local Search",
+    "125": "Acquisition Function Maximizer: Local Search",
+    "126": "Acquisition Function Maximizer: Local Search",
+    "127": "Acquisition Function Maximizer: Local Search",
+    "128": "Acquisition Function Maximizer: Local Search",
+    "129": "Acquisition Function Maximizer: Local Search",
+    "130": "Acquisition Function Maximizer: Local Search",
+    "131": "Acquisition Function Maximizer: Local Search",
+    "132": "Random Search",
+    "133": "Acquisition Function Maximizer: Local Search",
+    "134": "Acquisition Function Maximizer: Local Search",
+    "135": "Acquisition Function Maximizer: Local Search",
+    "136": "Acquisition Function Maximizer: Local Search"
+  }
+}
