@@ -11,6 +11,7 @@ PRETTY_NAMES = {
     "jiang": "GDP",
     "cho": "KDE",
     "prr": "PRR",
+    "df": "DF",
     "batch_size": "Batch Size",
     "lambda_value": "Lambda Value",
     "learning_rate": "Learning Rate",
@@ -24,6 +25,7 @@ COLOR_MAP = {
     "GDP": "#fc8d62",
     "KDE": "#8da0cb",
     "PRR": "#e78ac3",
+    "DF": "#cc4e17",
     "FaUCI (Fast)": "#a6d854",
     "FaUCI (Exhaustive)": "#ffd92f",
 }

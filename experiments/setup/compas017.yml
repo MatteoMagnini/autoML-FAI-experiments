@@ -1,5 +1,5 @@
 dataset: compas
 method: cho
 fairness_metric: demographic_parity
-protected: 8+7
+protected: 1+5
 epochs: 100

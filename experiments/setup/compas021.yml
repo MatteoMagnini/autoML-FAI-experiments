@@ -1,6 +1,6 @@
 dataset: compas
 method: fauci
 fairness_metric: demographic_parity
-protected: 8+7
+protected: 1+5
 epochs: 100
 fast_mode: False
