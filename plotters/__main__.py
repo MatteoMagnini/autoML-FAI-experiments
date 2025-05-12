@@ -22,13 +22,7 @@ COORDINATES = sorted([
 ])
 
 
-if __name__ == "__main__":
-    args = {
-        "input_path": RESULTS_PATH,
-    }
-
-    results, objectives = read_results(args)
-
+def plot_pareto_fronts(results):
     # Pareto fronts
     for dataset, dataset_dict in results.items():
         print(dataset)
@@ -50,6 +44,8 @@ if __name__ == "__main__":
                     file_paths=[base_path + ".eps", base_path + ".png"]
                 )
 
+
+def plot_parallel_coordinates():
     # Parallel coordinates
     for file in os.listdir(RESULTS_PATH):
         if file.endswith("_results.csv") and not file.startswith("test"):
@@ -120,6 +116,8 @@ if __name__ == "__main__":
                 plt.clf()
                 del df_selected, df_selected_original, scaler
 
+
+def plot_pareto_fronts_test():
     # Pareto Test
     # Generate the pareto fronts like before, but this time for the test results only
     # You need to reed the configurations from the incumbents and then select those configurations from the test results
@@ -152,7 +150,6 @@ if __name__ == "__main__":
                 pareto_fronts_valid[dataset][metric][id] = {}
             pareto_fronts_test[dataset][metric][id][approach] = test_results[["1 - accuracy", metric]].to_numpy()
             pareto_fronts_valid[dataset][metric][id][approach] = validation_results[["1 - accuracy", metric]].to_numpy()
-
     for dataset, dataset_dict in pareto_fronts_test.items():
         for metric, metric_dict in dataset_dict.items():
             for id, id_dict in metric_dict.items():
@@ -176,3 +173,14 @@ if __name__ == "__main__":
                     obj1=metric,
                     file_paths=[base_path + "_validation_test.eps", base_path + "_validation_test.png"]
                 )
+
+
+
+if __name__ == "__main__":
+    args = {
+        "input_path": RESULTS_PATH,
+    }
+    results, objectives = read_results(args)
+    plot_pareto_fronts(results)
+    # plot_parallel_coordinates()
+    # plot_pareto_fronts_test()
