@@ -1,0 +1,703 @@
+{
+  "stats": {
+    "submitted": 30,
+    "finished": 30,
+    "running": 0
+  },
+  "data": [
+    [
+      1,
+      null,
+      209652396,
+      null,
+      [
+        0.17462604086855588,
+        0.2072522211074829
+      ],
+      46074.96849822998,
+      1,
+      1746622298.32637,
+      1746668373.2972848,
+      {}
+    ],
+    [
+      2,
+      null,
+      209652396,
+      null,
+      [
+        0.1553390855786065,
+        0.1385403871536255
+      ],
+      3508.409429550171,
+      1,
+      1746668373.319211,
+      1746671881.7310789,
+      {}
+    ],
+    [
+      3,
+      null,
+      209652396,
+      null,
+      [
+        0.16166591406112366,
+        0.15820939540863038
+      ],
+      7822.523444652557,
+      1,
+      1746671881.7402844,
+      1746679704.2657075,
+      {}
+    ],
+    [
+      4,
+      null,
+      209652396,
+      null,
+      [
+        0.1600998249201842,
+        0.18548933744430543
+      ],
+      71204.08606314659,
+      1,
+      1746679704.2728248,
+      1746750908.360943,
+      {}
+    ],
+    [
+      5,
+      null,
+      209652396,
+      null,
+      [
+        0.3423451528241948,
+        0.0
+      ],
+      1123.1182572841644,
+      1,
+      1746750908.3674917,
+      1746752031.4879205,
+      {}
+    ],
+    [
+      6,
+      null,
+      209652396,
+      null,
+      [
+        0.1698657023507323,
+        0.133412047624588
+      ],
+      1403.2452917099,
+      1,
+      1746752032.385305,
+      1746753435.6326034,
+      {}
+    ],
+    [
+      7,
+      null,
+      209652396,
+      null,
+      [
+        0.1851295471804454,
+        0.14110421657562255
+      ],
+      934.6387786865234,
+      1,
+      1746753435.6415172,
+      1746754370.2823293,
+      {}
+    ],
+    [
+      8,
+      null,
+      209652396,
+      null,
+      [
+        0.16307847355751545,
+        0.1538331913948059
+      ],
+      943.2053864002228,
+      1,
+      1746754370.3205693,
+      1746755313.5288455,
+      {}
+    ],
+    [
+      9,
+      null,
+      209652396,
+      null,
+      [
+        0.16209567257471447,
+        0.168438355922699
+      ],
+      1310.6013264656067,
+      1,
+      1746755313.5532207,
+      1746756624.157748,
+      {}
+    ],
+    [
+      10,
+      null,
+      209652396,
+      null,
+      [
+        0.18236547128762698,
+        0.14780799627304078
+      ],
+      973.3909759521484,
+      1,
+      1746756624.1942427,
+      1746757597.5908585,
+      {}
+    ],
+    [
+      11,
+      null,
+      209652396,
+      null,
+      [
+        0.16270997977584806,
+        0.16135282039642335
+      ],
+      1470.6984641551971,
+      1,
+      1746757597.6416845,
+      1746759068.3438687,
+      {}
+    ],
+    [
+      12,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.0
+      ],
+      328.121289730072,
+      1,
+      1746759068.3966944,
+      1746759396.521842,
+      {}
+    ],
+    [
+      13,
+      null,
+      209652396,
+      null,
+      [
+        0.16823803253443975,
+        0.16578473091125487
+      ],
+      1142.265716791153,
+      1,
+      1746759396.5555415,
+      1746760538.8233232,
+      {}
+    ],
+    [
+      14,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        1.9639730453491213e-06
+      ],
+      576.1428172588348,
+      1,
+      1746760539.846434,
+      1746761115.9912565,
+      {}
+    ],
+    [
+      15,
+      null,
+      209652396,
+      null,
+      [
+        0.4503304108094527,
+        0.0
+      ],
+      228.014719247818,
+      1,
+      1746761116.024462,
+      1746761344.0420253,
+      {}
+    ],
+    [
+      16,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        4.9677193164825436e-05
+      ],
+      577.3477675914764,
+      1,
+      1746761344.08553,
+      1746761921.4366634,
+      {}
+    ],
+    [
+      17,
+      null,
+      209652396,
+      null,
+      [
+        0.5512052157261738,
+        0.0
+      ],
+      237.42824459075928,
+      1,
+      1746761921.473058,
+      1746762158.9042184,
+      {}
+    ],
+    [
+      18,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        2.99602746963501e-06
+      ],
+      657.3519055843353,
+      1,
+      1746762158.9360306,
+      1746762816.290823,
+      {}
+    ],
+    [
+      19,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        2.20218300819397e-05
+      ],
+      551.6164729595184,
+      1,
+      1746762816.3345582,
+      1746763367.953087,
+      {}
+    ],
+    [
+      20,
+      null,
+      209652396,
+      null,
+      [
+        0.1691284365685563,
+        0.20947901964187624
+      ],
+      8687.901060342789,
+      1,
+      1746763367.9908762,
+      1746772055.895276,
+      {}
+    ],
+    [
+      21,
+      null,
+      209652396,
+      null,
+      [
+        0.1671019424013436,
+        0.15848987102508544
+      ],
+      517.7379050254822,
+      1,
+      1746772055.9490926,
+      1746772573.689864,
+      {}
+    ],
+    [
+      22,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        0.0
+      ],
+      494.4896297454834,
+      1,
+      1746772573.7354627,
+      1746773068.2288544,
+      {}
+    ],
+    [
+      23,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        4.7385692596435556e-08
+      ],
+      2053.512950897217,
+      1,
+      1746773069.002898,
+      1746775122.5178332,
+      {}
+    ],
+    [
+      24,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        3.618001937866211e-07
+      ],
+      1344.3474688529968,
+      1,
+      1746775122.5466428,
+      1746776466.8962755,
+      {}
+    ],
+    [
+      25,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        1.1414289474487306e-07
+      ],
+      1525.8295984268188,
+      1,
+      1746776466.9317844,
+      1746777992.7635233,
+      {}
+    ],
+    [
+      26,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        5.811452865600586e-08
+      ],
+      3253.2028596401215,
+      1,
+      1746777992.7748187,
+      1746781245.979705,
+      {}
+    ],
+    [
+      27,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        4.202127456665039e-08
+      ],
+      6503.520365476608,
+      1,
+      1746781245.9918892,
+      1746787749.5142748,
+      {}
+    ],
+    [
+      28,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        1.162290573120117e-07
+      ],
+      1693.8746373653412,
+      1,
+      1746787749.5247831,
+      1746789443.4013581,
+      {}
+    ],
+    [
+      29,
+      null,
+      209652396,
+      null,
+      [
+        0.24080952628856825,
+        3.874301910400391e-08
+      ],
+      4623.831593990326,
+      1,
+      1746789443.4119544,
+      1746794067.245611,
+      {}
+    ],
+    [
+      30,
+      null,
+      209652396,
+      null,
+      [
+        0.1640305431473096,
+        0.1729607105255127
+      ],
+      1920.0235528945923,
+      1,
+      1746794067.2951956,
+      1746795987.320949,
+      {}
+    ]
+  ],
+  "configs": {
+    "1": {
+      "batch_size": 297,
+      "lambda_value": 0.6205646954477,
+      "learning_rate": 0.000210147218,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 697
+    },
+    "2": {
+      "batch_size": 979,
+      "lambda_value": 0.3596079321578,
+      "learning_rate": 0.0535361448362,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 65
+    },
+    "3": {
+      "batch_size": 652,
+      "lambda_value": 0.7642785040662,
+      "learning_rate": 0.0014379647071,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 136
+    },
+    "4": {
+      "batch_size": 94,
+      "lambda_value": 0.005704017356,
+      "learning_rate": 0.0050831004951,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 339
+    },
+    "5": {
+      "batch_size": 241,
+      "lambda_value": 0.9708397453651,
+      "learning_rate": 0.0329667406801,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 407
+    },
+    "6": {
+      "batch_size": 622,
+      "lambda_value": 0.8568572314948,
+      "learning_rate": 0.0607422460238,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 72
+    },
+    "7": {
+      "batch_size": 716,
+      "lambda_value": 0.8037138599283,
+      "learning_rate": 0.0805060384366,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 77
+    },
+    "8": {
+      "batch_size": 644,
+      "lambda_value": 0.7120836233398,
+      "learning_rate": 0.0928313523635,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 76
+    },
+    "9": {
+      "batch_size": 754,
+      "lambda_value": 0.7524869452083,
+      "learning_rate": 0.0801094595873,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 65
+    },
+    "10": {
+      "batch_size": 626,
+      "lambda_value": 0.7936666506896,
+      "learning_rate": 0.0975958355484,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 77
+    },
+    "11": {
+      "batch_size": 630,
+      "lambda_value": 0.7105618877182,
+      "learning_rate": 0.0599834405316,
+      "number_of_layers": 2,
+      "number_of_neurons_per_layer": 72
+    },
+    "12": {
+      "batch_size": 822,
+      "lambda_value": 0.9982338942063,
+      "learning_rate": 0.0644237612142,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 72
+    },
+    "13": {
+      "batch_size": 668,
+      "lambda_value": 0.7354281210155,
+      "learning_rate": 0.0608255427758,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 64
+    },
+    "14": {
+      "batch_size": 814,
+      "lambda_value": 0.9868429610243,
+      "learning_rate": 0.0071865587321,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 339
+    },
+    "15": {
+      "batch_size": 823,
+      "lambda_value": 0.9984118986033,
+      "learning_rate": 0.0203253620765,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 256
+    },
+    "16": {
+      "batch_size": 800,
+      "lambda_value": 0.9857405158291,
+      "learning_rate": 0.0007596047898,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 220
+    },
+    "17": {
+      "batch_size": 809,
+      "lambda_value": 0.9985959018453,
+      "learning_rate": 0.0327357719214,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 276
+    },
+    "18": {
+      "batch_size": 867,
+      "lambda_value": 0.9921817347454,
+      "learning_rate": 0.0063365526329,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 378
+    },
+    "19": {
+      "batch_size": 824,
+      "lambda_value": 0.9952179187239,
+      "learning_rate": 0.0005357684061,
+      "number_of_layers": 4,
+      "number_of_neurons_per_layer": 287
+    },
+    "20": {
+      "batch_size": 277,
+      "lambda_value": 0.0788153739624,
+      "learning_rate": 0.0011246047718,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 788
+    },
+    "21": {
+      "batch_size": 895,
+      "lambda_value": 0.7897473442105,
+      "learning_rate": 0.011623077444,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 411
+    },
+    "22": {
+      "batch_size": 597,
+      "lambda_value": 0.4199483890762,
+      "learning_rate": 0.0062957704128,
+      "number_of_layers": 3,
+      "number_of_neurons_per_layer": 1002
+    },
+    "23": {
+      "batch_size": 72,
+      "lambda_value": 0.9982396668878,
+      "learning_rate": 0.0078840151866,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 75
+    },
+    "24": {
+      "batch_size": 544,
+      "lambda_value": 0.9939972393778,
+      "learning_rate": 0.0077790629058,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 68
+    },
+    "25": {
+      "batch_size": 372,
+      "lambda_value": 0.9955769960211,
+      "learning_rate": 0.0071865587321,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 81
+    },
+    "26": {
+      "batch_size": 234,
+      "lambda_value": 0.996368349374,
+      "learning_rate": 0.0070260805618,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 67
+    },
+    "27": {
+      "batch_size": 53,
+      "lambda_value": 0.993828336181,
+      "learning_rate": 0.0075674061442,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 64
+    },
+    "28": {
+      "batch_size": 365,
+      "lambda_value": 0.9954914301168,
+      "learning_rate": 0.0072227324441,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 70
+    },
+    "29": {
+      "batch_size": 49,
+      "lambda_value": 0.9950826963879,
+      "learning_rate": 0.0075310467016,
+      "number_of_layers": 5,
+      "number_of_neurons_per_layer": 70
+    },
+    "30": {
+      "batch_size": 497,
+      "lambda_value": 0.4323787825414,
+      "learning_rate": 0.0004186695981,
+      "number_of_layers": 1,
+      "number_of_neurons_per_layer": 866
+    }
+  },
+  "config_origins": {
+    "1": "Initial Design: Sobol",
+    "2": "Initial Design: Sobol",
+    "3": "Initial Design: Sobol",
+    "4": "Initial Design: Sobol",
+    "5": "Initial Design: Sobol",
+    "6": "Acquisition Function Maximizer: Local Search",
+    "7": "Acquisition Function Maximizer: Local Search",
+    "8": "Acquisition Function Maximizer: Local Search",
+    "9": "Acquisition Function Maximizer: Local Search",
+    "10": "Acquisition Function Maximizer: Local Search",
+    "11": "Acquisition Function Maximizer: Local Search",
+    "12": "Acquisition Function Maximizer: Local Search",
+    "13": "Acquisition Function Maximizer: Local Search",
+    "14": "Acquisition Function Maximizer: Local Search",
+    "15": "Acquisition Function Maximizer: Local Search",
+    "16": "Acquisition Function Maximizer: Local Search",
+    "17": "Acquisition Function Maximizer: Local Search",
+    "18": "Acquisition Function Maximizer: Local Search",
+    "19": "Acquisition Function Maximizer: Local Search",
+    "20": "Random Search",
+    "21": "Random Search",
+    "22": "Random Search",
+    "23": "Acquisition Function Maximizer: Local Search",
+    "24": "Acquisition Function Maximizer: Local Search",
+    "25": "Acquisition Function Maximizer: Local Search",
+    "26": "Acquisition Function Maximizer: Local Search",
+    "27": "Acquisition Function Maximizer: Local Search",
+    "28": "Acquisition Function Maximizer: Local Search",
+    "29": "Acquisition Function Maximizer: Local Search",
+    "30": "Random Search"
+  }
+}
