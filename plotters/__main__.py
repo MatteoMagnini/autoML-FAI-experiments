@@ -1,4 +1,6 @@
 import os
+
+import numpy as np
 import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -11,6 +13,7 @@ from results import PATH as RESULTS_PATH
 from plotters.test import PATH as PLOT_TEST_PATH
 from plotters.parallel import PATH as PLOT_PARALLEL_PATH
 from plotters.pareto import PATH as PLOT_PARETO_PATH
+from tables import PATH as TABLES_PATH
 
 
 COORDINATES = sorted([
@@ -22,8 +25,9 @@ COORDINATES = sorted([
 ])
 
 
-def plot_pareto_fronts(results):
+def plot_pareto_fronts(results, compute_auc: bool = True):
     # Pareto fronts
+    auc = []
     for dataset, dataset_dict in results.items():
         print(dataset)
         for metric, metric_dict in dataset_dict.items():
@@ -34,6 +38,24 @@ def plot_pareto_fronts(results):
                 for approach, approach_dict in attribute_dict.items():
                     print(f"\t\t\t\t{approach}")
                     pareto_fronts_valid[approach] = find_pareto_front(approach_dict["results"], '1 - accuracy', metric)
+
+                    # Compute and store AUC if required
+                    if compute_auc:
+                        # Compute the AUC from the individual results
+                        pareto_fronts_valid[approach]
+                        auc_value = np.trapz(
+                            y=pareto_fronts_valid[approach][metric].values,  # y-coordinates
+                            x=pareto_fronts_valid[approach]['1 - accuracy'].values  # x-coordinates
+                        )
+                        if auc_value is not None:
+                            auc.append({
+                                "dataset": dataset,
+                                "metric": metric,
+                                "attribute": attribute,
+                                "approach": approach,
+                                "auc": auc_value
+                            })
+
                 base_path = os.path.join(PLOT_PARETO_PATH, f"{dataset}_{metric}_{attribute}")
                 plot_multiple_pareto_fronts(
                     pareto_fronts_valid,
@@ -43,6 +65,13 @@ def plot_pareto_fronts(results):
                     obj1=metric,
                     file_paths=[base_path + ".eps", base_path + ".png"]
                 )
+
+    # Save AUC metrics to a CSV file
+    if compute_auc and auc:
+        auc_df = pd.DataFrame(auc)
+        auc_csv_path = os.path.join(TABLES_PATH, "auc_metrics.csv")
+        auc_df.to_csv(auc_csv_path, index=False)
+        print(f"AUC metrics saved to {auc_csv_path}")
 
 
 def plot_parallel_coordinates():

@@ -2,6 +2,8 @@
 old/
 plotters/**/*.png
 plotters/**/*.eps
+tables/*.tex
+tables/*.csv
 analysis/*.csv
 results/*.png
 results/*.eps
