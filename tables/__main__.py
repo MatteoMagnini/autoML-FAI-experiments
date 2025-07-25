@@ -10,7 +10,7 @@ def custom_latex_table(table: pd.DataFrame, caption: str, label: str) -> str:
     import io
 
     buf = io.StringIO()
-    buf.write("\\begin{table}[ht]\n\\centering\n")
+    buf.write("\\begin{table}\n\\centering\n")
     buf.write("\\begin{tabular}{l|ccc|ccc}\n")
     buf.write("\\toprule\n")
     buf.write("\\textbf{Approach} & \\multicolumn{3}{c|}{\\textbf{Adult}} & \\multicolumn{3}{c}{\\textbf{COMPAS}} \\\\\n")
@@ -18,7 +18,11 @@ def custom_latex_table(table: pd.DataFrame, caption: str, label: str) -> str:
     buf.write("\\midrule\n")
 
     for approach, row in table.iterrows():
-        row_str = [approach] + [f"{x:.4f}" if pd.notna(x) else "-" for x in row]
+        row_str = [approach] + [
+            f"\\textbf{{{x * 1e3:.2f}}}" if pd.notna(x) and x == table[
+                col].min() else f"{x * 1e3:.2f}" if pd.notna(x) else "-"
+            for col, x in zip(table.columns, row)
+        ]
         buf.write(" & ".join(row_str) + " \\\\\n")
 
     buf.write("\\bottomrule\n")
@@ -90,9 +94,12 @@ def generate_latex_auc_table(name: str = "auc_metrics.csv") -> None:
         ]
 
         latex_str = custom_latex_table(table,
-                                       caption=f"Area under the curve (AUC) for {PRETTY_NAMES[metric]} on the Adult and COMPAS datasets.\n"
+                                       caption=f"AUC for {PRETTY_NAMES[metric]} on the Adult and COMPAS datasets.\n"
                                                 "%\n"
-                                                "The best results are highlighted in bold.\n",
+                                                "The best results are highlighted in bold.\n"
+                                                "%\n"
+                                                "The AUC is reported in thousands (x1000)."
+                                       ,
                                        label=f"tab:{metric}-auc")
         with open(TABLES_PATH / f"{metric}_auc_table.tex", "w") as f:
             f.write(latex_str)
