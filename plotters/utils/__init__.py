@@ -6,8 +6,10 @@ PRETTY_NAMES = {
     "equalized_odds": "Equalized Odds",
     "disparate_impact": "Disparate Impact",
     "fauci": "FaUCI",
+    "fauci(Fast)": "FaUCI (Fast)",
     "fauci(fast)": "FaUCI (Fast)",
     "fauci(Exhaustive)": "FaUCI (Exhaustive)",
+    "fauci(exhaustive)": "FaUCI (Exhaustive)",
     "jiang": "GDP",
     "cho": "KDE",
     "prr": "PRR",
@@ -17,6 +19,12 @@ PRETTY_NAMES = {
     "learning_rate": "Learning Rate",
     "number_of_layers": "Number of Layers",
     "number_of_neurons_per_layer": "Neurons per Layer",
+    "1+5": "Intersectional",
+    "1": "Sex",
+    "5": "Ethnicity",
+    "8": "Sex",
+    "7": "Ethnicity",
+    "8+7": "Intersectional",
 }
 
 # Enhanced colormap with accessible and visually appealing colors

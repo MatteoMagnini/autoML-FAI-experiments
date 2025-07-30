@@ -1,3 +1,4 @@
+import io
 import pandas as pd
 from tables import PATH as TABLES_PATH
 from plotters.utils import PRETTY_NAMES
@@ -7,7 +8,6 @@ def custom_latex_table(table: pd.DataFrame, caption: str, label: str) -> str:
     """
     Convert a pivoted DataFrame to LaTeX with custom multicolumn headers.
     """
-    import io
 
     buf = io.StringIO()
     buf.write("\\begin{table}\n\\centering\n")
