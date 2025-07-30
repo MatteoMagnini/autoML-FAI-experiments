@@ -37,8 +37,12 @@ def generate_violin_plot(fairness: str, smac_cache_dataset_runs: dict):
     axs = axs.flatten()
 
     # Iterate over datasets and their sensitive attributes
-    for i, (dataset_name, sensitive_attributes) in enumerate(smac_cache_dataset_runs.items()):
-        for j, (sensitive_attribute, approaches) in enumerate(sensitive_attributes.items()):
+    # sort: Adult first and then Compas
+    title_settled = False
+    for i, (dataset_name, sensitive_attributes) in enumerate(sorted(smac_cache_dataset_runs.items())):
+        axs[i].set_title(f"{PRETTY_NAMES[dataset_name]}", fontsize=18, pad=20)
+        sorted_sensitive_attributes = ["Sex", "Ethnicity", "Intersectional"]  # Explicitly sort sensitive attributes
+        for j, (sensitive_attribute, approaches) in enumerate(sorted(sensitive_attributes.items(), key=lambda x: sorted_sensitive_attributes.index(PRETTY_NAMES[x[0]]))):
             # Prepare data for the violin plot
             data = []
             labels = []
@@ -47,11 +51,12 @@ def generate_violin_plot(fairness: str, smac_cache_dataset_runs: dict):
                 labels.append(PRETTY_NAMES[approach_name])
 
             # Create the violin plot
-            sns.violinplot(data=data, ax=axs[j * 2 + i], inner="quartile", color=COLOR_MAP.get(PRETTY_NAMES[sensitive_attribute]), scale="width")
-            axs[j * 2 + i].set_title(f"{PRETTY_NAMES[dataset_name]} - {PRETTY_NAMES[sensitive_attribute]}")
+            sns.violinplot(data=data, ax=axs[j * 2 + i], inner="quartile",
+                           color=COLOR_MAP.get(PRETTY_NAMES[sensitive_attribute]), scale="count")
+
+            axs[j * 2 + i].set_ylabel(PRETTY_NAMES[sensitive_attribute], labelpad=20, fontsize=18)
+            # axs[j * 2 + i].set_ylabel("Time (seconds)")
             axs[j * 2 + i].set_xticklabels(labels, rotation=45)
-            axs[j * 2 + i].set_ylabel("Time (seconds)")
-            axs[j * 2 + i].set_xlabel("Approaches")
 
 
     # Adjust layout and show the plot
