@@ -19,12 +19,12 @@ PRETTY_NAMES = {
     "learning_rate": "Learning Rate",
     "number_of_layers": "Number of Layers",
     "number_of_neurons_per_layer": "Neurons per Layer",
-    "1+5": "Intersectional",
+    "1+5": "Intersectionality",
     "1": "Sex",
     "5": "Ethnicity",
     "8": "Sex",
     "7": "Ethnicity",
-    "8+7": "Intersectional",
+    "8+7": "Intersectionality",
 }
 
 # Enhanced colormap with accessible and visually appealing colors

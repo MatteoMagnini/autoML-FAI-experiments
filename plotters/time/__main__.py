@@ -40,8 +40,7 @@ def generate_violin_plot(fairness: str, smac_cache_dataset_runs: dict):
     # sort: Adult first and then Compas
     title_settled = False
     for i, (dataset_name, sensitive_attributes) in enumerate(sorted(smac_cache_dataset_runs.items())):
-        axs[i].set_title(f"{PRETTY_NAMES[dataset_name]}", fontsize=18, pad=20)
-        sorted_sensitive_attributes = ["Sex", "Ethnicity", "Intersectional"]  # Explicitly sort sensitive attributes
+        sorted_sensitive_attributes = ["Sex", "Ethnicity", "Intersectionality"]  # Explicitly sort sensitive attributes
         for j, (sensitive_attribute, approaches) in enumerate(sorted(sensitive_attributes.items(), key=lambda x: sorted_sensitive_attributes.index(PRETTY_NAMES[x[0]]))):
             # Prepare data for the violin plot
             data = []
@@ -52,11 +51,12 @@ def generate_violin_plot(fairness: str, smac_cache_dataset_runs: dict):
 
             # Create the violin plot
             sns.violinplot(data=data, ax=axs[j * 2 + i], inner="quartile",
-                           color=COLOR_MAP.get(PRETTY_NAMES[sensitive_attribute]), scale="count")
+                           color=COLOR_MAP.get(PRETTY_NAMES[sensitive_attribute]), scale="count", cut=0)
 
-            axs[j * 2 + i].set_ylabel(PRETTY_NAMES[sensitive_attribute], labelpad=20, fontsize=18)
+            axs[j * 2].set_ylabel(PRETTY_NAMES[sensitive_attribute], labelpad=20, fontsize=20)
             # axs[j * 2 + i].set_ylabel("Time (seconds)")
             axs[j * 2 + i].set_xticklabels(labels, rotation=45)
+        axs[4 + i].set_xlabel(f"{PRETTY_NAMES[dataset_name]}", fontsize=20, labelpad=20)
 
 
     # Adjust layout and show the plot
@@ -69,7 +69,7 @@ def generate_violin_plot(fairness: str, smac_cache_dataset_runs: dict):
 
 
 if __name__ == "__main__":
-    all_smac_cache = read_smac_cache_all_runs(SMAC_PATH)
+    all_smac_cache = read_smac_cache_all_runs(SMAC_PATH, True)
     all_smac_cache = rearrange_data(all_smac_cache)
     for metric in all_smac_cache.keys():
-        generate_violin_plot(metric, all_smac_cache[metric])
+        generate_violin_plot(metric, all_smac_cache[metric], )
