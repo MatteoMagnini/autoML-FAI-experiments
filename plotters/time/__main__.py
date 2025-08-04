@@ -50,8 +50,7 @@ def generate_violin_plot(fairness: str, smac_cache_dataset_runs: dict):
                 labels.append(PRETTY_NAMES[approach_name])
 
             # Create the violin plot
-            sns.violinplot(data=data, ax=axs[j * 2 + i], inner="quartile",
-                           color=COLOR_MAP.get(PRETTY_NAMES[sensitive_attribute]), scale="count", cut=0)
+            sns.violinplot(data=data, ax=axs[j * 2 + i], inner="quartile", palette={i: COLOR_MAP.get(approach_name) for i, approach_name in enumerate(labels)}, cut=0)
 
             axs[j * 2].set_ylabel(PRETTY_NAMES[sensitive_attribute], labelpad=20, fontsize=20)
             # axs[j * 2 + i].set_ylabel("Time (seconds)")
