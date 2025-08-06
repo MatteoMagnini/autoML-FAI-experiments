@@ -74,6 +74,91 @@ def plot_pareto_fronts(results, compute_auc: bool = True):
         print(f"AUC metrics saved to {auc_csv_path}")
 
 
+def plot_subplot_parallel_coordinates(results, approach, dataset, id, first_metric, second_metric):
+    selected_cols = [first_metric] + COORDINATES
+    df_selected = results.copy()[selected_cols].dropna()
+
+    # Compute correlation with the metric and sort columns
+    correlations = df_selected.corr()[first_metric].abs().sort_values()
+    correlations = correlations.drop(first_metric)
+    sorted_columns = correlations.index.tolist()
+    sorted_columns.append(first_metric)  # Add metric as the last column
+    df_selected = df_selected[sorted_columns]
+
+    df_selected = df_selected.rename(columns=PRETTY_NAMES)
+    df_selected_original = df_selected.copy()
+
+    scaler = MinMaxScaler()
+    for col in sorted_columns:
+        # if col != cost:
+        df_selected[PRETTY_NAMES[col]] = scaler.fit_transform(df_selected[[PRETTY_NAMES[col]]])
+
+    fig, ax = plt.subplots(figsize=(12, 6))
+    sns.set_style("whitegrid")
+
+    # Normalize the cost column for coloring
+    cost_normalized = MinMaxScaler().fit_transform(
+        results[[second_metric]]
+    ).flatten()
+    colors = plt.cm.viridis_r(cost_normalized)
+
+    for idx in range(len(df_selected)):
+        plt.plot(
+            df_selected.columns,
+            df_selected.iloc[idx],
+            color=colors[idx],
+            linewidth=0.5,
+            alpha=0.7
+        )
+
+    plt.xticks(rotation=45, ha="right")
+    plt.title(f"Parallel Coordinate Plot for {PRETTY_NAMES[approach]} on {dataset.capitalize()} dataset using {PRETTY_NAMES[id]}")
+    plt.yticks([])
+
+    # Add original scale for each y column
+    for i, col in enumerate(sorted_columns):
+        min_val = df_selected_original[PRETTY_NAMES[col]].min()
+        max_val = df_selected_original[PRETTY_NAMES[col]].max()
+        for j in range(5):
+            t = plt.text(i, j / 4, f"{min_val + j * (max_val - min_val) / 4:.2f}",
+                         color="black", fontsize=8, ha="center", va="center")
+            t.set_bbox(dict(facecolor='white', alpha=0.8, edgecolor='white'))
+
+    sm = plt.cm.ScalarMappable(
+        cmap=plt.get_cmap("viridis_r"),
+        norm=plt.Normalize(
+            results[second_metric].min(),
+            results[second_metric].max()
+        )
+    )
+    sm.set_array([])
+    cbar = plt.colorbar(sm, ax=ax)
+    # cbar.set_label(PRETTY_NAMES[second_metric], rotation=45, ha='right', va='bottom')
+    x_center = cbar.ax.get_position().x0
+    y_bottom = cbar.ax.get_position().y0
+
+    fig.text(
+        x_center + 0.02,
+        y_bottom - 0.03,
+        PRETTY_NAMES[second_metric],
+        ha='center',
+        va='top',
+        rotation=45,
+    )
+
+    # Save
+    first_metric = first_metric.replace(' ', '')
+    second_metric = second_metric.replace(' ', '')
+    plot_path = os.path.join(PLOT_PARALLEL_PATH, f"{dataset}_{id}_{approach}_{first_metric}_{second_metric}")
+    plt.savefig(plot_path + ".eps", bbox_inches="tight")
+    plt.savefig(plot_path + ".png", bbox_inches="tight", dpi=300)
+    plt.close()
+
+    # Clean up
+    plt.clf()
+    del df_selected, df_selected_original, scaler
+
+
 def plot_parallel_coordinates():
     # Parallel coordinates
     for file in os.listdir(RESULTS_PATH):
@@ -81,78 +166,9 @@ def plot_parallel_coordinates():
             dataset, approach, metric_left, metric_right, id, _ = file.split("_")
             metric = f"{metric_left}_{metric_right}"
             results = pd.read_csv(os.path.join(RESULTS_PATH, file))
+            plot_subplot_parallel_coordinates(results, approach, dataset, id, metric, "1 - accuracy")
+            plot_subplot_parallel_coordinates(results, approach, dataset, id, "1 - accuracy", metric)
 
-            for cost in ["1 - accuracy", metric]:
-                selected_cols = [cost] + COORDINATES
-                df_selected = results.copy()[selected_cols].dropna()
-
-                # Compute correlation with the metric and sort columns
-                correlations = df_selected.corr()[cost].abs().sort_values()
-                correlations = correlations.drop(cost)
-                sorted_columns = correlations.index.tolist()
-                sorted_columns.append(cost)  # Add metric as the last column
-                df_selected = df_selected[sorted_columns]
-
-                df_selected = df_selected.rename(columns=PRETTY_NAMES)
-                df_selected_original = df_selected.copy()
-
-                scaler = MinMaxScaler()
-                for col in sorted_columns:
-                    # if col != cost:
-                    df_selected[PRETTY_NAMES[col]] = scaler.fit_transform(df_selected[[PRETTY_NAMES[col]]])
-
-                fig, ax = plt.subplots(figsize=(12, 6))
-                sns.set_style("whitegrid")
-
-                # Normalize the cost column for coloring
-                cost_normalized = MinMaxScaler().fit_transform(
-                    df_selected_original[[PRETTY_NAMES[cost]]]
-                ).flatten()
-                colors = plt.cm.cividis_r(cost_normalized)
-
-                for idx in range(len(df_selected)):
-                    plt.plot(
-                        df_selected.columns,
-                        df_selected.iloc[idx],
-                        color=colors[idx],
-                        linewidth=0.5,
-                        alpha=0.7
-                    )
-
-                plt.xticks(rotation=45, ha="right")
-                plt.title(f"Parallel Coordinate Plot for\n{PRETTY_NAMES[approach]} on {dataset.capitalize()} dataset")
-                plt.yticks([])
-
-                # Add original scale for each y column
-                for i, col in enumerate(sorted_columns):
-                    min_val = df_selected_original[PRETTY_NAMES[col]].min()
-                    max_val = df_selected_original[PRETTY_NAMES[col]].max()
-                    for j in range(5):
-                        t = plt.text(i, j / 4, f"{min_val + j * (max_val - min_val) / 4:.2f}",
-                                     color="black", fontsize=8, ha="center", va="center")
-                        t.set_bbox(dict(facecolor='white', alpha=0.8, edgecolor='white'))
-
-                # Add colorbar for the cost metric
-                # sm = plt.cm.ScalarMappable(
-                #     cmap=plt.get_cmap("cividis_r"),
-                #     norm=plt.Normalize(
-                #         df_selected_original[PRETTY_NAMES[cost]].min(),
-                #         df_selected_original[PRETTY_NAMES[cost]].max()
-                #     )
-                # )
-                # sm.set_array([])
-                # cbar = plt.colorbar(sm, ax=ax)
-                # cbar.set_label(PRETTY_NAMES[cost])
-
-                # Save
-                plot_path = os.path.join(PLOT_PARALLEL_PATH, f"{dataset}_{cost.replace(' ', '')}_{id}_{approach}")
-                plt.savefig(plot_path + ".eps", bbox_inches="tight")
-                plt.savefig(plot_path + ".png", bbox_inches="tight", dpi=300)
-                plt.close()
-
-                # Clean up
-                plt.clf()
-                del df_selected, df_selected_original, scaler
 
 
 def plot_pareto_fronts_test():
